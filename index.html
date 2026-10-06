@@ -11,21 +11,23 @@
        MONOCHROME EXECUTIVE DESIGN SYSTEM (Antigravity Clean B&W)
        ========================================================================== */
     :root {
-      --bg: #f8f9fa;
+      --bg: #f8f9fb;
       --card-bg: #ffffff;
-      --border: #e4e4e7;
-      --border-dark: #27272a;
+      --border: #e2e8f0;
+      --border-subtle: rgba(0, 0, 0, 0.05);
+      --border-dark: #09090b;
       --text: #09090b;
-      --text-muted: #71717a;
-      --text-subtle: #a1a1aa;
-      --accent: #18181b;
+      --text-muted: #64748b;
+      --text-subtle: #94a3b8;
+      --accent: #09090b;
       --accent-hover: #27272a;
-      --accent-light: #f4f4f5;
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-      --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.08), 0 4px 8px -2px rgba(0, 0, 0, 0.04);
+      --accent-light: #f1f5f9;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+      --shadow-lg: 0 16px 36px -4px rgba(0, 0, 0, 0.07), 0 4px 12px rgba(0, 0, 0, 0.03);
       --radius: 8px;
       --radius-lg: 12px;
+      --radius-xl: 16px;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -47,6 +49,53 @@
       flex-direction: column;
     }
 
+    
+    /* ==========================================================================
+       ENTERPRISE VECTOR ICONS SYSTEM (Antigravity Clean SVG - No Emojis)
+       ========================================================================== */
+    .ui-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      vertical-align: -0.15em;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+      pointer-events: none;
+    }
+    .ui-icon-xs {
+      width: 10px;
+      height: 10px;
+      vertical-align: -0.05em;
+      stroke-width: 2.2;
+    }
+    .ui-icon-sm {
+      width: 12px;
+      height: 12px;
+      vertical-align: -0.12em;
+    }
+    .ui-icon-lg {
+      width: 16px;
+      height: 16px;
+      vertical-align: -0.2em;
+    }
+    .btn-solid .ui-icon, .btn-primary .ui-icon, .btn-outline .ui-icon, .date-preset-pill .ui-icon {
+      margin-right: 5px;
+    }
+    .status-indicator-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      margin-right: 6px;
+      vertical-align: middle;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+
     /* Tabular numbers for all financial values */
     .tabular {
       font-variant-numeric: tabular-nums;
@@ -62,10 +111,10 @@
        TOP APP BAR
        -------------------------------------------------------------------------- */
     .app-header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       position: sticky;
       top: 0;
       z-index: 50;
@@ -401,22 +450,49 @@
     }
 
     .btn-solid {
-      background: var(--text);
+      background: #09090b;
       color: #ffffff;
-      border: 1px solid var(--text);
-      padding: 7px 14px;
+      border: 1px solid #09090b;
+      padding: 6px 14px;
       border-radius: 6px;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .btn-solid:hover {
       background: #27272a;
       border-color: #27272a;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transform: translateY(-0.5px);
+    }
+
+    .btn-solid:active {
+      transform: scale(0.985);
+    }
+
+    .admin-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 8px 10px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      transition: background 0.15s ease;
+    }
+
+    .admin-menu-item:hover {
+      background: #f4f4f5;
     }
 
     .btn-aod-trigger {
@@ -441,13 +517,13 @@
        COLLECTION REMINDER NOTIFICATION BANNER
        -------------------------------------------------------------------------- */
     .reminder-banner {
+      display: none !important; /* Runs in background, pops up on scheduled checkpoints */
       background: #ffffff;
       border: 1px solid var(--border);
       border-left: 4px solid var(--text);
       border-radius: var(--radius);
       padding: 12px 18px;
       margin-bottom: 20px;
-      display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
@@ -546,59 +622,63 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 18px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 2px;
-      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 0;
+      border-bottom: none;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .tabs-group {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 6px;
+      background: #f1f5f9;
+      padding: 3px;
+      border-radius: 10px;
+      gap: 3px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .tab-nav-btn {
-      background: none;
-      border: 1px solid transparent;
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
       cursor: pointer;
-      border-radius: 6px 6px 0 0;
+      border-radius: 7px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      position: relative;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .tab-nav-btn:hover {
-      color: var(--text);
-      background: var(--accent-light);
+      color: #09090b;
+      background: rgba(255, 255, 255, 0.6);
     }
 
     .tab-nav-btn.active {
-      color: var(--text);
+      color: #09090b;
       background: #ffffff;
-      border: 1px solid var(--border);
-      border-bottom: 2px solid var(--text);
-      font-weight: 800;
+      font-weight: 700;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.03);
     }
 
     .tab-badge {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       padding: 1px 6px;
       border-radius: 10px;
-      background: var(--accent-light);
-      color: var(--text);
-      border: 1px solid var(--border);
+      background: #e2e8f0;
+      color: #475569;
+      border: none;
+      transition: all 0.18s ease;
     }
 
     .tab-nav-btn.active .tab-badge {
-      background: var(--text);
+      background: #09090b;
       color: #ffffff;
     }
 
@@ -754,9 +834,20 @@
 
     .kpi-card.hero-center {
       text-align: center;
-      border: 1px solid var(--text);
-      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
       background: #ffffff;
+      position: relative;
+    }
+    .kpi-card.hero-center::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20px;
+      right: 20px;
+      height: 2px;
+      background: #09090b;
+      border-radius: 2px;
     }
     .kpi-card.hero-center .kpi-header {
       justify-content: center;
@@ -765,7 +856,7 @@
     .kpi-card.hero-center .kpi-value {
       font-size: 36px;
       margin: 4px 0 8px;
-      color: #0f172a;
+      color: #09090b;
     }
     .kpi-card.hero-center .kpi-subtext {
       justify-content: center;
@@ -901,21 +992,21 @@
     }
 
     .pacing-bar-container {
-      background: var(--accent-light);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      height: 22px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      height: 12px;
       position: relative;
       overflow: hidden;
       margin-bottom: 8px;
     }
 
     .pacing-bar-fill {
-      background: var(--text);
+      background: #09090b;
       height: 100%;
       width: 0%;
-      border-radius: 7px 0 0 7px;
-      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 999px;
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .pacing-markers {
@@ -1189,20 +1280,21 @@
     }
 
     .input-amount {
-      width: 160px;
-      padding: 8px 10px;
-      border: 1px solid var(--border);
+      width: 150px;
+      padding: 6px 10px;
+      border: 1px solid #e2e8f0;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
-      color: var(--text);
+      color: #09090b;
       outline: none;
       background: #ffffff;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
     .input-amount:focus {
-      border-color: var(--text);
-      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+      border-color: #09090b;
+      box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.06);
       background: #ffffff;
     }
 
@@ -1329,16 +1421,27 @@
     /* CENTERED AOD HERO CARD (TODAY'S COLLECTION AT CENTER) */
     .aod-center-hero {
       background: #ffffff;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(0, 0, 0, 0.06);
       border-radius: 16px;
-      padding: 32px 28px;
+      padding: 30px 24px;
       text-align: center;
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
       margin-bottom: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      position: relative;
+    }
+    .aod-center-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 36px;
+      right: 36px;
+      height: 2px;
+      background: #09090b;
+      border-radius: 2px;
     }
 
     .aod-hero-label {
@@ -1512,14 +1615,6 @@
       font-weight: 800;
       font-size: 18px;
       letter-spacing: -0.02em;
-    }
-
-    .login-brand-img {
-      max-height: 44px;
-      max-width: 190px;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
     }
 
     .login-title {
@@ -1735,15 +1830,15 @@
       </div>
 
       <div class="header-center">
-        <!-- Date Hierarchy Multi-Select Filter (Year -> Qtr -> Month -> Date) -->
+        <!-- Date Hierarchy Multi-Select Filter (Year -> Qtr -> Month -> Date) - Admin Only -->
         <div class="date-hierarchy-wrapper" id="dateHierarchyWrapper">
-          <button type="button" id="btnDateHierarchyTrigger" class="btn-date-hierarchy" onclick="toggleDateHierarchyDropdown()" title="Click to filter by Year, Quarter, Month, or multi-select dates">
-            <span>📅</span>
-            <span id="dateFilterActiveLabel">05 Oct 2026 (Today)</span>
+          <button type="button" id="btnDateHierarchyTrigger" class="btn-date-hierarchy" onclick="toggleDateHierarchyDropdown()" title="Click to filter by Year, Quarter, Month, or multi-select dates" style="display:none;">
+            <svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="dateFilterActiveLabel">Today</span>
             <span style="font-size:10px; margin-left:2px;">▼</span>
           </button>
 
-          <!-- Fast Presets right next to trigger -->
+          <!-- Fast Presets: Managers have direct access to Today & Yesterday -->
           <div style="display:inline-flex; gap:3px;">
             <button type="button" id="btnQuickToday" class="date-preset-pill active" onclick="applyPresetDates('today')">Today</button>
             <button type="button" id="btnQuickYesterday" class="date-preset-pill" onclick="applyPresetDates('yesterday')">Yesterday</button>
@@ -1823,7 +1918,12 @@
       <div class="header-actions">
         <!-- Always On Display Trigger -->
         <button type="button" class="btn-aod-trigger" onclick="openAodMode()" title="Toggle full-screen Always On Display">
-          🖥️ Always On Display
+          <svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Always On Display
+        </button>
+
+        <!-- Floor Checkpoint Alerts Status Trigger -->
+        <button type="button" id="btnHeaderAlertsStatus" class="btn-outline" onclick="openReminderPopupModalManual()" title="Shift checkpoints & floor alert status">
+          ⏰ Alerts
         </button>
 
         <!-- Admin switcher (only shown if admin/mis logged in) -->
@@ -1831,10 +1931,44 @@
           <!-- Populated dynamically -->
         </select>
 
-        <!-- Admin user management button (only shown if admin/mis logged in) -->
-        <button type="button" id="btnAdminUsersModal" class="btn-outline" style="display:none; font-weight:700;" onclick="openAdminUsersModal()" title="Admin: Manage system users, passwords, and roles">
-          👥 Manage Users
-        </button>
+        <!-- Admin Edit Options Dropdown Toggle (Branches & Targets, Users & Passwords, Add Caller, Add Manager) -->
+        <div id="adminEditToggleWrap" style="display:none; position:relative;">
+          <button type="button" id="btnAdminEditToggle" class="btn-outline" style="font-weight:700; display:inline-flex; align-items:center; gap:6px; background:#ffffff; color:#09090b;" onclick="toggleAdminEditMenu(event)" title="Admin edit tools & floor management">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> <span>Edit Options</span>
+            <span id="adminEditToggleArrow" style="font-size:10px; transition:transform 0.15s ease;">▾</span>
+          </button>
+          <div id="adminEditDropdownMenu" style="display:none; position:absolute; right:0; top:calc(100% + 6px); min-width:215px; background:#ffffff; border:1px solid var(--border); border-radius:8px; box-shadow:0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); z-index:90; padding:6px; flex-direction:column; gap:2px;">
+            <button type="button" class="admin-menu-item" onclick="openBranchManagerModal(); closeAdminEditMenu();">
+              <svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg>
+              <div style="text-align:left;">
+                <div style="font-weight:700; font-size:12.5px; color:#09090b;">Branches & Targets</div>
+                <div style="font-size:10.5px; color:var(--text-muted);">Manage branches & goals</div>
+              </div>
+            </button>
+            <button type="button" class="admin-menu-item" onclick="openAdminUsersModal(); closeAdminEditMenu();">
+              <svg class="ui-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <div style="text-align:left;">
+                <div style="font-weight:700; font-size:12.5px; color:#09090b;">Users & Passwords</div>
+                <div style="font-size:10.5px; color:var(--text-muted);">Edit accounts, PINs & roles</div>
+              </div>
+            </button>
+            <div style="height:1px; background:var(--border); margin:4px 0;"></div>
+            <button type="button" class="admin-menu-item" onclick="openAddCallerModal(); closeAdminEditMenu();">
+              <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <div style="text-align:left;">
+                <div style="font-weight:700; font-size:12.5px; color:#09090b;">Add Caller</div>
+                <div style="font-size:10.5px; color:var(--text-muted);">New caller on floor</div>
+              </div>
+            </button>
+            <button type="button" class="admin-menu-item" onclick="openAddManagerModal(); closeAdminEditMenu();">
+              <svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <div style="text-align:left;">
+                <div style="font-weight:700; font-size:12.5px; color:#09090b;">Add New Manager</div>
+                <div style="font-size:10.5px; color:var(--text-muted);">New manager desk</div>
+              </div>
+            </button>
+          </div>
+        </div>
 
         <div id="userDisplayPill" class="user-pill">
           <span id="activeUserName">Manager</span>
@@ -1863,7 +1997,7 @@
       </div>
       <div class="reminder-checkpoints">
         <span class="checkpoint-badge" id="cp1" title="10:30 AM: Set today's shift projection benchmark">
-          <span>🎯 10:30 AM</span> <span style="font-size:9.5px; opacity:0.85;">Projection</span>
+          <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> <span>10:30 AM</span> <span style="font-size:9.5px; opacity:0.85;">Projection</span>
         </span>
         <span class="checkpoint-badge" id="cp2" title="12:00 PM: Midday collection update reminder">
           <span>⏰ 12:00 PM</span> <span style="font-size:9.5px; opacity:0.85;">Update</span>
@@ -1875,10 +2009,10 @@
           <span>⏰ 06:20 PM</span> <span style="font-size:9.5px; opacity:0.85;">Update</span>
         </span>
         <button type="button" id="btnNotifToggle" class="btn-reminder-action" onclick="toggleDesktopAlerts(true)" title="Toggle background OS notifications">
-          🔔 Background Alerts
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Background Alerts
         </button>
         <button type="button" class="btn-reminder-action" onclick="checkReminderStatus(true)" title="Check current caller status immediately">
-          ⚡ Ping Floor
+          <svg class="ui-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Ping Floor
         </button>
       </div>
     </section>
@@ -1908,7 +2042,7 @@
             <div class="kpi-card">
               <div class="kpi-header">
                 <span class="kpi-label">TODAY'S PROJECTION</span>
-                <button type="button" class="kpi-action-btn" onclick="openProjectionModal()">✏️ Edit</button>
+                <button type="button" class="kpi-action-btn" onclick="openProjectionModal()"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</button>
               </div>
               <div id="kpiTodayProjection" class="kpi-value tabular">₹ 0</div>
               <div class="kpi-subtext">
@@ -1991,13 +2125,13 @@
     <div class="tabs-nav-wrap">
       <div class="tabs-group">
         <button type="button" id="tabBtnMyTeam" class="tab-nav-btn active" onclick="switchMainTab('myteam')">
-          👤 My Team Entry <span id="tabBadgeMyTeam" class="tab-badge">0</span>
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> My Team Entry <span id="tabBadgeMyTeam" class="tab-badge">0</span>
         </button>
         <button type="button" id="tabBtnBranches" class="tab-nav-btn" onclick="switchMainTab('branches')">
-          🏢 Branch Wise Table <span id="tabBadgeBranches" class="tab-badge">4</span>
+          <svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg> Branch Wise Table <span id="tabBadgeBranches" class="tab-badge">4</span>
         </button>
         <button type="button" id="tabBtnAllManagers" class="tab-nav-btn" onclick="switchMainTab('allmanagers')">
-          👥 Overall Managers Collections <span id="tabBadgeAllManagers" class="tab-badge">10</span>
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Overall Managers Collections <span id="tabBadgeAllManagers" class="tab-badge">10</span>
         </button>
       </div>
 
@@ -2014,19 +2148,19 @@
           <span id="tableTeamTitlePill" class="entry-count-pill">Team Roster</span>
         </div>
         <div class="entry-tools" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-          <input type="text" id="callerFilterInput" class="search-input" placeholder="🔍 Search caller name..." oninput="onCallerSearchChange()">
-          <label style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:600; color:var(--text-muted); cursor:pointer; user-select:none;">
+          <input type="text" id="callerFilterInput" class="search-input" placeholder="Search caller name..." oninput="onCallerSearchChange()">
+          <label id="wrapShowHiddenCallers" style="display:none; align-items:center; gap:5px; font-size:11.5px; font-weight:600; color:var(--text-muted); cursor:pointer; user-select:none;">
             <input type="checkbox" id="chkShowHiddenCallers" onchange="toggleShowHiddenCallers(this.checked)" style="accent-color:#09090b; cursor:pointer;">
             Show Hidden Callers
           </label>
-          <button type="button" class="btn-outline" onclick="openAddCallerModal()" style="font-weight:700;">
-            ➕ Add Caller
+          <button type="button" id="btnAddCallerMyTeam" class="btn-outline" onclick="openAddCallerModal()" style="display:none; font-weight:700;">
+            <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Caller
           </button>
           <button type="button" id="btnAssignBankMoney" class="btn-solid" onclick="openAssignBankMoneyModal()" style="display:none; background:#0f766e; border-color:#0f766e; font-weight:700;" title="Assign Bank Money to a Manager's Collection">
-            💸 Assign to Manager
+            <svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg> Assign to Manager
           </button>
           <button type="button" class="btn-solid" onclick="saveAllCallerEntries()">
-            💾 Save All
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save All
           </button>
         </div>
       </div>
@@ -2040,7 +2174,7 @@
               <th>TODAY'S COLLECTION (₹)</th>
               <th style="width: 120px; text-align: center;">% OF TEAM</th>
               <th style="width: 100px;">STATUS</th>
-              <th style="width: 90px; text-align: center;">ACTIONS</th>
+              <th id="thCallerActionsCol" style="width: 90px; text-align: center; display:none;">ACTIONS</th>
             </tr>
           </thead>
           <tbody id="callerTableBody">
@@ -2053,7 +2187,7 @@
               <td id="tfootTodayCollection" class="tabular" style="font-size: 16px; font-weight: 800;">₹ 0</td>
               <td style="text-align: center;" class="tabular">100%</td>
               <td id="tfootStatusNotice" style="font-size: 12px; font-weight: 600;">Live Synced</td>
-              <td></td>
+              <td id="tfootActionsCol" style="display:none;"></td>
             </tr>
           </tfoot>
         </table>
@@ -2064,7 +2198,7 @@
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
           <div>
             <h3 style="font-size:14px; font-weight:800; margin:0 0 2px; color:var(--text); display:flex; align-items:center; gap:8px;">
-              <span>🏦 Bank Money Distribution Ledger</span>
+              <svg class="ui-icon" viewBox="0 0 24 24"><line x1="3" y1="21" x2="21" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="12 3 20 10 4 10 12 3"/><line x1="6" y1="10" x2="6" y2="21"/><line x1="10" y1="10" x2="10" y2="21"/><line x1="14" y1="10" x2="14" y2="21"/><line x1="18" y1="10" x2="18" y2="21"/></svg> <span>Bank Money Distribution Ledger</span>
               <span id="bankLedgerBadge" style="font-size:11px; background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:10px; font-weight:700;">Assignments</span>
             </h3>
             <p style="font-size:11.5px; color:var(--text-muted); margin:0;">
@@ -2072,7 +2206,7 @@
             </p>
           </div>
           <button type="button" class="btn-solid" onclick="openAssignBankMoneyModal()" style="background:#0f766e; border-color:#0f766e; font-size:12px; padding:6px 12px; font-weight:700;">
-            ➕ Assign to Manager
+            <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Assign to Manager
           </button>
         </div>
 
@@ -2111,10 +2245,13 @@
       <div class="entry-header">
         <div class="entry-header-left">
           <h2 class="entry-title">Branch Wise Collections Summary</h2>
-          <span class="entry-count-pill">4 Branches · Jogeshwari · Dadar · Agencies · Saroj</span>
+          <span id="branchHeaderPill" class="entry-count-pill">4 Branches · Jogeshwari · Dadar · Agencies · Saroj</span>
         </div>
-        <div class="entry-tools">
-          <input type="text" id="branchFilterInput" class="search-input" placeholder="🔍 Search branch or manager..." oninput="renderBranchWiseTable()">
+        <div class="entry-tools" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <input type="text" id="branchFilterInput" class="search-input" placeholder="Search branch or manager..." oninput="renderBranchWiseTable()">
+          <button type="button" class="btn-solid" onclick="openBranchManagerModal()" style="font-weight:700;">
+            <svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg> Manage Branches & Assign Teams
+          </button>
         </div>
       </div>
 
@@ -2122,15 +2259,18 @@
         <table class="caller-table">
           <thead>
             <tr>
-              <th style="width: 44px; text-align: center;">#</th>
+              <th style="width: 38px; text-align: center;">#</th>
               <th>BRANCH</th>
-              <th>ASSIGNED MANAGERS</th>
-              <th style="text-align: center;">CALLERS</th>
-              <th style="text-align: right;">TODAY COLLECTION (₹)</th>
-              <th style="text-align: right;">SHIFT PROJECTION (₹)</th>
-              <th style="text-align: center; width: 110px;">PACING %</th>
-              <th style="text-align: center; width: 100px;">% SHARE</th>
-              <th style="text-align: center; width: 130px;">TEAMS</th>
+              <th>MANAGERS</th>
+              <th style="text-align: center; width: 85px;">CALLERS</th>
+              <th style="text-align: right; width: 115px;">TARGET (₹)</th>
+              <th style="text-align: right; width: 115px;">YESTERDAY (₹)</th>
+              <th style="text-align: right; width: 115px;">SDLM (₹)</th>
+              <th style="text-align: right; width: 115px;">JULY SDLM (₹)</th>
+              <th style="text-align: right; width: 125px;">TODAY (₹)</th>
+              <th style="text-align: center; width: 85px;">PACING %</th>
+              <th style="text-align: center; width: 80px;">% SHARE</th>
+              <th style="text-align: center; width: 110px;">TEAMS</th>
             </tr>
           </thead>
           <tbody id="branchWiseTableBody">
@@ -2141,8 +2281,11 @@
               <td></td>
               <td colspan="2">GRAND FLOOR TOTAL</td>
               <td id="tfootBranchTotalCallers" style="text-align: center;" class="tabular">0 Callers</td>
+              <td id="tfootBranchTotalTarget" style="text-align: right;" class="tabular">₹ 0</td>
+              <td id="tfootBranchTotalYesterday" style="text-align: right;" class="tabular">₹ 0</td>
+              <td id="tfootBranchTotalSdlm" style="text-align: right;" class="tabular">₹ 0</td>
+              <td id="tfootBranchTotalJulySdlm" style="text-align: right;" class="tabular">₹ 0</td>
               <td id="tfootBranchTotalToday" style="text-align: right;" class="tabular">₹ 0</td>
-              <td id="tfootBranchTotalProj" style="text-align: right;" class="tabular">₹ 0</td>
               <td id="tfootBranchTotalPacing" style="text-align: center;" class="tabular">0.0%</td>
               <td style="text-align: center;" class="tabular">100.0%</td>
               <td style="text-align: center;">-</td>
@@ -2160,13 +2303,13 @@
           <span class="entry-count-pill">All 10 Managers</span>
         </div>
         <div class="entry-tools" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-          <input type="text" id="mgrFilterInput" class="search-input" placeholder="🔍 Search manager..." oninput="renderOverallManagersTable()">
+          <input type="text" id="mgrFilterInput" class="search-input" placeholder="Search manager..." oninput="renderOverallManagersTable()">
           <label style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:600; color:var(--text-muted); cursor:pointer; user-select:none;">
             <input type="checkbox" id="chkShowHiddenManagers" onchange="toggleShowHiddenManagers(this.checked)" style="accent-color:#09090b; cursor:pointer;">
             Show Hidden Managers
           </label>
           <button type="button" class="btn-solid" onclick="openAddManagerModal()">
-            ➕ Add Manager
+            <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Manager
           </button>
         </div>
       </div>
@@ -2207,12 +2350,12 @@
     <!-- STICKY ACTION BAR -->
     <div class="sticky-actions-bar">
       <div class="bar-notice">
-        <span>💡 <b>Addition Tip:</b> Type <code>455 + 500 + 899</code> and press <b>Enter</b> — it computes and updates the total automatically.</span>
+        <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> <span><b>Addition Tip:</b> Type <code>455 + 500 + 899</code> and press <b>Enter</b> — it computes and updates the total automatically.</span>
       </div>
       <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
         <span id="lastSavedTimestamp" class="tabular" style="font-size: 11.5px; color: var(--text-muted);">Last saved: Just now</span>
         <button type="button" class="btn-solid" onclick="saveAllCallerEntries()">
-          💾 Save All
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save All
         </button>
       </div>
     </div>
@@ -2230,7 +2373,7 @@
       </div>
       <div style="display:flex; align-items:center; gap:16px;">
         <span id="aodClockDisplay" class="aod-clock tabular">00:00:00</span>
-        <button type="button" class="aod-close-btn" onclick="closeAodMode()">✕ Exit AOD</button>
+        <button type="button" class="aod-close-btn" onclick="closeAodMode()"><svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Exit AOD</button>
       </div>
     </div>
 
@@ -2246,44 +2389,56 @@
       <div class="aod-yesterday-pill-wrap">
         <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Yesterday Benchmark:</span>
         <span id="aodYesterdayVal" class="tabular" style="font-size:15px; font-weight:800; color:var(--text);">₹ 0</span>
-        <button type="button" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px;" onclick="promptEditYesterdayCollection()" title="Edit Yesterday Amount">✏️</button>
+        <button type="button" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; display:inline-flex; align-items:center;" onclick="promptEditYesterdayCollection()" title="Edit Yesterday Amount"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
         <span id="aodYesterdayDiffPill" class="aod-yesterday-diff tabular">+₹ 0 vs Yesterday</span>
       </div>
     </div>
 
     <!-- LOWER BALANCED GRID: Shift Goal & Realization (Left) + Top 5 Collections (Right) -->
     <div class="aod-lower-grid">
-      <!-- Left: Shift Goal & Realization -->
-      <div class="aod-card-white">
+      <!-- Left: Branch Wise Collections Table (Replaces Projections) -->
+      <div class="aod-card-white" style="display:flex; flex-direction:column;">
         <div class="aod-card-title">
-          <span>SHIFT PROJECTION REALIZATION</span>
-          <span id="aodPacingPercentBadge" style="font-size:11px; font-weight:800; background:var(--accent-light); padding:2px 7px; border-radius:4px; border:1px solid var(--border);">0.0%</span>
-        </div>
-        <div class="pacing-meter-wrap" style="padding:10px 0;">
-          <div class="pacing-bar-container" style="height:26px;">
-            <div id="aodPacingBarFill" class="pacing-bar-fill"></div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg> <span>BRANCH WISE COLLECTIONS</span>
+            <span id="aodBranchCountBadge" style="font-size:10.5px; font-weight:800; background:var(--accent-light); padding:2px 7px; border-radius:4px; border:1px solid var(--border);">4 Branches</span>
           </div>
-          <div class="pacing-markers tabular" style="margin-top:6px;">
-            <span>0%</span>
-            <span>25%</span>
-            <span>50%</span>
-            <span>75%</span>
-            <span>100% Target</span>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span id="aodBranchFloorPill" class="tabular" style="font-size:11.5px; font-weight:800; color:#0f766e; background:#f0fdf4; padding:2px 8px; border-radius:12px; border:1px solid #bbf7d0;">Floor Live</span>
+            <button type="button" class="btn-outline" style="font-size:10.5px; padding:2px 7px;" onclick="openBranchManagerModal('targets')" title="Manage Targets & Branches"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Targets & Assign</button>
           </div>
         </div>
-        <div class="pacing-stats-row" style="margin-top:16px;">
-          <div class="pacing-stat-block">
-            <span class="pacing-stat-label">Collected</span>
-            <span id="aodStatCollected" class="pacing-stat-val tabular">₹ 0</span>
-          </div>
-          <div class="pacing-stat-block">
-            <span class="pacing-stat-label">Projection</span>
-            <span id="aodStatProjection" class="pacing-stat-val tabular">₹ 0</span>
-          </div>
-          <div class="pacing-stat-block">
-            <span class="pacing-stat-label">Gap to Goal</span>
-            <span id="aodStatGap" class="pacing-stat-val tabular">₹ 0</span>
-          </div>
+
+        <div style="overflow-x:auto; flex:1;">
+          <table class="caller-table" style="font-size:12px; width:100%;">
+            <thead>
+              <tr style="background:#fafafa;">
+                <th style="width:32px; text-align:center;">#</th>
+                <th>BRANCH</th>
+                <th style="text-align:right; width:100px;">TARGET (₹)</th>
+                <th style="text-align:right; width:100px;">YESTERDAY (₹)</th>
+                <th style="text-align:right; width:100px;">SDLM (₹)</th>
+                <th style="text-align:right; width:100px;">JULY SDLM (₹)</th>
+                <th style="text-align:right; width:110px;">TODAY (₹)</th>
+                <th style="text-align:center; width:70px;">% SHARE</th>
+              </tr>
+            </thead>
+            <tbody id="aodBranchTableBody">
+              <!-- Populated dynamically via updateAodData() -->
+            </tbody>
+            <tfoot>
+              <tr style="background:#f8fafc; font-weight:800; border-top:2px solid var(--border);">
+                <td></td>
+                <td>GRAND FLOOR TOTAL</td>
+                <td id="aodTfootTotalTarget" style="text-align:right; font-size:12px; font-weight:800;" class="tabular">₹ 0</td>
+                <td id="aodTfootTotalYesterday" style="text-align:right; font-size:12px; font-weight:800;" class="tabular">₹ 0</td>
+                <td id="aodTfootTotalSdlm" style="text-align:right; font-size:12px; font-weight:800;" class="tabular">₹ 0</td>
+                <td id="aodTfootTotalJulySdlm" style="text-align:right; font-size:12px; font-weight:800;" class="tabular">₹ 0</td>
+                <td id="aodTfootTotalToday" style="text-align:right; font-size:13px; font-weight:800;" class="tabular">₹ 0</td>
+                <td style="text-align:center;" class="tabular">100%</td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
       </div>
 
@@ -2338,13 +2493,13 @@
             Manage portal users, reset PINs/passwords, update roles (Admin/Manager/MIS), and reassign calling rosters.
           </p>
         </div>
-        <button type="button" class="btn-outline" style="padding: 4px 10px; font-size: 13px; font-weight: 700;" onclick="closeAdminUsersModal()">✕</button>
+        <button type="button" class="btn-outline" style="padding: 4px 10px; font-size: 13px; font-weight: 700;" onclick="closeAdminUsersModal()"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
 
       <!-- Action Bar: Search, Role Filter, Add User -->
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
         <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-          <input type="text" id="adminUserSearchInput" class="search-input" placeholder="🔍 Search username or name..." oninput="filterAdminUsersTable()">
+          <input type="text" id="adminUserSearchInput" class="search-input" placeholder="Search username or name..." oninput="filterAdminUsersTable()">
           <select id="adminUserRoleFilter" class="search-input" style="width: auto; font-weight: 600;" onchange="filterAdminUsersTable()">
             <option value="">All Roles</option>
             <option value="admin">Admin</option>
@@ -2355,7 +2510,7 @@
           </select>
         </div>
         <button type="button" class="btn-solid" style="font-size: 12px; padding: 6px 12px;" onclick="openEditUserForm(null)">
-          ➕ Add New User
+          <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add New User
         </button>
       </div>
 
@@ -2369,6 +2524,7 @@
               <th>DISPLAY NAME</th>
               <th style="text-align: center;">ROLE</th>
               <th>ASSIGNED TEAM</th>
+              <th style="text-align: center; width: 110px;">PIN / PASS</th>
               <th style="text-align: center; width: 140px;">ACTIONS</th>
             </tr>
           </thead>
@@ -2392,7 +2548,7 @@
     <div class="modal-card" style="max-width: 440px; width: 95%;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
         <h3 class="modal-title" id="editUserModalTitle" style="margin: 0; font-size: 16px;">Edit User Account</h3>
-        <button type="button" class="btn-outline" style="padding: 2px 8px; font-size: 12px;" onclick="closeEditUserForm()">✕</button>
+        <button type="button" class="btn-outline" style="padding: 2px 8px; font-size: 12px;" onclick="closeEditUserForm()"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
 
       <form onsubmit="event.preventDefault(); submitSaveUserForm();">
@@ -2436,6 +2592,7 @@
               <option value="customerservice">Customer Service</option>
               <option value="saroj">Saroj</option>
               <option value="satish">Satish Patil</option>
+              <option value="bankmoney">Bank Money (Direct Receipts)</option>
             </select>
           </div>
         </div>
@@ -2447,7 +2604,7 @@
           </div>
           <div style="display: flex; gap: 6px;">
             <input type="text" id="formInputPassword" class="form-input tabular" placeholder="Enter new password (e.g. 1234)" autocomplete="new-password">
-            <button type="button" class="btn-outline" style="padding: 0 10px; font-size: 11px;" onclick="generateRandomPin()" title="Generate 4-digit PIN">🎲 PIN</button>
+            <button type="button" class="btn-outline" style="padding: 0 10px; font-size: 11px;" onclick="generateRandomPin()" title="Generate 4-digit PIN"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> PIN</button>
           </div>
         </div>
 
@@ -2455,11 +2612,11 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px;">
           <button type="button" id="btnDeleteUserAction" class="btn-outline" style="color: #dc2626; border-color: #fca5a5; display: none;" onclick="deleteCurrentUserAction()">
-            🗑️ Delete
+            <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete
           </button>
           <div style="display: flex; gap: 8px; margin-left: auto;">
             <button type="button" class="btn-outline" onclick="closeEditUserForm()">Cancel</button>
-            <button type="submit" id="btnSaveUserSubmit" class="btn-solid">💾 Save User</button>
+            <button type="submit" id="btnSaveUserSubmit" class="btn-solid"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save User</button>
           </div>
         </div>
       </form>
@@ -2473,7 +2630,7 @@
     <div class="modal-card" style="max-width: 440px; width: 95%;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
         <h3 class="modal-title" id="callerModalTitle" style="margin: 0; font-size: 16px;">Add New Caller</h3>
-        <button type="button" class="btn-outline" style="padding: 2px 8px; font-size: 12px;" onclick="closeCallerModal()">✕</button>
+        <button type="button" class="btn-outline" style="padding: 2px 8px; font-size: 12px;" onclick="closeCallerModal()"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
 
       <form onsubmit="event.preventDefault(); submitSaveCallerForm();">
@@ -2511,11 +2668,11 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px;">
           <button type="button" id="callerDeleteBtn" class="btn-outline" style="color: #dc2626; border-color: #fca5a5; display: none;" onclick="deleteCallerAction()">
-            🗑️ Delete
+            <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete
           </button>
           <div style="display: flex; gap: 8px; margin-left: auto;">
             <button type="button" class="btn-outline" onclick="closeCallerModal()">Cancel</button>
-            <button type="submit" id="callerSaveBtn" class="btn-solid">💾 Save Caller</button>
+            <button type="submit" id="callerSaveBtn" class="btn-solid"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Caller</button>
           </div>
         </div>
       </form>
@@ -2529,7 +2686,7 @@
     <div class="modal-card" style="max-width: 460px; width: 95%;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
         <h3 class="modal-title" id="managerModalTitle" style="margin: 0; font-size: 16px;">Add New Floor Manager</h3>
-        <button type="button" class="btn-outline" style="padding: 2px 8px; font-size: 12px;" onclick="closeManagerModal()">✕</button>
+        <button type="button" class="btn-outline" style="padding: 2px 8px; font-size: 12px;" onclick="closeManagerModal()"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
 
       <form onsubmit="event.preventDefault(); submitSaveManagerForm();">
@@ -2582,7 +2739,7 @@
             <div class="form-group" style="margin-bottom: 0;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                 <label class="form-label" for="managerFormPassword" style="margin-bottom: 0;">PIN / Pass</label>
-                <button type="button" class="btn-outline" style="padding: 0 6px; font-size: 10px;" onclick="generateManagerPin()" title="Generate 4-digit PIN">🎲 PIN</button>
+                <button type="button" class="btn-outline" style="padding: 0 6px; font-size: 10px;" onclick="generateManagerPin()" title="Generate 4-digit PIN"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> PIN</button>
               </div>
               <input type="text" id="managerFormPassword" class="form-input tabular" placeholder="e.g. 1234" autocomplete="new-password">
             </div>
@@ -2594,11 +2751,11 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px;">
           <button type="button" id="managerDeleteBtn" class="btn-outline" style="color: #dc2626; border-color: #fca5a5; display: none;" onclick="deleteManagerPromptAction()">
-            🗑️ Delete
+            <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete
           </button>
           <div style="display: flex; gap: 8px; margin-left: auto;">
             <button type="button" class="btn-outline" onclick="closeManagerModal()">Cancel</button>
-            <button type="submit" id="managerSaveBtn" class="btn-solid">💾 Save Manager</button>
+            <button type="submit" id="managerSaveBtn" class="btn-solid"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Manager</button>
           </div>
         </div>
       </form>
@@ -2613,13 +2770,13 @@
       <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
         <div>
           <h3 class="modal-title" style="display:flex; align-items:center; gap:8px;">
-            <span>💸 Assign Bank Money to Manager</span>
+            <svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg> <span>Assign Bank Money to Manager</span>
           </h3>
           <p class="modal-desc" style="margin-top:2px;">
             Allocate direct bank receipts from Bank Money pool into a manager's collection.
           </p>
         </div>
-        <button type="button" class="btn-outline" style="border:none; font-size:16px; padding:2px 8px; cursor:pointer;" onclick="closeAssignBankMoneyModal()">✕</button>
+        <button type="button" class="btn-outline" style="border:none; font-size:16px; padding:2px 8px; cursor:pointer;" onclick="closeAssignBankMoneyModal()"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
 
       <!-- Pool Status Card -->
@@ -2676,10 +2833,213 @@
         <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:8px;">
           <button type="button" class="btn-outline" onclick="closeAssignBankMoneyModal()">Cancel</button>
           <button type="submit" id="btnSubmitAssignBankMoney" class="btn-solid" style="background:#0f766e; border-color:#0f766e; font-weight:700;">
-            💸 Confirm & Assign to Manager
+            <svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg> Confirm & Assign to Manager
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: MANAGE BRANCHES & ASSIGN MANAGERS
+       ======================================================================== -->
+  <div id="branchManagerModalBackdrop" class="modal-backdrop" style="z-index: 107; display: none;" onclick="if(event.target===this) closeBranchManagerModal()">
+    <div class="modal-card" style="max-width: 740px; width: 95%; max-height: 90vh; display: flex; flex-direction: column;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h3 class="modal-title" style="margin: 0; font-size: 16.5px;"><svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg> Manage Branches & Team Assignments</h3>
+            <span class="brand-badge" style="font-size: 10px; padding: 2px 6px;">ADMIN</span>
+          </div>
+          <p class="modal-desc" style="margin: 3px 0 0; font-size: 12px;">
+            Assign floor managers to Jogeshwari, Dadar, Agencies, Saroj, or create custom branches.
+          </p>
+        </div>
+        <button type="button" class="btn-outline" style="padding: 2px 8px; font-size: 12px;" onclick="closeBranchManagerModal()"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+
+      <!-- Navigation Tabs inside Modal -->
+      <div style="display: flex; gap: 8px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+        <button type="button" id="modalTabBtnAssignMgrs" class="btn-outline" style="font-weight: 700; font-size: 12px; background: #09090b; color: #fff;" onclick="switchBranchModalTab('assign')">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Assign Managers
+        </button>
+        <button type="button" id="modalTabBtnBranchTargets" class="btn-outline" style="font-weight: 700; font-size: 12px;" onclick="switchBranchModalTab('targets')">
+          <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Targets & SDLM Benchmarks
+        </button>
+        <button type="button" id="modalTabBtnCreateBranch" class="btn-outline" style="font-weight: 700; font-size: 12px;" onclick="switchBranchModalTab('create')">
+          <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Create New Branch
+        </button>
+      </div>
+
+      <!-- Tab 1: Assign Managers -->
+      <div id="branchModalTabAssign" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+          <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 600;">
+            Choose branch destination for each manager. Updates reflect across the dashboard & Always On Display.
+          </span>
+          <button type="button" class="btn-outline" style="font-size: 11px; padding: 3px 8px; white-space: nowrap;" onclick="resetBranchAssignmentsToDefault()">
+            <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Reset Standard Rules
+          </button>
+        </div>
+
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); overflow-y: auto; max-height: 380px;">
+          <table class="caller-table" style="font-size: 12px;">
+            <thead style="position: sticky; top: 0; background: #fafafa; z-index: 1;">
+              <tr>
+                <th style="width: 36px; text-align: center;">#</th>
+                <th>MANAGER / TEAM</th>
+                <th style="text-align: center; width: 120px;">CURRENT BRANCH</th>
+                <th style="width: 220px;">ASSIGN TO BRANCH</th>
+              </tr>
+            </thead>
+            <tbody id="branchAssignMgrsTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: Set Branch Targets -->
+      <div id="branchModalTabTargets" style="flex: 1; overflow-y: auto; display: none; flex-direction: column;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+          <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 600;">
+            Set collection targets, yesterday benchmarks, and SDLM (September & July) for each branch. Reflects live across Always On Display & Branch metrics.
+          </span>
+          <button type="button" class="btn-solid" style="font-size: 11.5px; padding: 4px 12px;" onclick="saveBranchTargetsModal()">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save All Benchmarks
+          </button>
+        </div>
+
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); overflow-y: auto; max-height: 380px;">
+          <table class="caller-table" style="font-size: 12px;">
+            <thead style="position: sticky; top: 0; background: #fafafa; z-index: 1;">
+              <tr>
+                <th style="width: 34px; text-align: center;">#</th>
+                <th>BRANCH</th>
+                <th style="text-align: right; width: 100px;">TODAY LIVE</th>
+                <th style="width: 120px; text-align: right;">TARGET (₹)</th>
+                <th style="width: 120px; text-align: right;">YESTERDAY (₹)</th>
+                <th style="width: 120px; text-align: right;">SDLM (₹)</th>
+                <th style="width: 120px; text-align: right;">JULY SDLM (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="branchTargetsTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: Create / Manage Branches -->
+      <div id="branchModalTabCreate" style="flex: 1; overflow-y: auto; display: none; flex-direction: column; gap: 14px;">
+        <!-- Create Branch Form -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px;">
+          <h4 style="margin: 0 0 10px; font-size: 13.5px; font-weight: 800; color: var(--text);"><svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Create New Branch</h4>
+          <form onsubmit="event.preventDefault(); submitCreateBranchForm();">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+              <div>
+                <label class="form-label" for="newBranchNameInp" style="margin-bottom: 4px;">Branch Name *</label>
+                <input type="text" id="newBranchNameInp" class="form-input" placeholder="e.g. Thane / Vashi / Corporate" required oninput="autoSuggestBranchKey(this.value)">
+              </div>
+              <div>
+                <label class="form-label" for="newBranchKeyInp" style="margin-bottom: 4px;">Branch Key / Code *</label>
+                <input type="text" id="newBranchKeyInp" class="form-input tabular" placeholder="e.g. thane" required style="text-transform: lowercase;">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+              <div>
+                <label class="form-label" for="newBranchBadgeInp" style="margin-bottom: 4px;">Badge / Office Type</label>
+                <input type="text" id="newBranchBadgeInp" class="form-input" placeholder="e.g. Satellite Office / Branch Office">
+              </div>
+              <div>
+                <label class="form-label" for="newBranchDescInp" style="margin-bottom: 4px;">Description / Location</label>
+                <input type="text" id="newBranchDescInp" class="form-input" placeholder="e.g. Regional Calling Operations">
+              </div>
+            </div>
+
+            <div id="createBranchError" style="display:none; color: #dc2626; font-size: 11.5px; margin-bottom: 10px; font-weight: 600;"></div>
+
+            <button type="submit" class="btn-solid" style="padding: 7px 14px; font-size: 12px;">
+              <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Create Branch
+            </button>
+          </form>
+        </div>
+
+        <!-- Existing Branches List -->
+        <div>
+          <h4 style="margin: 0 0 8px; font-size: 13px; font-weight: 800; color: var(--text);">Active Branches Directory</h4>
+          <div id="existingBranchesListWrap" style="display: flex; flex-direction: column; gap: 6px;">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border);">
+        <span id="branchModalStatusMsg" style="font-size: 11.5px; color: var(--text-muted);">Ready to apply</span>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-outline" onclick="closeBranchManagerModal()">Cancel</button>
+          <button type="button" class="btn-solid" onclick="saveBranchAssignmentsModal()">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save & Apply Assignments
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: POPUP NOTIFICATION FOR CHECKPOINT REMINDER (ON TIME POPUP)
+       ======================================================================== -->
+  <div id="reminderPopupModalBackdrop" class="modal-backdrop" style="z-index: 110; display: none;" onclick="if(event.target===this) closeReminderPopupModal()">
+    <div class="modal-card" style="max-width: 460px; width: 95%; text-align: center; padding: 24px 22px;">
+      <div style="width: 58px; height: 58px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 12px; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);" id="reminderPopupIcon">
+        ⏰
+      </div>
+
+      <div style="display: inline-block; padding: 3px 10px; background: #f4f4f5; border: 1px solid #e4e4e7; border-radius: 20px; font-size: 11px; font-weight: 800; color: #09090b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;" id="reminderPopupBadge">
+        12:00 PM Checkpoint
+      </div>
+
+      <h3 class="modal-title" id="reminderPopupTitle" style="font-size: 18px; margin-bottom: 6px;">
+        Midday Collection Update Reminder
+      </h3>
+
+      <p class="modal-desc" id="reminderPopupDesc" style="font-size: 13px; line-height: 1.45; margin-bottom: 18px; color: var(--text-muted);">
+        It's time to record your team's live collection updates. Keep real-time floor metrics accurate!
+      </p>
+
+      <!-- Live metrics summary strip -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #fafafa; border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 18px; text-align: left;">
+        <div>
+          <div style="font-size: 10.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Pending Callers</div>
+          <div id="reminderPopupPendingCallers" class="tabular" style="font-size: 16px; font-weight: 800; color: #dc2626; margin-top: 2px;">
+            0 callers
+          </div>
+        </div>
+        <div>
+          <div style="font-size: 10.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Team Today's Logged</div>
+          <div id="reminderPopupTotalLogged" class="tabular" style="font-size: 16px; font-weight: 800; color: #09090b; margin-top: 2px;">
+            ₹ 0
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button type="button" id="reminderPopupActionBtn" class="btn-solid" style="padding: 10px; font-size: 13px; font-weight: 700; width: 100%; justify-content: center;">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Update Collections Now
+        </button>
+
+        <div style="display: flex; gap: 8px; justify-content: center; margin-top: 2px;">
+          <button type="button" class="btn-outline" style="flex: 1; font-size: 12px; padding: 6px 12px;" onclick="snoozeReminderPopup(10)">
+            ⏰ Snooze (10m)
+          </button>
+          <button type="button" class="btn-outline" style="flex: 1; font-size: 12px; padding: 6px 12px;" onclick="closeReminderPopupModal()">
+            <svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Dismiss
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -2688,10 +3048,7 @@
        ======================================================================== -->
   <div id="loginScreen" class="login-overlay" style="display:none;">
     <div class="login-box">
-      <div style="display:flex; justify-content:center; align-items:center; margin-bottom:14px;">
-        <img src="shaha_finlease_logo_transparent.png" alt="Shaha Finlease" class="login-brand-img" onerror="this.style.display='none'; document.getElementById('loginFallbackLogo').style.display='flex';">
-        <div id="loginFallbackLogo" class="login-logo" style="display:none;">SF</div>
-      </div>
+      <div class="login-logo" style="margin-bottom: 14px;">SF</div>
       <h1 class="login-title">Manager Portal</h1>
       <p class="login-desc">Sign in with your credentials to access your team collection desk.</p>
 
@@ -2708,12 +3065,13 @@
           <input type="password" id="loginPassword" class="form-input" placeholder="Enter password or PIN" autocomplete="current-password" required>
         </div>
 
-        <button type="submit" id="loginSubmitBtn" class="login-btn">
+        <button type="submit" id="loginSubmitBtn" class="login-btn" style="margin-top: 4px;">
           Sign In
         </button>
       </form>
     </div>
   </div>
+
 
   <!-- TOAST NOTIFICATION -->
   <div id="toastPill" class="toast-pill">
@@ -2744,6 +3102,50 @@
       'satish': "SATISH P",
       'bankmoney': "BANK MONEY (KOMAL)"
     };
+
+    
+    // ------------------------------------------------------------------------
+    // ENTERPRISE VECTOR ICON SYSTEM (SVG Micro-Engine)
+    // ------------------------------------------------------------------------
+    var UI_ICONS = {
+      edit: '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+      building: '<svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg>',
+      users: '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      user: '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      plus: '<svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+      target: '<svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+      settings: '<svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+      calendar: '<svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+      save: '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>',
+      search: '<svg class="ui-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+      refresh: '<svg class="ui-icon" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>',
+      bank: '<svg class="ui-icon" viewBox="0 0 24 24"><line x1="3" y1="21" x2="21" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="12 3 20 10 4 10 12 3"/><line x1="6" y1="10" x2="6" y2="21"/><line x1="10" y1="10" x2="10" y2="21"/><line x1="14" y1="10" x2="14" y2="21"/><line x1="18" y1="10" x2="18" y2="21"/></svg>',
+      send: '<svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>',
+      monitor: '<svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+      bell: '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>',
+      bellOff: '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>',
+      trash: '<svg class="ui-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+      eye: '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+      eyeOff: '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>',
+      check: '<svg class="ui-icon" viewBox="0 0 24 24" style="stroke-width:2.5;"><polyline points="20 6 9 17 4 12"/></svg>',
+      zap: '<svg class="ui-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+      briefcase: '<svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+      close: '<svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+      key: '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>',
+      info: '<svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+    };
+
+    function uiIcon(name, extraClass, style) {
+      var svg = UI_ICONS[name] || '';
+      if (!svg) return '';
+      if (extraClass) {
+        svg = svg.replace('class="ui-icon"', 'class="ui-icon ' + extraClass + '"');
+      }
+      if (style) {
+        svg = svg.replace('<svg ', '<svg style="' + style + '" ');
+      }
+      return svg;
+    }
 
     var ALL_MANAGERS_ORDER = [
       'ambuj', 'poonam', 'omkar', 'smita', 'aditi', 'shravanti', 'shweta', 'anuraddha', 'customerservice', 'saroj', 'satish', 'bankmoney'
@@ -2794,6 +3196,12 @@
       if (rawBMap) managerBranchMap = JSON.parse(rawBMap);
     } catch(e) {}
 
+    var customBranches = [];
+    try {
+      var rawCb = localStorage.getItem('shaha_custom_branches');
+      if (rawCb) customBranches = JSON.parse(rawCb);
+    } catch(e) {}
+
     // Date Hierarchy Navigation State
     var dateHierarchyBrowsing = {
       year: new Date().getFullYear(),
@@ -2801,55 +3209,87 @@
       month: new Date().getMonth() + 1
     };
 
-    // Branch Definitions:
+    // Standard core branches:
     // jogeshwari (all except poonam, smita, satish, saroj), dadar (smita), agencies (poonam, satish), saroj (saroj)
-    var BRANCH_DEFINITIONS = [
+    var SDLM_BRANCH_DATA = {"july": [{"day": 1, "date": "July 01, 2026", "window": "July 1 - 01", "daily_total": 378268.0, "jogeshwari": 180789.0, "dadar": 163524.0, "agency": 33955.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 378268.0}, {"day": 2, "date": "July 02, 2026", "window": "July 1 - 02", "daily_total": 104670.0, "jogeshwari": 211390.0, "dadar": 222593.0, "agency": 48955.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 482938.0}, {"day": 3, "date": "July 03, 2026", "window": "July 1 - 03", "daily_total": 130272.0, "jogeshwari": 315520.0, "dadar": 228593.0, "agency": 69097.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 613210.0}, {"day": 4, "date": "July 04, 2026", "window": "July 1 - 04", "daily_total": 35365.0, "jogeshwari": 326481.0, "dadar": 235194.0, "agency": 86900.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 648575.0}, {"day": 5, "date": "July 05, 2026", "window": "July 1 - 05", "daily_total": 5500.0, "jogeshwari": 326481.0, "dadar": 235194.0, "agency": 92400.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 654075.0}, {"day": 6, "date": "July 06, 2026", "window": "July 1 - 06", "daily_total": 396203.0, "jogeshwari": 562626.0, "dadar": 333459.0, "agency": 154193.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1050278.0}, {"day": 7, "date": "July 07, 2026", "window": "July 1 - 07", "daily_total": 388099.0, "jogeshwari": 799258.0, "dadar": 407011.0, "agency": 232108.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1438377.0}, {"day": 8, "date": "July 08, 2026", "window": "July 1 - 08", "daily_total": 103897.0, "jogeshwari": 832446.0, "dadar": 419220.0, "agency": 290608.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1542274.0}, {"day": 9, "date": "July 09, 2026", "window": "July 1 - 09", "daily_total": 315411.0, "jogeshwari": 1045548.0, "dadar": 493999.0, "agency": 318138.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1857685.0}, {"day": 10, "date": "July 10, 2026", "window": "July 1 - 10", "daily_total": 569927.0, "jogeshwari": 1311125.0, "dadar": 645071.0, "agency": 451291.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 2427612.0}, {"day": 11, "date": "July 11, 2026", "window": "July 1 - 11", "daily_total": 222652.0, "jogeshwari": 1472697.0, "dadar": 655496.0, "agency": 501946.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 2650264.0}, {"day": 12, "date": "July 12, 2026", "window": "July 1 - 12", "daily_total": 10001.0, "jogeshwari": 1482698.0, "dadar": 655496.0, "agency": 501946.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 2660265.0}, {"day": 13, "date": "July 13, 2026", "window": "July 1 - 13", "daily_total": 455395.0, "jogeshwari": 1620754.0, "dadar": 819310.0, "agency": 655471.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 3115660.0}, {"day": 14, "date": "July 14, 2026", "window": "July 1 - 14", "daily_total": 333537.0, "jogeshwari": 1874331.0, "dadar": 886437.0, "agency": 668304.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 3449197.0}, {"day": 15, "date": "July 15, 2026", "window": "July 1 - 15", "daily_total": 397203.0, "jogeshwari": 2113252.0, "dadar": 985172.0, "agency": 717102.0, "saroj": 0.0, "other": 30874.0, "cumulative_total": 3846400.0}, {"day": 16, "date": "July 16, 2026", "window": "July 1 - 16", "daily_total": 486893.0, "jogeshwari": 2531278.0, "dadar": 991500.0, "agency": 779641.0, "saroj": 0.0, "other": 30874.0, "cumulative_total": 4333293.0}, {"day": 17, "date": "July 17, 2026", "window": "July 1 - 17", "daily_total": 493850.0, "jogeshwari": 2858727.0, "dadar": 1081900.0, "agency": 845642.0, "saroj": 10000.0, "other": 30874.0, "cumulative_total": 4827143.0}, {"day": 18, "date": "July 18, 2026", "window": "July 1 - 18", "daily_total": 687286.0, "jogeshwari": 3215030.0, "dadar": 1235873.0, "agency": 922652.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 5514429.0}, {"day": 19, "date": "July 19, 2026", "window": "July 1 - 19", "daily_total": 35000.0, "jogeshwari": 3215030.0, "dadar": 1270873.0, "agency": 922652.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 5549429.0}, {"day": 20, "date": "July 20, 2026", "window": "July 1 - 20", "daily_total": 705046.0, "jogeshwari": 3661267.0, "dadar": 1420443.0, "agency": 1031891.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 6254475.0}, {"day": 21, "date": "July 21, 2026", "window": "July 1 - 21", "daily_total": 655510.0, "jogeshwari": 4078758.0, "dadar": 1551796.0, "agency": 1138557.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 6909985.0}, {"day": 22, "date": "July 22, 2026", "window": "July 1 - 22", "daily_total": 375878.0, "jogeshwari": 4363516.0, "dadar": 1620070.0, "agency": 1161403.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 7285863.0}, {"day": 23, "date": "July 23, 2026", "window": "July 1 - 23", "daily_total": 292360.0, "jogeshwari": 4550478.0, "dadar": 1701538.0, "agency": 1185333.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 7578223.0}, {"day": 24, "date": "July 24, 2026", "window": "July 1 - 24", "daily_total": 783657.0, "jogeshwari": 5206198.0, "dadar": 1745620.0, "agency": 1269188.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 8361880.0}, {"day": 25, "date": "July 25, 2026", "window": "July 1 - 25", "daily_total": 451001.0, "jogeshwari": 5540346.0, "dadar": 1790454.0, "agency": 1301207.0, "saroj": 150000.0, "other": 30874.0, "cumulative_total": 8812881.0}, {"day": 26, "date": "July 26, 2026", "window": "July 1 - 26", "daily_total": 23120.0, "jogeshwari": 5563466.0, "dadar": 1790454.0, "agency": 1301207.0, "saroj": 150000.0, "other": 30874.0, "cumulative_total": 8836001.0}, {"day": 27, "date": "July 27, 2026", "window": "July 1 - 27", "daily_total": 1222354.0, "jogeshwari": 6551057.0, "dadar": 1913815.0, "agency": 1359699.0, "saroj": 202910.0, "other": 30874.0, "cumulative_total": 10058355.0}, {"day": 28, "date": "July 28, 2026", "window": "July 1 - 28", "daily_total": 714940.0, "jogeshwari": 6991187.0, "dadar": 2059497.0, "agency": 1408827.0, "saroj": 282910.0, "other": 30874.0, "cumulative_total": 10773295.0}, {"day": 29, "date": "July 29, 2026", "window": "July 1 - 29", "daily_total": 591372.0, "jogeshwari": 7390539.0, "dadar": 2150140.0, "agency": 1510204.0, "saroj": 282910.0, "other": 30874.0, "cumulative_total": 11364667.0}, {"day": 30, "date": "July 30, 2026", "window": "July 1 - 30", "daily_total": 1287614.0, "jogeshwari": 8222206.0, "dadar": 2350028.0, "agency": 1591263.0, "saroj": 457910.0, "other": 30874.0, "cumulative_total": 12652281.0}, {"day": 31, "date": "July 31, 2026", "window": "July 1 - 31", "daily_total": 1653782.0, "jogeshwari": 9253930.0, "dadar": 2598698.0, "agency": 1789001.0, "saroj": 633560.0, "other": 30874.0, "cumulative_total": 14306063.0}], "september": [{"day": 1, "date": "September 01, 2026", "window": "September 1 - 01", "daily_total": 457208.0, "jogeshwari": 194029.0, "dadar": 63289.0, "agency": 199890.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 457208.0}, {"day": 2, "date": "September 02, 2026", "window": "September 1 - 02", "daily_total": 319908.0, "jogeshwari": 356888.0, "dadar": 166218.0, "agency": 254010.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 777116.0}, {"day": 3, "date": "September 03, 2026", "window": "September 1 - 03", "daily_total": 144561.0, "jogeshwari": 454258.0, "dadar": 186218.0, "agency": 281201.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 921677.0}, {"day": 4, "date": "September 04, 2026", "window": "September 1 - 04", "daily_total": 136116.0, "jogeshwari": 500258.0, "dadar": 248210.0, "agency": 309325.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1057793.0}, {"day": 5, "date": "September 05, 2026", "window": "September 1 - 05", "daily_total": 26014.0, "jogeshwari": 526272.0, "dadar": 248210.0, "agency": 309325.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1083807.0}, {"day": 6, "date": "September 06, 2026", "window": "September 1 - 06", "daily_total": 8400.0, "jogeshwari": 534672.0, "dadar": 248210.0, "agency": 309325.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1092207.0}, {"day": 7, "date": "September 07, 2026", "window": "September 1 - 07", "daily_total": 316993.0, "jogeshwari": 695479.0, "dadar": 367856.0, "agency": 345865.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1409200.0}, {"day": 8, "date": "September 08, 2026", "window": "September 1 - 08", "daily_total": 484006.0, "jogeshwari": 898910.0, "dadar": 478425.0, "agency": 515871.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1893206.0}, {"day": 9, "date": "September 09, 2026", "window": "September 1 - 09", "daily_total": 401187.0, "jogeshwari": 1197953.0, "dadar": 540495.0, "agency": 555945.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 2294393.0}, {"day": 10, "date": "September 10, 2026", "window": "September 1 - 10", "daily_total": 600466.0, "jogeshwari": 1579850.0, "dadar": 742769.0, "agency": 572240.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 2894859.0}, {"day": 11, "date": "September 11, 2026", "window": "September 1 - 11", "daily_total": 394673.0, "jogeshwari": 1763650.0, "dadar": 926644.0, "agency": 599238.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 3289532.0}, {"day": 12, "date": "September 12, 2026", "window": "September 1 - 12", "daily_total": 514248.0, "jogeshwari": 2142927.0, "dadar": 1016244.0, "agency": 644609.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 3803780.0}, {"day": 13, "date": "September 13, 2026", "window": "September 1 - 13", "daily_total": 95000.0, "jogeshwari": 2232927.0, "dadar": 1021244.0, "agency": 644609.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 3898780.0}, {"day": 14, "date": "September 14, 2026", "window": "September 1 - 14", "daily_total": 30420.0, "jogeshwari": 2259727.0, "dadar": 1024864.0, "agency": 644609.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 3929200.0}, {"day": 15, "date": "September 15, 2026", "window": "September 1 - 15", "daily_total": 364825.0, "jogeshwari": 2543215.0, "dadar": 1090655.0, "agency": 660155.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 4294025.0}, {"day": 16, "date": "September 16, 2026", "window": "September 1 - 16", "daily_total": 348559.0, "jogeshwari": 2796742.0, "dadar": 1141179.0, "agency": 704663.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 4642584.0}, {"day": 17, "date": "September 17, 2026", "window": "September 1 - 17", "daily_total": 418243.0, "jogeshwari": 3127625.0, "dadar": 1209789.0, "agency": 723413.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 5060827.0}, {"day": 18, "date": "September 18, 2026", "window": "September 1 - 18", "daily_total": 424049.0, "jogeshwari": 3444491.0, "dadar": 1253240.0, "agency": 741305.0, "saroj": 45840.0, "other": 0.0, "cumulative_total": 5484876.0}, {"day": 19, "date": "September 19, 2026", "window": "September 1 - 19", "daily_total": 180478.0, "jogeshwari": 3553448.0, "dadar": 1304740.0, "agency": 751326.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 5665354.0}, {"day": 20, "date": "September 20, 2026", "window": "September 1 - 20", "daily_total": 1000.0, "jogeshwari": 3553448.0, "dadar": 1304740.0, "agency": 752326.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 5666354.0}, {"day": 21, "date": "September 21, 2026", "window": "September 1 - 21", "daily_total": 243922.0, "jogeshwari": 3608965.0, "dadar": 1459994.0, "agency": 785477.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 5910276.0}, {"day": 22, "date": "September 22, 2026", "window": "September 1 - 22", "daily_total": 327546.0, "jogeshwari": 3829765.0, "dadar": 1509336.0, "agency": 842881.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 6237822.0}, {"day": 23, "date": "September 23, 2026", "window": "September 1 - 23", "daily_total": 552926.0, "jogeshwari": 4210560.0, "dadar": 1637885.0, "agency": 886463.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 6790748.0}, {"day": 24, "date": "September 24, 2026", "window": "September 1 - 24", "daily_total": 459248.0, "jogeshwari": 4521794.0, "dadar": 1712999.0, "agency": 959363.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 7249996.0}, {"day": 25, "date": "September 25, 2026", "window": "September 1 - 25", "daily_total": 225177.0, "jogeshwari": 4641994.0, "dadar": 1800126.0, "agency": 977213.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 7475173.0}, {"day": 26, "date": "September 26, 2026", "window": "September 1 - 26", "daily_total": 275618.0, "jogeshwari": 4859829.0, "dadar": 1831986.0, "agency": 1003136.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 7750791.0}, {"day": 27, "date": "September 27, 2026", "window": "September 1 - 27", "daily_total": 116291.0, "jogeshwari": 4974120.0, "dadar": 1831986.0, "agency": 1005136.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 7867082.0}, {"day": 28, "date": "September 28, 2026", "window": "September 1 - 28", "daily_total": 474864.0, "jogeshwari": 5353652.0, "dadar": 1866376.0, "agency": 1066078.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 8341946.0}, {"day": 29, "date": "September 29, 2026", "window": "September 1 - 29", "daily_total": 664974.0, "jogeshwari": 5805229.0, "dadar": 2043568.0, "agency": 1102283.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 9006920.0}, {"day": 30, "date": "September 30, 2026", "window": "September 1 - 30", "daily_total": 1233454.0, "jogeshwari": 6620618.0, "dadar": 2268145.0, "agency": 1295771.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 10240374.0}]};
+
+    var CORE_BRANCH_DEFINITIONS = [
       {
         key: 'jogeshwari',
         name: 'Jogeshwari',
         badge: 'HQ Floor',
-        desc: 'All teams except Poonam, Smita, Satish, Saroj',
-        isMember: function(mk) {
-          var k = mk.toLowerCase();
-          if (managerBranchMap[k]) return managerBranchMap[k] === 'jogeshwari';
-          var excluded = ['poonam', 'smita', 'satish', 'saroj'];
-          return excluded.indexOf(k) === -1;
-        }
+        desc: 'Jogeshwari HQ (All teams except Dadar, Agencies, Saroj)',
+        defaultExcluded: ['poonam', 'smita', 'satish', 'saroj']
       },
       {
         key: 'dadar',
         name: 'Dadar',
         badge: 'Branch Office',
-        desc: 'Smita',
-        isMember: function(mk) {
-          var k = mk.toLowerCase();
-          if (managerBranchMap[k]) return managerBranchMap[k] === 'dadar';
-          return k === 'smita';
-        }
+        desc: 'Dadar Branch (Smita)',
+        defaultManagers: ['smita']
       },
       {
         key: 'agencies',
         name: 'Agencies',
         badge: 'Partners',
-        desc: 'Poonam, Satish',
-        isMember: function(mk) {
-          var k = mk.toLowerCase();
-          if (managerBranchMap[k]) return managerBranchMap[k] === 'agencies';
-          return k === 'poonam' || k === 'satish';
-        }
+        desc: 'Agencies & Partners (Poonam, Satish)',
+        defaultManagers: ['poonam', 'satish']
       },
       {
         key: 'saroj',
         name: 'Saroj',
         badge: 'Special Vertical',
-        desc: 'Saroj',
-        isMember: function(mk) {
-          var k = mk.toLowerCase();
-          if (managerBranchMap[k]) return managerBranchMap[k] === 'saroj';
-          return k === 'saroj';
-        }
+        desc: 'Saroj Desk',
+        defaultManagers: ['saroj']
       }
     ];
+
+    function getAllBranchDefinitions() {
+      var list = [];
+      CORE_BRANCH_DEFINITIONS.forEach(function(b) {
+        list.push({
+          key: b.key,
+          name: b.name,
+          badge: b.badge,
+          desc: b.desc,
+          isCore: true,
+          isMember: function(mk) {
+            var k = mk.toLowerCase();
+            if (managerBranchMap[k]) return managerBranchMap[k] === b.key;
+            if (b.defaultManagers) return b.defaultManagers.indexOf(k) !== -1;
+            if (b.defaultExcluded) return b.defaultExcluded.indexOf(k) === -1;
+            return false;
+          }
+        });
+      });
+
+      customBranches.forEach(function(cb) {
+        list.push({
+          key: cb.key,
+          name: cb.name,
+          badge: cb.badge || 'Branch',
+          desc: cb.desc || cb.name,
+          isCore: false,
+          isMember: function(mk) {
+            var k = mk.toLowerCase();
+            return managerBranchMap[k] === cb.key;
+          }
+        });
+      });
+
+      return list;
+    }
+
+    function getManagerAssignedBranch(mgrKey) {
+      var k = (mgrKey || '').toLowerCase();
+      if (managerBranchMap[k]) return managerBranchMap[k];
+      if (k === 'smita') return 'dadar';
+      if (k === 'poonam' || k === 'satish') return 'agencies';
+      if (k === 'saroj') return 'saroj';
+      return 'jogeshwari';
+    }
+
+    var BRANCH_DEFINITIONS = getAllBranchDefinitions();
 
     var AVAILABLE_YEARS = [2026, 2025, 2024];
 
@@ -3010,7 +3450,9 @@
 
       var isAdmin = (user.role === 'admin' || user.role === 'mis' || user.role === 'editor');
       var sel = document.getElementById('adminMgrSelect');
-      var btnAdminUsers = document.getElementById('btnAdminUsersModal');
+      var editToggleWrap = document.getElementById('adminEditToggleWrap');
+      var btnDateHierarchy = document.getElementById('btnDateHierarchyTrigger');
+      var dateHierarchyPop = document.getElementById('dateHierarchyDropdown');
       var tabBranches = document.getElementById('tabBtnBranches');
       var tabAllMgrs = document.getElementById('tabBtnAllManagers');
       var viewBranches = document.getElementById('tabContentBranches');
@@ -3019,18 +3461,31 @@
       if (isAdmin) {
         currentManagerKey = user.managerKey && user.managerKey !== 'all' ? user.managerKey.toLowerCase() : 'ambuj';
         setupAdminManagerDropdown();
-        if (btnAdminUsers) btnAdminUsers.style.display = 'inline-flex';
+        if (editToggleWrap) editToggleWrap.style.display = 'inline-block';
+        if (btnDateHierarchy) btnDateHierarchy.style.display = 'inline-flex';
         if (tabBranches) tabBranches.style.display = 'inline-flex';
         if (tabAllMgrs) tabAllMgrs.style.display = 'inline-flex';
       } else {
-        // Manager Login: Strictly bound to their own team
+        // Manager Login: Strictly bound to their own team, no date filter (access to Today and Yesterday only)
         currentManagerKey = (user.managerKey || user.username || '').toLowerCase();
         if (sel) sel.style.display = 'none';
-        if (btnAdminUsers) btnAdminUsers.style.display = 'none';
+        if (editToggleWrap) editToggleWrap.style.display = 'none';
+        closeAdminEditMenu();
+        if (btnDateHierarchy) btnDateHierarchy.style.display = 'none';
+        if (dateHierarchyPop) dateHierarchyPop.style.display = 'none';
         if (tabBranches) tabBranches.style.display = 'none';
         if (tabAllMgrs) tabAllMgrs.style.display = 'none';
         if (viewBranches) viewBranches.style.display = 'none';
         if (viewAllMgrs) viewAllMgrs.style.display = 'none';
+
+        // Enforce that managers can only be on Today or Yesterday
+        var todayStr = getTodayDateString();
+        var ydayStr = getYesterdayDateString(todayStr);
+        if (activeDateStr !== todayStr && activeDateStr !== ydayStr) {
+          activeDateStr = todayStr;
+          selectedDatesList = [ todayStr ];
+        }
+
         switchMainTab('myteam');
       }
 
@@ -3042,6 +3497,33 @@
       loadManagerData();
       initRealtimeSync();
     }
+
+    function toggleAdminEditMenu(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      var menu = document.getElementById('adminEditDropdownMenu');
+      if (!menu) return;
+      var isOpen = (menu.style.display === 'flex');
+      menu.style.display = isOpen ? 'none' : 'flex';
+      var arrow = document.getElementById('adminEditToggleArrow');
+      if (arrow) arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    function closeAdminEditMenu() {
+      var menu = document.getElementById('adminEditDropdownMenu');
+      if (menu) menu.style.display = 'none';
+      var arrow = document.getElementById('adminEditToggleArrow');
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+    }
+
+    document.addEventListener('click', function(e) {
+      var wrap = document.getElementById('adminEditToggleWrap');
+      if (wrap && !wrap.contains(e.target)) {
+        closeAdminEditMenu();
+      }
+    });
 
     function setupAdminManagerDropdown() {
       var sel = document.getElementById('adminMgrSelect');
@@ -3250,6 +3732,11 @@
     // DATE HIERARCHY FILTER (YEAR - QTR - MONTH - DATE MULTI-SELECT)
     // ------------------------------------------------------------------------
     function toggleDateHierarchyDropdown() {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Historical date filters are restricted to administrators.", "warning");
+        return;
+      }
       var pop = document.getElementById('dateHierarchyDropdown');
       if (!pop) return;
       var isOpen = pop.style.display === 'flex';
@@ -3481,6 +3968,12 @@
     }
 
     function applyPresetDates(preset) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin && preset !== 'today' && preset !== 'yesterday') {
+        showToast("Managers have access to Today and Yesterday only.", "info");
+        preset = 'today';
+      }
+
       var today = getTodayDateString();
       if (preset === 'today') {
         selectedDatesList = [ today ];
@@ -3517,15 +4010,23 @@
     }
 
     function applyDateHierarchyFilter() {
-      if (selectedDatesList.length === 0) {
-        selectedDatesList = [ getTodayDateString() ];
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      var today = getTodayDateString();
+      var yday = getYesterdayDateString(today);
+
+      if (!isAdmin) {
+        // Enforce strictly Today or Yesterday for managers
+        if (selectedDatesList.length !== 1 || (selectedDatesList[0] !== today && selectedDatesList[0] !== yday)) {
+          selectedDatesList = [ today ];
+        }
+      } else {
+        if (selectedDatesList.length === 0) {
+          selectedDatesList = [ today ];
+        }
       }
       selectedDatesList.sort();
 
       closeDateHierarchyDropdown();
-
-      var today = getTodayDateString();
-      var yday = getYesterdayDateString(today);
 
       var labelEl = document.getElementById('dateFilterActiveLabel');
       var quickTodayBtn = document.getElementById('btnQuickToday');
@@ -3699,14 +4200,15 @@
       };
     }
 
-    function getYesterdayTeamCollection() {
-      var manual = localStorage.getItem('shaha_mgr_yday_' + currentManagerKey);
+    function getManagerYesterdayCollection(mgrKey) {
+      var mk = (mgrKey || '').toLowerCase();
+      var manual = localStorage.getItem('shaha_mgr_yday_' + mk);
       if (manual !== null && manual !== undefined && manual !== '') {
         return Number(manual) || 0;
       }
 
       var yDate = getYesterdayDateString(activeDateStr || getTodayDateString());
-      var snapRaw = localStorage.getItem('shaha_mgr_snap_' + yDate + '_' + currentManagerKey);
+      var snapRaw = localStorage.getItem('shaha_mgr_snap_' + yDate + '_' + mk);
       if (snapRaw) {
         try {
           var arr = JSON.parse(snapRaw);
@@ -3716,6 +4218,240 @@
         } catch(e) {}
       }
       return 0;
+    }
+
+    function getYesterdayTeamCollection() {
+      return getManagerYesterdayCollection(currentManagerKey);
+    }
+
+    function getBranchTarget(branchKey) {
+      var bKey = (branchKey || '').toLowerCase();
+      try {
+        var raw = localStorage.getItem('shaha_branch_targets');
+        if (raw) {
+          var map = JSON.parse(raw);
+          if (map && map[bKey] !== undefined) return Number(map[bKey]) || 0;
+        }
+      } catch(e) {}
+      var single = localStorage.getItem('shaha_branch_target_' + bKey);
+      if (single !== null && single !== undefined && single !== '') return Number(single) || 0;
+
+      // Default target based on sum of manager projections if none set
+      var defs = getAllBranchDefinitions();
+      var bDef = defs.find(function(b) { return b.key === bKey; });
+      if (bDef) {
+        var sumProj = 0;
+        ALL_MANAGERS_ORDER.forEach(function(mk) {
+          if (bDef.isMember(mk)) {
+            sumProj += (Number(allManagerProjections[mk]) || 0);
+          }
+        });
+        if (sumProj > 0) return sumProj;
+      }
+      return 0;
+    }
+
+    function setBranchTarget(branchKey, amount) {
+      var bKey = (branchKey || '').toLowerCase();
+      var val = Number(amount) || 0;
+      try {
+        var raw = localStorage.getItem('shaha_branch_targets');
+        var map = raw ? JSON.parse(raw) : {};
+        map[bKey] = val;
+        localStorage.setItem('shaha_branch_targets', JSON.stringify(map));
+      } catch(e) {}
+      localStorage.setItem('shaha_branch_target_' + bKey, String(val));
+    }
+
+    function setBranchYesterdayCollection(branchKey, amount) {
+      var bKey = (branchKey || '').toLowerCase();
+      var val = Number(amount) || 0;
+      try {
+        var raw = localStorage.getItem('shaha_branch_ydays');
+        var map = raw ? JSON.parse(raw) : {};
+        map[bKey] = val;
+        localStorage.setItem('shaha_branch_ydays', JSON.stringify(map));
+      } catch(e) {}
+      localStorage.setItem('shaha_branch_yday_' + bKey, String(val));
+    }
+
+    function getBranchYesterdayCollection(branchKey) {
+      var bKey = (branchKey || '').toLowerCase();
+      var manual = localStorage.getItem('shaha_branch_yday_' + bKey);
+      if (manual !== null && manual !== undefined && manual !== '') {
+        return Number(manual) || 0;
+      }
+      try {
+        var raw = localStorage.getItem('shaha_branch_ydays');
+        if (raw) {
+          var map = JSON.parse(raw);
+          if (map && map[bKey] !== undefined) return Number(map[bKey]) || 0;
+        }
+      } catch(e) {}
+      var defs = getAllBranchDefinitions();
+      var bDef = defs.find(function(b) { return b.key === bKey; });
+      if (!bDef) return 0;
+      var sum = 0;
+      ALL_MANAGERS_ORDER.forEach(function(mk) {
+        if (bDef.isMember(mk)) {
+          sum += getManagerYesterdayCollection(mk);
+        }
+      });
+      return sum;
+    }
+
+    function promptEditBranchYesterday(branchKey, branchName) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Setting yesterday collection requires administrator permissions.", "warning");
+        return;
+      }
+      var current = getBranchYesterdayCollection(branchKey);
+      var input = prompt("Set Yesterday's Collection for " + (branchName || branchKey.toUpperCase()) + " (₹):", current ? current : "");
+      if (input !== null) {
+        var val = parseNumeric(input);
+        setBranchYesterdayCollection(branchKey, val);
+        updateAodData();
+        if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
+        showToast("Yesterday collection for " + (branchName || branchKey) + " set to " + formatIndianCurrency(val), "success");
+      }
+    }
+
+    function getBranchSdlm(branchKey) {
+      var bKey = (branchKey || '').toLowerCase();
+      var manual = localStorage.getItem('shaha_branch_sdlm_' + bKey);
+      if (manual !== null && manual !== undefined && manual !== '') {
+        return Number(manual) || 0;
+      }
+      try {
+        var raw = localStorage.getItem('shaha_branch_sdlms');
+        if (raw) {
+          var map = JSON.parse(raw);
+          if (map && map[bKey] !== undefined) return Number(map[bKey]) || 0;
+        }
+      } catch(e) {}
+
+      // Fallback to SDLM_BRANCH_DATA for September benchmark
+      if (typeof SDLM_BRANCH_DATA !== 'undefined' && SDLM_BRANCH_DATA.september) {
+        var day = (new Date()).getDate();
+        if (typeof activeDateStr === 'string' && activeDateStr.indexOf('-') !== -1) {
+          var parts = activeDateStr.split('-');
+          day = parseInt(parts[2], 10) || day;
+        }
+        var idx = Math.min(Math.max(1, day), SDLM_BRANCH_DATA.september.length) - 1;
+        var row = SDLM_BRANCH_DATA.september[idx] || {};
+        if (bKey === 'jogeshwari') return Number(row.jogeshwari) || 0;
+        if (bKey === 'dadar') return Number(row.dadar) || 0;
+        if (bKey === 'agencies' || bKey === 'agency') return Number(row.agency) || 0;
+        if (bKey === 'saroj') return Number(row.saroj) || 0;
+      }
+      return 0;
+    }
+
+    function setBranchSdlm(branchKey, amount) {
+      var bKey = (branchKey || '').toLowerCase();
+      var val = Number(amount) || 0;
+      try {
+        var raw = localStorage.getItem('shaha_branch_sdlms');
+        var map = raw ? JSON.parse(raw) : {};
+        map[bKey] = val;
+        localStorage.setItem('shaha_branch_sdlms', JSON.stringify(map));
+      } catch(e) {}
+      localStorage.setItem('shaha_branch_sdlm_' + bKey, String(val));
+    }
+
+    function promptEditBranchSdlm(branchKey, branchName) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Setting SDLM requires administrator permissions.", "warning");
+        return;
+      }
+      var current = getBranchSdlm(branchKey);
+      var input = prompt("Set SDLM (September Benchmark) for " + (branchName || branchKey.toUpperCase()) + " (₹):", current ? current : "");
+      if (input !== null) {
+        var val = parseNumeric(input);
+        setBranchSdlm(branchKey, val);
+        updateAodData();
+        if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
+        showToast("SDLM for " + (branchName || branchKey) + " set to " + formatIndianCurrency(val), "success");
+      }
+    }
+
+    function getBranchJulySdlm(branchKey) {
+      var bKey = (branchKey || '').toLowerCase();
+      var manual = localStorage.getItem('shaha_branch_july_sdlm_' + bKey);
+      if (manual !== null && manual !== undefined && manual !== '') {
+        return Number(manual) || 0;
+      }
+      try {
+        var raw = localStorage.getItem('shaha_branch_july_sdlms');
+        if (raw) {
+          var map = JSON.parse(raw);
+          if (map && map[bKey] !== undefined) return Number(map[bKey]) || 0;
+        }
+      } catch(e) {}
+
+      // Fallback to SDLM_BRANCH_DATA for July benchmark
+      if (typeof SDLM_BRANCH_DATA !== 'undefined' && SDLM_BRANCH_DATA.july) {
+        var day = (new Date()).getDate();
+        if (typeof activeDateStr === 'string' && activeDateStr.indexOf('-') !== -1) {
+          var parts = activeDateStr.split('-');
+          day = parseInt(parts[2], 10) || day;
+        }
+        var idx = Math.min(Math.max(1, day), SDLM_BRANCH_DATA.july.length) - 1;
+        var row = SDLM_BRANCH_DATA.july[idx] || {};
+        if (bKey === 'jogeshwari') return Number(row.jogeshwari) || 0;
+        if (bKey === 'dadar') return Number(row.dadar) || 0;
+        if (bKey === 'agencies' || bKey === 'agency') return Number(row.agency) || 0;
+        if (bKey === 'saroj') return Number(row.saroj) || 0;
+      }
+      return 0;
+    }
+
+    function setBranchJulySdlm(branchKey, amount) {
+      var bKey = (branchKey || '').toLowerCase();
+      var val = Number(amount) || 0;
+      try {
+        var raw = localStorage.getItem('shaha_branch_july_sdlms');
+        var map = raw ? JSON.parse(raw) : {};
+        map[bKey] = val;
+        localStorage.setItem('shaha_branch_july_sdlms', JSON.stringify(map));
+      } catch(e) {}
+      localStorage.setItem('shaha_branch_july_sdlm_' + bKey, String(val));
+    }
+
+    function promptEditBranchJulySdlm(branchKey, branchName) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Setting July SDLM requires administrator permissions.", "warning");
+        return;
+      }
+      var current = getBranchJulySdlm(branchKey);
+      var input = prompt("Set SDLM for July Benchmark for " + (branchName || branchKey.toUpperCase()) + " (₹):", current ? current : "");
+      if (input !== null) {
+        var val = parseNumeric(input);
+        setBranchJulySdlm(branchKey, val);
+        updateAodData();
+        if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
+        showToast("July SDLM for " + (branchName || branchKey) + " set to " + formatIndianCurrency(val), "success");
+      }
+    }
+
+    function promptEditBranchTarget(branchKey, branchName) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Setting branch targets requires administrator permissions.", "warning");
+        return;
+      }
+      var current = getBranchTarget(branchKey);
+      var input = prompt("Set Daily Target for " + (branchName || branchKey.toUpperCase()) + " (₹):", current ? current : "");
+      if (input !== null) {
+        var val = parseNumeric(input);
+        setBranchTarget(branchKey, val);
+        updateAodData();
+        if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
+        showToast("Target for " + (branchName || branchKey) + " set to " + formatIndianCurrency(val), "success");
+      }
     }
 
     function renderKPICards() {
@@ -3810,6 +4546,20 @@
       var tbody = document.getElementById('callerTableBody');
       var searchTxt = (document.getElementById('callerFilterInput').value || '').trim().toLowerCase();
 
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+
+      var btnAddCaller = document.getElementById('btnAddCallerMyTeam');
+      if (btnAddCaller) btnAddCaller.style.display = isAdmin ? 'inline-flex' : 'none';
+
+      var wrapHidden = document.getElementById('wrapShowHiddenCallers');
+      if (wrapHidden) wrapHidden.style.display = isAdmin ? 'inline-flex' : 'none';
+
+      var thActions = document.getElementById('thCallerActionsCol');
+      if (thActions) thActions.style.display = isAdmin ? '' : 'none';
+
+      var tfActions = document.getElementById('tfootActionsCol');
+      if (tfActions) tfActions.style.display = isAdmin ? '' : 'none';
+
       var callersToDisplay = teamCallers;
       if (searchTxt) {
         callersToDisplay = teamCallers.filter(function(c) {
@@ -3818,7 +4568,7 @@
       }
 
       if (callersToDisplay.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:24px; color:var(--text-muted);">No callers found matching search.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="' + (isAdmin ? 6 : 5) + '" style="text-align:center; padding:24px; color:var(--text-muted);">No callers found matching search.</td></tr>';
         return;
       }
 
@@ -3834,14 +4584,24 @@
 
         var statusBadge = '';
         if (isInactive) {
-          statusBadge = '<span style="background:#fee2e2; color:#991b1b; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px; border:1px solid #fca5a5;">🚫 Hidden</span>';
+          statusBadge = '<span style="background:#fee2e2; color:#991b1b; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px; border:1px solid #fca5a5;">' + uiIcon('eyeOff', 'ui-icon-xs') + ' Hidden</span>';
         } else if (isCollected) {
-          statusBadge = '<span style="background:var(--text); color:#ffffff; font-size:11px; font-weight:700; padding:3px 8px; border-radius:12px;">✓ Logged</span>';
+          statusBadge = '<span style="background:var(--text); color:#ffffff; font-size:11px; font-weight:700; padding:3px 8px; border-radius:12px;">' + uiIcon('check', 'ui-icon-xs') + ' Logged</span>';
         } else {
           statusBadge = '<span style="border:1px solid var(--border); color:var(--text-muted); font-size:11px; font-weight:600; padding:2px 8px; border-radius:12px;">Pending</span>';
         }
 
         var rowStyle = isInactive ? ' style="opacity: 0.72; background: #fafafa;"' : '';
+
+        var actionsTd = '';
+        if (isAdmin) {
+          actionsTd = '<td style="text-align: center;">' +
+            '<div style="display:inline-flex; align-items:center; gap:4px;">' +
+              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;" onclick="openEditCallerModal(\'' + escapeHtml(c.id || '') + '\', \'' + escapeHtml(c.officer_name) + '\')" title="Edit caller details">' + uiIcon('edit', 'ui-icon-xs') + '</button>' +
+              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;' + (isInactive ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="toggleHideCaller(\'' + escapeHtml(c.id || '') + '\', \'' + escapeHtml(c.officer_name) + '\')" title="' + (isInactive ? 'Unhide / Restore caller' : 'Hide / Inactivate caller') + '">' + (isInactive ? uiIcon('eye', 'ui-icon-xs') : uiIcon('eyeOff', 'ui-icon-xs')) + '</button>' +
+            '</div>' +
+          '</td>';
+        }
 
         html += '<tr id="rowCaller_' + escapeId(c.officer_name) + '"' + rowStyle + '>' +
           '<td class="caller-rank-col tabular">' + (idx + 1) + '</td>' +
@@ -3860,17 +4620,12 @@
                 'onkeydown="onCallerInputKeyDown(event, this)" ' +
                 'onblur="onCallerInputBlur(this)">' +
               '<span id="calcPreview_' + escapeId(c.officer_name) + '" class="calc-preview-chip tabular">= ₹ 0</span>' +
-              '<span id="savedIndicator_' + escapeId(c.officer_name) + '" class="save-indicator">✓ Saved</span>' +
+              '<span id="savedIndicator_' + escapeId(c.officer_name) + '" class="save-indicator">' + uiIcon('check', 'ui-icon-xs') + ' Saved</span>' +
             '</div>' +
           '</td>' +
           '<td style="text-align: center;" class="share-col tabular">' + (sharePct > 0 ? sharePct.toFixed(1) + '%' : '0%') + '</td>' +
           '<td>' + statusBadge + '</td>' +
-          '<td style="text-align: center;">' +
-            '<div style="display:inline-flex; align-items:center; gap:4px;">' +
-              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;" onclick="openEditCallerModal(\'' + escapeHtml(c.id || '') + '\', \'' + escapeHtml(c.officer_name) + '\')" title="Edit caller details">✏️</button>' +
-              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;' + (isInactive ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="toggleHideCaller(\'' + escapeHtml(c.id || '') + '\', \'' + escapeHtml(c.officer_name) + '\')" title="' + (isInactive ? 'Unhide / Restore caller' : 'Hide / Inactivate caller') + '">' + (isInactive ? '👁️' : '🚫') + '</button>' +
-            '</div>' +
-          '</td>' +
+          actionsTd +
         '</tr>';
       });
 
@@ -4015,7 +4770,7 @@
         });
 
         if (indicator) {
-          indicator.textContent = "✓ Saved";
+          indicator.innerHTML = uiIcon("check", "ui-icon-xs") + " Saved";
           setTimeout(function() {
             indicator.classList.remove('visible');
           }, 1800);
@@ -4026,7 +4781,7 @@
       } catch(err) {
         console.error("Error saving caller amount:", err);
         if (indicator) {
-          indicator.textContent = "⚠️ Queued";
+          indicator.innerHTML = uiIcon("info", "ui-icon-xs") + " Queued";
         }
         setSyncStatus(false, "Connection Issue");
         showToast("Database unreachable. Amount saved locally.", "warning");
@@ -4085,10 +4840,22 @@
 
       var branchData = [];
       var floorGrandCallers = 0;
+      var floorGrandTarget = 0;
+      var floorGrandYesterday = 0;
+      var floorGrandSdlm = 0;
+      var floorGrandJulySdlm = 0;
       var floorGrandToday = 0;
       var floorGrandProj = 0;
 
-      BRANCH_DEFINITIONS.forEach(function(bDef) {
+      var branchDefs = getAllBranchDefinitions();
+      var bHeaderPill = document.getElementById('branchHeaderPill');
+      if (bHeaderPill) {
+        bHeaderPill.textContent = branchDefs.length + " Branches · " + branchDefs.map(function(b) { return b.name; }).join(' · ');
+      }
+      var bBadge = document.getElementById('tabBadgeBranches');
+      if (bBadge) bBadge.textContent = branchDefs.length;
+
+      branchDefs.forEach(function(bDef) {
         var branchMgrKeys = ALL_MANAGERS_ORDER.filter(function(mk) {
           if (hiddenManagers.indexOf(mk) !== -1 && !showHiddenManagers) return false;
           return bDef.isMember(mk);
@@ -4124,6 +4891,11 @@
           });
         });
 
+        var bTarget = getBranchTarget(bDef.key);
+        var bYesterday = getBranchYesterdayCollection(bDef.key);
+        var bSdlm = getBranchSdlm(bDef.key);
+        var bJulySdlm = getBranchJulySdlm(bDef.key);
+
         if (searchTxt) {
           var branchMatch = bDef.name.toLowerCase().indexOf(searchTxt) !== -1;
           var mgrMatch = branchManagersDetails.some(function(md) {
@@ -4139,15 +4911,24 @@
         }
 
         floorGrandCallers += branchCallersList.length;
+        floorGrandTarget += bTarget;
+        floorGrandYesterday += bYesterday;
+        floorGrandSdlm += bSdlm;
+        floorGrandJulySdlm += bJulySdlm;
         floorGrandToday += branchTodaySum;
         floorGrandProj += branchProjSum;
 
-        var pacing = branchProjSum > 0 ? (branchTodaySum / branchProjSum) * 100 : 0;
+        var pacingBenchmark = bTarget > 0 ? bTarget : branchProjSum;
+        var pacing = pacingBenchmark > 0 ? (branchTodaySum / pacingBenchmark) * 100 : 0;
 
         branchData.push({
           def: bDef,
           keys: branchMgrKeys,
           callers: branchCallersList,
+          target: bTarget,
+          yesterday: bYesterday,
+          sdlm: bSdlm,
+          julySdlm: bJulySdlm,
           today: branchTodaySum,
           projection: branchProjSum,
           pacing: pacing,
@@ -4176,8 +4957,19 @@
             '<span style="font-size:11px; color:var(--text-muted);">(' + escapeHtml(mgrNamesPreview) + ')</span>' +
           '</td>' +
           '<td style="text-align:center; font-weight:700;" class="tabular">' + b.callers.length + ' Callers</td>' +
+          '<td style="text-align:right; font-weight:700;" class="tabular">' +
+            (isAdmin ? '<span title="Click to edit target" style="cursor:pointer;" onclick="event.stopPropagation(); promptEditBranchTarget(\'' + escapeHtml(b.def.key) + '\', \'' + escapeHtml(b.def.name) + '\')">' + formatIndianCurrency(b.target) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span></span>' : formatIndianCurrency(b.target)) +
+          '</td>' +
+          '<td style="text-align:right; font-weight:600; color:var(--text-muted);" class="tabular">' +
+            (isAdmin ? '<span title="Click to edit yesterday collection" style="cursor:pointer;" onclick="event.stopPropagation(); promptEditBranchYesterday(\'' + escapeHtml(b.def.key) + '\', \'' + escapeHtml(b.def.name) + '\')">' + formatIndianCurrency(b.yesterday) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span></span>' : formatIndianCurrency(b.yesterday)) +
+          '</td>' +
+          '<td style="text-align:right; font-weight:600; color:var(--text-muted);" class="tabular">' +
+            (isAdmin ? '<span title="Click to edit SDLM" style="cursor:pointer;" onclick="event.stopPropagation(); promptEditBranchSdlm(\'' + escapeHtml(b.def.key) + '\', \'' + escapeHtml(b.def.name) + '\')">' + formatIndianCurrency(b.sdlm) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span></span>' : formatIndianCurrency(b.sdlm)) +
+          '</td>' +
+          '<td style="text-align:right; font-weight:600; color:var(--text-muted);" class="tabular">' +
+            (isAdmin ? '<span title="Click to edit July SDLM" style="cursor:pointer;" onclick="event.stopPropagation(); promptEditBranchJulySdlm(\'' + escapeHtml(b.def.key) + '\', \'' + escapeHtml(b.def.name) + '\')">' + formatIndianCurrency(b.julySdlm) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span></span>' : formatIndianCurrency(b.julySdlm)) +
+          '</td>' +
           '<td style="text-align:right; font-weight:800; font-size:13.5px;" class="tabular">' + formatIndianCurrency(b.today) + '</td>' +
-          '<td style="text-align:right; color:var(--text-muted);" class="tabular">' + formatIndianCurrency(b.projection) + '</td>' +
           '<td style="text-align:center;" class="tabular"><span style="background:var(--accent-light); padding:2px 7px; border-radius:4px; font-weight:700; border:1px solid var(--border);">' + b.pacing.toFixed(1) + '%</span></td>' +
           '<td style="text-align:center; font-weight:700;" class="tabular">' + (shareOfFloor > 0 ? shareOfFloor.toFixed(1) + '%' : '0%') + '</td>' +
           '<td style="text-align:center;">' +
@@ -4244,7 +5036,7 @@
           });
 
           html += '<tr class="accordion-row">' +
-            '<td colspan="9" style="padding:10px 18px 16px; background:#f8fafc;">' +
+            '<td colspan="12" style="padding:10px 18px 16px; background:#f8fafc;">' +
               '<div style="font-size:11.5px; font-weight:800; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;">' +
                 'Branch Teams & Managers Breakdown · ' + escapeHtml(b.def.name) +
               '</div>' +
@@ -4272,12 +5064,19 @@
       // Update grand floor totals in footer
       var callersFoot = document.getElementById('tfootBranchTotalCallers');
       if (callersFoot) callersFoot.textContent = floorGrandCallers + ' Callers';
+      var targetFoot = document.getElementById('tfootBranchTotalTarget');
+      if (targetFoot) targetFoot.textContent = formatIndianCurrency(floorGrandTarget);
+      var ydayFoot = document.getElementById('tfootBranchTotalYesterday');
+      if (ydayFoot) ydayFoot.textContent = formatIndianCurrency(floorGrandYesterday);
+      var sdlmFoot = document.getElementById('tfootBranchTotalSdlm');
+      if (sdlmFoot) sdlmFoot.textContent = formatIndianCurrency(floorGrandSdlm);
+      var julySdlmFoot = document.getElementById('tfootBranchTotalJulySdlm');
+      if (julySdlmFoot) julySdlmFoot.textContent = formatIndianCurrency(floorGrandJulySdlm);
       var todayFoot = document.getElementById('tfootBranchTotalToday');
       if (todayFoot) todayFoot.textContent = formatIndianCurrency(floorGrandToday);
-      var projFoot = document.getElementById('tfootBranchTotalProj');
-      if (projFoot) projFoot.textContent = formatIndianCurrency(floorGrandProj);
+      var pacingBenchmark = floorGrandTarget > 0 ? floorGrandTarget : floorGrandProj;
       var pacingFoot = document.getElementById('tfootBranchTotalPacing');
-      var floorPacing = floorGrandProj > 0 ? (floorGrandToday / floorGrandProj) * 100 : 0;
+      var floorPacing = pacingBenchmark > 0 ? (floorGrandToday / pacingBenchmark) * 100 : 0;
       if (pacingFoot) pacingFoot.textContent = floorPacing.toFixed(1) + '%';
     }
 
@@ -4290,6 +5089,350 @@
       var k = bKey + '_' + mgrKey;
       expandedBranchManagerAccordions[k] = !expandedBranchManagerAccordions[k];
       renderBranchWiseTable();
+    }
+
+    // ------------------------------------------------------------------------
+    // BRANCH OFFICE & MANAGER ASSIGNMENT ENGINE
+    // ------------------------------------------------------------------------
+    function openBranchManagerModal(defaultTab) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Managing branches is restricted to administrators.", "warning");
+        return;
+      }
+
+      var modal = document.getElementById('branchManagerModalBackdrop');
+      if (!modal) return;
+
+      var targetTab = (defaultTab === 'targets' || defaultTab === 'create') ? defaultTab : 'assign';
+      switchBranchModalTab(targetTab);
+      renderBranchAssignMgrsTable();
+      renderBranchTargetsTable();
+      renderExistingBranchesList();
+
+      var statusMsg = document.getElementById('branchModalStatusMsg');
+      if (statusMsg) statusMsg.textContent = 'Ready to customize branch mappings & targets';
+
+      modal.style.display = 'flex';
+    }
+
+    function closeBranchManagerModal() {
+      var modal = document.getElementById('branchManagerModalBackdrop');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function switchBranchModalTab(tab) {
+      var tabAssign = document.getElementById('branchModalTabAssign');
+      var tabTargets = document.getElementById('branchModalTabTargets');
+      var tabCreate = document.getElementById('branchModalTabCreate');
+      var btnAssign = document.getElementById('modalTabBtnAssignMgrs');
+      var btnTargets = document.getElementById('modalTabBtnBranchTargets');
+      var btnCreate = document.getElementById('modalTabBtnCreateBranch');
+
+      if (tab === 'assign') {
+        if (tabAssign) tabAssign.style.display = 'flex';
+        if (tabTargets) tabTargets.style.display = 'none';
+        if (tabCreate) tabCreate.style.display = 'none';
+        if (btnAssign) { btnAssign.style.background = '#09090b'; btnAssign.style.color = '#fff'; }
+        if (btnTargets) { btnTargets.style.background = 'transparent'; btnTargets.style.color = 'var(--text)'; }
+        if (btnCreate) { btnCreate.style.background = 'transparent'; btnCreate.style.color = 'var(--text)'; }
+        renderBranchAssignMgrsTable();
+      } else if (tab === 'targets') {
+        if (tabAssign) tabAssign.style.display = 'none';
+        if (tabTargets) tabTargets.style.display = 'flex';
+        if (tabCreate) tabCreate.style.display = 'none';
+        if (btnAssign) { btnAssign.style.background = 'transparent'; btnAssign.style.color = 'var(--text)'; }
+        if (btnTargets) { btnTargets.style.background = '#09090b'; btnTargets.style.color = '#fff'; }
+        if (btnCreate) { btnCreate.style.background = 'transparent'; btnCreate.style.color = 'var(--text)'; }
+        renderBranchTargetsTable();
+      } else {
+        if (tabAssign) tabAssign.style.display = 'none';
+        if (tabTargets) tabTargets.style.display = 'none';
+        if (tabCreate) tabCreate.style.display = 'flex';
+        if (btnAssign) { btnAssign.style.background = 'transparent'; btnAssign.style.color = 'var(--text)'; }
+        if (btnTargets) { btnTargets.style.background = 'transparent'; btnTargets.style.color = 'var(--text)'; }
+        if (btnCreate) { btnCreate.style.background = '#09090b'; btnCreate.style.color = '#fff'; }
+        renderExistingBranchesList();
+      }
+    }
+
+    function renderBranchTargetsTable() {
+      var tbody = document.getElementById('branchTargetsTableBody');
+      if (!tbody) return;
+
+      var allBranches = getAllBranchDefinitions();
+      var html = '';
+
+      allBranches.forEach(function(b, idx) {
+        var branchMgrKeys = ALL_MANAGERS_ORDER.filter(function(mk) {
+          if (hiddenManagers.indexOf(mk) !== -1 && !showHiddenManagers) return false;
+          return b.isMember(mk);
+        });
+
+        var bToday = 0;
+        branchMgrKeys.forEach(function(mk) {
+          var cList = allFloorCallers.filter(function(c) {
+            return (c.manager_key || '').toLowerCase() === mk;
+          });
+          cList.forEach(function(c) { bToday += Number(c.today) || 0; });
+        });
+
+        var currentTarget = getBranchTarget(b.key);
+        var currentYday = getBranchYesterdayCollection(b.key);
+        var currentSdlm = getBranchSdlm(b.key);
+        var currentJulySdlm = getBranchJulySdlm(b.key);
+
+        var valTargetFmt = currentTarget > 0 ? currentTarget.toLocaleString('en-IN') : '';
+        var valYdayFmt = currentYday > 0 ? currentYday.toLocaleString('en-IN') : '';
+        var valSdlmFmt = currentSdlm > 0 ? currentSdlm.toLocaleString('en-IN') : '';
+        var valJulySdlmFmt = currentJulySdlm > 0 ? currentJulySdlm.toLocaleString('en-IN') : '';
+
+        html += '<tr>' +
+          '<td style="text-align:center; font-weight:700;" class="tabular">' + (idx + 1) + '</td>' +
+          '<td>' +
+            '<div style="font-weight:700; font-size:12.5px; color:var(--text);">' + escapeHtml(b.name) + '</div>' +
+            '<div style="font-size:10.5px; color:var(--text-muted);">' + escapeHtml(b.badge) + ' · ' + branchMgrKeys.length + ' Mgrs</div>' +
+          '</td>' +
+          '<td style="text-align:right; font-weight:700;" class="tabular">' +
+            formatIndianCurrency(bToday) +
+          '</td>' +
+          '<td style="text-align:right;">' +
+            '<input type="text" class="form-input tabular branch-target-input" data-key="' + escapeHtml(b.key) + '" value="' + escapeHtml(valTargetFmt) + '" placeholder="e.g. 15,00,000" style="text-align:right; font-weight:700; font-size:12px; padding:5px 8px;">' +
+          '</td>' +
+          '<td style="text-align:right;">' +
+            '<input type="text" class="form-input tabular branch-yday-input" data-key="' + escapeHtml(b.key) + '" value="' + escapeHtml(valYdayFmt) + '" placeholder="e.g. 12,00,000" style="text-align:right; font-weight:600; font-size:12px; padding:5px 8px;">' +
+          '</td>' +
+          '<td style="text-align:right;">' +
+            '<input type="text" class="form-input tabular branch-sdlm-input" data-key="' + escapeHtml(b.key) + '" value="' + escapeHtml(valSdlmFmt) + '" placeholder="e.g. 11,50,000" style="text-align:right; font-weight:600; font-size:12px; padding:5px 8px;">' +
+          '</td>' +
+          '<td style="text-align:right;">' +
+            '<input type="text" class="form-input tabular branch-july-sdlm-input" data-key="' + escapeHtml(b.key) + '" value="' + escapeHtml(valJulySdlmFmt) + '" placeholder="e.g. 10,00,000" style="text-align:right; font-weight:600; font-size:12px; padding:5px 8px;">' +
+          '</td>' +
+        '</tr>';
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    function saveBranchTargetsModal() {
+      var targetInps = document.querySelectorAll('.branch-target-input');
+      targetInps.forEach(function(inp) {
+        var key = inp.getAttribute('data-key');
+        if (key) {
+          var val = parseNumeric(inp.value);
+          setBranchTarget(key, val);
+        }
+      });
+
+      var ydayInps = document.querySelectorAll('.branch-yday-input');
+      ydayInps.forEach(function(inp) {
+        var key = inp.getAttribute('data-key');
+        if (key) {
+          var val = parseNumeric(inp.value);
+          setBranchYesterdayCollection(key, val);
+        }
+      });
+
+      var sdlmInps = document.querySelectorAll('.branch-sdlm-input');
+      sdlmInps.forEach(function(inp) {
+        var key = inp.getAttribute('data-key');
+        if (key) {
+          var val = parseNumeric(inp.value);
+          setBranchSdlm(key, val);
+        }
+      });
+
+      var julySdlmInps = document.querySelectorAll('.branch-july-sdlm-input');
+      julySdlmInps.forEach(function(inp) {
+        var key = inp.getAttribute('data-key');
+        if (key) {
+          var val = parseNumeric(inp.value);
+          setBranchJulySdlm(key, val);
+        }
+      });
+
+      updateAodData();
+      if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
+      showToast("Updated targets & SDLM benchmarks for all branches", "success");
+    }
+
+    function renderBranchAssignMgrsTable() {
+      var tbody = document.getElementById('branchAssignMgrsTableBody');
+      if (!tbody) return;
+
+      var allBranches = getAllBranchDefinitions();
+      var html = '';
+
+      ALL_MANAGERS_ORDER.forEach(function(mk, idx) {
+        var mName = MANAGER_NAMES[mk] || mk.toUpperCase();
+        var currentBranchKey = getManagerAssignedBranch(mk);
+        var currentBranch = allBranches.find(function(b) { return b.key === currentBranchKey; }) || allBranches[0];
+
+        html += '<tr>' +
+          '<td style="text-align:center; font-weight:700;" class="tabular">' + (idx + 1) + '</td>' +
+          '<td>' +
+            '<div style="font-weight:700; font-size:12.5px; color:var(--text);">' + escapeHtml(mName) + '</div>' +
+            '<div style="font-size:10.5px; color:var(--text-muted); font-family:monospace;">@' + escapeHtml(mk) + '</div>' +
+          '</td>' +
+          '<td style="text-align:center;">' +
+            '<span style="font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:4px; background:#f4f4f5; border:1px solid #e4e4e7;">' + escapeHtml(currentBranch ? currentBranch.name : 'Jogeshwari') + '</span>' +
+          '</td>' +
+          '<td>' +
+            '<select class="form-input branch-assign-select" data-mgr="' + escapeHtml(mk) + '" style="font-size:12px; padding:6px 8px; font-weight:600;">';
+
+        allBranches.forEach(function(b) {
+          var isSel = (b.key === currentBranchKey);
+          html += '<option value="' + escapeHtml(b.key) + '"' + (isSel ? ' selected' : '') + '>' +
+            escapeHtml(b.name) + ' (' + escapeHtml(b.badge) + ')' +
+          '</option>';
+        });
+
+        html += '</select>' +
+          '</td>' +
+        '</tr>';
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    function renderExistingBranchesList() {
+      var wrap = document.getElementById('existingBranchesListWrap');
+      if (!wrap) return;
+
+      var allBranches = getAllBranchDefinitions();
+      var html = '';
+
+      allBranches.forEach(function(b) {
+        var assignedMgrCount = ALL_MANAGERS_ORDER.filter(function(mk) {
+          return getManagerAssignedBranch(mk) === b.key;
+        }).length;
+
+        var deleteBtn = (!b.isCore) ?
+          '<button type="button" class="btn-outline" style="font-size:11px; padding:2px 7px; color:#dc2626; border-color:#fecaca;" onclick="deleteCustomBranch(\'' + escapeHtml(b.key) + '\')" title="Delete custom branch"><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete</button>' :
+          '<span style="font-size:10.5px; color:var(--text-muted); font-weight:600;">Standard Core</span>';
+
+        html += '<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#ffffff; border:1px solid var(--border); border-radius:6px;">' +
+          '<div>' +
+            '<div style="display:flex; align-items:center; gap:6px;">' +
+              '<strong style="font-size:13px; color:var(--text);">' + escapeHtml(b.name) + '</strong>' +
+              '<span style="font-size:10px; font-weight:700; background:#f1f5f9; color:#475569; padding:1px 5px; border-radius:3px;">' + escapeHtml(b.badge) + '</span>' +
+              '<span style="font-size:10px; color:var(--text-muted); font-family:monospace;">key: ' + escapeHtml(b.key) + '</span>' +
+            '</div>' +
+            '<div style="font-size:11px; color:var(--text-muted); margin-top:2px;">' +
+              escapeHtml(b.desc || '') + ' · <strong>' + assignedMgrCount + ' Managers</strong> assigned' +
+            '</div>' +
+          '</div>' +
+          deleteBtn +
+        '</div>';
+      });
+
+      wrap.innerHTML = html;
+    }
+
+    function autoSuggestBranchKey(val) {
+      var keyInp = document.getElementById('newBranchKeyInp');
+      if (keyInp) {
+        keyInp.value = String(val || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      }
+    }
+
+    function submitCreateBranchForm() {
+      var nameInp = document.getElementById('newBranchNameInp');
+      var keyInp = document.getElementById('newBranchKeyInp');
+      var badgeInp = document.getElementById('newBranchBadgeInp');
+      var descInp = document.getElementById('newBranchDescInp');
+      var errBox = document.getElementById('createBranchError');
+
+      var name = (nameInp.value || '').trim();
+      var key = (keyInp.value || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+      var badge = (badgeInp.value || '').trim() || 'Branch Office';
+      var desc = (descInp.value || '').trim() || (name + ' Operations');
+
+      if (!name || !key) {
+        if (errBox) { errBox.textContent = "Branch Name and Key are required."; errBox.style.display = 'block'; }
+        return;
+      }
+
+      var existing = getAllBranchDefinitions().some(function(b) { return b.key === key; });
+      if (existing) {
+        if (errBox) { errBox.textContent = "Branch with key '" + key + "' already exists."; errBox.style.display = 'block'; }
+        return;
+      }
+
+      if (errBox) errBox.style.display = 'none';
+
+      customBranches.push({
+        key: key,
+        name: name,
+        badge: badge,
+        desc: desc
+      });
+
+      try {
+        localStorage.setItem('shaha_custom_branches', JSON.stringify(customBranches));
+      } catch(e) {}
+
+      nameInp.value = '';
+      keyInp.value = '';
+      badgeInp.value = '';
+      descInp.value = '';
+
+      showToast("Branch '" + name + "' created!", "success");
+      renderExistingBranchesList();
+      renderBranchAssignMgrsTable();
+      renderBranchWiseTable();
+      updateAodData();
+    }
+
+    function deleteCustomBranch(key) {
+      if (!confirm("Are you sure you want to delete this custom branch?\n\nAny managers currently assigned to it will be reassigned to Jogeshwari.")) {
+        return;
+      }
+
+      ALL_MANAGERS_ORDER.forEach(function(mk) {
+        if (managerBranchMap[mk] === key) {
+          managerBranchMap[mk] = 'jogeshwari';
+        }
+      });
+      try { localStorage.setItem('shaha_manager_branches', JSON.stringify(managerBranchMap)); } catch(e) {}
+
+      customBranches = customBranches.filter(function(b) { return b.key !== key; });
+      try { localStorage.setItem('shaha_custom_branches', JSON.stringify(customBranches)); } catch(e) {}
+
+      showToast("Custom branch deleted.", "warning");
+      renderExistingBranchesList();
+      renderBranchAssignMgrsTable();
+      renderBranchWiseTable();
+      updateAodData();
+    }
+
+    function resetBranchAssignmentsToDefault() {
+      managerBranchMap = {};
+      try { localStorage.removeItem('shaha_manager_branches'); } catch(e) {}
+      renderBranchAssignMgrsTable();
+      renderExistingBranchesList();
+      showToast("Assignments reset to standard rules (Jogeshwari HQ, Dadar, Agencies, Saroj).", "info");
+    }
+
+    function saveBranchAssignmentsModal() {
+      var selects = document.querySelectorAll('.branch-assign-select');
+      selects.forEach(function(sel) {
+        var mk = sel.getAttribute('data-mgr');
+        var bKey = sel.value;
+        if (mk && bKey) {
+          managerBranchMap[mk.toLowerCase()] = bKey;
+        }
+      });
+
+      try {
+        localStorage.setItem('shaha_manager_branches', JSON.stringify(managerBranchMap));
+      } catch(e) {}
+
+      closeBranchManagerModal();
+      renderBranchWiseTable();
+      renderOverallManagersTable();
+      updateAodData();
+      showToast("Branch assignments saved and applied!", "success");
     }
 
     // ------------------------------------------------------------------------
@@ -4377,7 +5520,7 @@
         var isExpanded = !!expandedManagerAccordions[m.key];
         var chevron = isExpanded ? '▲' : '▼';
         var currentPill = m.isCurrentManager ? ' <span style="font-size:10.5px; background:var(--text); color:#fff; padding:1px 6px; border-radius:10px;">My Team</span>' : '';
-        var hiddenBadge = m.isHidden ? ' <span style="font-size:10px; background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; padding:1px 6px; border-radius:10px; font-weight:700;">🚫 Hidden</span>' : '';
+        var hiddenBadge = m.isHidden ? ' <span style="font-size:10px; background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; padding:1px 6px; border-radius:10px; font-weight:700;">' + uiIcon('eyeOff', 'ui-icon-xs') + ' Hidden</span>' : '';
         var rowStyle = m.isHidden ? ' style="opacity: 0.72; background: #fafafa;"' : '';
 
         html += '<tr class="mgr-row ' + (isExpanded ? 'expanded' : '') + '"' + rowStyle + ' data-mgr="' + escapeHtml(m.key) + '" onclick="toggleManagerAccordion(this.getAttribute(\'data-mgr\'))">' +
@@ -4389,12 +5532,12 @@
           '<td style="text-align:center;" class="tabular"><span style="background:var(--accent-light); padding:2px 7px; border-radius:4px; font-weight:700; border:1px solid var(--border);">' + m.pacing.toFixed(1) + '%</span></td>' +
           '<td style="text-align:center;">' +
             '<div style="display:inline-flex; align-items:center; gap:4px;">' +
-              (m.key === 'bankmoney' ? '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px; background:#0f766e; color:#ffffff; border-color:#0f766e; font-weight:700;" onclick="event.stopPropagation(); openAssignBankMoneyModal();" title="Assign bank money to a manager">💸 Assign</button>' : '') +
+              (m.key === 'bankmoney' ? '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px; background:#0f766e; color:#ffffff; border-color:#0f766e; font-weight:700;" onclick="event.stopPropagation(); openAssignBankMoneyModal();" title="Assign bank money to a manager">' + uiIcon('send', 'ui-icon-xs') + ' Assign</button>' : '') +
               '<button type="button" class="btn-toggle-team" data-mgr="' + escapeHtml(m.key) + '" onclick="event.stopPropagation(); toggleManagerAccordion(this.getAttribute(\'data-mgr\'));">' +
                 chevron + ' ' + (isExpanded ? 'Hide' : 'View (' + m.callers.length + ')') +
               '</button>' +
-              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;" onclick="event.stopPropagation(); openEditManagerModal(\'' + escapeHtml(m.key) + '\')" title="Edit manager details">✏️</button>' +
-              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;' + (m.isHidden ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="event.stopPropagation(); toggleHideManager(\'' + escapeHtml(m.key) + '\')" title="' + (m.isHidden ? 'Unhide / Restore manager' : 'Hide manager from active floor') + '">' + (m.isHidden ? '👁️' : '🚫') + '</button>' +
+              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;" onclick="event.stopPropagation(); openEditManagerModal(\'' + escapeHtml(m.key) + '\')" title="Edit manager details">' + uiIcon('edit', 'ui-icon-xs') + '</button>' +
+              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;' + (m.isHidden ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="event.stopPropagation(); toggleHideManager(\'' + escapeHtml(m.key) + '\')" title="' + (m.isHidden ? 'Unhide / Restore manager' : 'Hide manager from active floor') + '">' + (m.isHidden ? uiIcon('eye', 'ui-icon-xs') : uiIcon('eyeOff', 'ui-icon-xs')) + '</button>' +
             '</div>' +
           '</td>' +
         '</tr>';
@@ -4416,8 +5559,8 @@
               '<td style="text-align:center;" class="tabular">' + (cShare > 0 ? cShare.toFixed(1) + '%' : '0%') + '</td>' +
               '<td style="text-align:center;">' +
                 '<div style="display:inline-flex; align-items:center; gap:3px;">' +
-                  '<button type="button" class="btn-outline" style="padding:1px 6px; font-size:10px;" onclick="openEditCallerModal(\'' + escapeHtml(sc.id || '') + '\', \'' + escapeHtml(sc.officer_name) + '\')" title="Edit caller">✏️</button>' +
-                  '<button type="button" class="btn-outline" style="padding:1px 6px; font-size:10px;' + (isCallerInactive ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="toggleHideCaller(\'' + escapeHtml(sc.id || '') + '\', \'' + escapeHtml(sc.officer_name) + '\')" title="' + (isCallerInactive ? 'Unhide caller' : 'Hide caller') + '">' + (isCallerInactive ? '👁️' : '🚫') + '</button>' +
+                  '<button type="button" class="btn-outline" style="padding:1px 6px; font-size:10px;" onclick="openEditCallerModal(\'' + escapeHtml(sc.id || '') + '\', \'' + escapeHtml(sc.officer_name) + '\')" title="Edit caller">' + uiIcon('edit', 'ui-icon-xs') + '</button>' +
+                  '<button type="button" class="btn-outline" style="padding:1px 6px; font-size:10px;' + (isCallerInactive ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="toggleHideCaller(\'' + escapeHtml(sc.id || '') + '\', \'' + escapeHtml(sc.officer_name) + '\')" title="' + (isCallerInactive ? 'Unhide caller' : 'Hide caller') + '">' + (isCallerInactive ? uiIcon('eye', 'ui-icon-xs') : uiIcon('eyeOff', 'ui-icon-xs')) + '</button>' +
                 '</div>' +
               '</td>' +
             '</tr>';
@@ -4434,7 +5577,7 @@
                   'Team Callers Breakdown · ' + escapeHtml(m.title) +
                 '</div>' +
                 '<button type="button" class="btn-outline" style="font-size:11px; padding:3px 9px; font-weight:700;" onclick="openAddCallerModal(\'' + escapeHtml(m.key) + '\')">' +
-                  '➕ Add Caller to this Team' +
+                  uiIcon('plus', 'ui-icon-xs') + ' Add Caller to this Team' +
                 '</button>' +
               '</div>' +
               '<table class="nested-callers-table">' +
@@ -4485,7 +5628,7 @@
         targetHour: 10,
         targetMinute: 30,
         type: 'projection',
-        title: "🎯 10:30 AM · Projection Target Due",
+        title: "10:30 AM · Projection Target Due",
         body: "Please set today's shift projection benchmark for your team.",
         desc: "Morning projection benchmark target"
       },
@@ -4496,7 +5639,7 @@
         targetHour: 12,
         targetMinute: 0,
         type: 'collection',
-        title: "⏰ 12:00 PM · Midday Collection Update",
+        title: "12:00 PM · Midday Collection Update",
         body: "Midday checkpoint: Record morning collections across your calling roster.",
         desc: "Midday collection update"
       },
@@ -4577,15 +5720,15 @@
         return;
       }
       if (Notification.permission === 'granted') {
-        btn.innerHTML = '🟢 Alerts Active';
+        btn.innerHTML = '<span class="status-indicator-dot"></span> Alerts Active';
         btn.classList.add('active-alerts');
         btn.title = "Background desktop notifications are enabled. Click to test sound & alert.";
       } else if (Notification.permission === 'denied') {
-        btn.innerHTML = '🔕 Alerts Blocked';
+        btn.innerHTML = uiIcon('bellOff', 'ui-icon-sm') + ' Alerts Blocked';
         btn.classList.remove('active-alerts');
         btn.title = "Notifications blocked in browser permissions. Allow notifications for this site to receive background alerts.";
       } else {
-        btn.innerHTML = '🔔 Background Alerts';
+        btn.innerHTML = uiIcon('bell', 'ui-icon-sm') + ' Background Alerts';
         btn.classList.remove('active-alerts');
         btn.title = "Click to enable background desktop notifications for 10:30 AM, 12:00 PM, 4:00 PM, and 6:20 PM";
       }
@@ -4600,7 +5743,7 @@
       if (Notification.permission === 'granted') {
         if (isUserClick) {
           playCheckpointChime('projection');
-          showToast("✓ Background alerts are active! (Test alert fired)", "success");
+          showToast("Background alerts are active! (Test alert fired)", "success");
           try {
             var n = new Notification("Shaha Finlease — Collection Desk", {
               body: "Automatic background checkpoints active: 10:30 AM Projection, 12:00 PM, 4:00 PM, 6:20 PM",
@@ -4614,7 +5757,7 @@
           updateNotificationButtonState();
           if (perm === 'granted') {
             playCheckpointChime('projection');
-            showToast("✓ Background desktop notifications enabled!", "success");
+            showToast("Background desktop notifications enabled!", "success");
             try {
               var n = new Notification("Shaha Finlease — Collection Desk", {
                 body: "Automated reminders activated for 10:30 AM (Projection), 12:00 PM, 4:00 PM, 6:20 PM",
@@ -4739,7 +5882,7 @@
         descEl.textContent = teamProj === 0 ? "Set today's team projection benchmark before 10:30 AM calling start." : (pendingCount + " callers pending collections.");
       } else if (nowMin < 12 * 60) {
         titleEl.textContent = "Morning Calling: 12:00 PM Midday Update Upcoming";
-        descEl.textContent = (teamProj === 0 ? "⚠️ Shift projection not set! " : "") + pendingCount + " callers pending collection entry.";
+        descEl.textContent = (teamProj === 0 ? "Shift projection not set! " : "") + pendingCount + " callers pending collection entry.";
       } else if (nowMin < 16 * 60) {
         titleEl.textContent = "Midday Operations: 04:00 PM Afternoon Checkpoint";
         descEl.textContent = pendingCount + " of " + teamCallers.length + " callers pending entry. Record post-lunch collections.";
@@ -4747,12 +5890,22 @@
         titleEl.textContent = "Afternoon Push: 06:20 PM Final Shift Wrap-Up Upcoming";
         descEl.textContent = pendingCount + " callers still have unrecorded collections before shift closes.";
       } else {
-        titleEl.textContent = "✓ Shift Closed: All Checkpoints Reached (06:20 PM Final)";
+        titleEl.textContent = "Shift Closed: All Checkpoints Reached (06:20 PM Final)";
         descEl.textContent = (pendingCount === 0 ? "All callers recorded for today." : (pendingCount + " callers marked ₹0 / unlogged for today."));
       }
     }
 
+    var _activeCheckpointAlert = null;
+
     function triggerCheckpointAlert(cp) {
+      if (!cp) return;
+
+      // Check if snoozed
+      var snoozedUntil = Number(localStorage.getItem('shaha_snooze_until') || 0);
+      if (Date.now() < snoozedUntil) {
+        return;
+      }
+
       // 1. Play harmonic audio chime
       playCheckpointChime(cp.type);
 
@@ -4767,31 +5920,107 @@
           });
           notif.onclick = function() {
             window.focus();
-            if (cp.type === 'projection') {
-              openProjectionModal(true);
-            }
+            openReminderPopupModalForCheckpoint(cp);
             this.close();
           };
         } catch(e) {}
       }
 
-      // 3. In-App Notification / Dialog
-      if (cp.type === 'projection') {
-        showToast(cp.title + " · " + cp.body, "info");
-        var currentProj = teamProjection || 0;
-        if (currentProj === 0) {
-          setTimeout(function() {
+      // 3. Show On-Time Pop-Up Notification Modal
+      openReminderPopupModalForCheckpoint(cp);
+    }
+
+    function openReminderPopupModalForCheckpoint(cp) {
+      _activeCheckpointAlert = cp;
+      var modal = document.getElementById('reminderPopupModalBackdrop');
+      if (!modal) return;
+
+      var iconEl = document.getElementById('reminderPopupIcon');
+      var badgeEl = document.getElementById('reminderPopupBadge');
+      var titleEl = document.getElementById('reminderPopupTitle');
+      var descEl = document.getElementById('reminderPopupDesc');
+      var pendingEl = document.getElementById('reminderPopupPendingCallers');
+      var totalEl = document.getElementById('reminderPopupTotalLogged');
+      var actionBtn = document.getElementById('reminderPopupActionBtn');
+
+      var totals = calculateTeamTotals();
+      var pendingCount = 0;
+      teamCallers.forEach(function(c) {
+        if (!c.today || Number(c.today) === 0) pendingCount++;
+      });
+
+      if (badgeEl) badgeEl.textContent = cp ? cp.time + " Checkpoint" : "Shift Checkpoint";
+      if (titleEl) titleEl.textContent = cp ? cp.title : "Collection Update Reminder";
+      if (descEl) descEl.textContent = cp ? cp.body : "Time to record today's floor collection updates.";
+      if (pendingEl) pendingEl.textContent = pendingCount + " callers pending";
+      if (totalEl) totalEl.textContent = formatIndianCurrency(totals.totalToday);
+
+      if (cp && cp.type === 'projection') {
+        if (iconEl) iconEl.innerHTML = uiIcon('target', 'ui-icon-lg');
+        if (actionBtn) {
+          actionBtn.innerHTML = uiIcon('target', 'ui-icon-sm') + ' Set Today\'s Projection';
+          actionBtn.onclick = function() {
+            closeReminderPopupModal();
             openProjectionModal(true);
-          }, 400);
+          };
         }
       } else {
-        var pendingCount = 0;
-        teamCallers.forEach(function(c) {
-          if (!c.today || Number(c.today) === 0) pendingCount++;
-        });
-        var msg = cp.title + (pendingCount > 0 ? (" · " + pendingCount + " callers pending entry") : " · All callers recorded");
-        showToast(msg, pendingCount > 0 ? "info" : "success");
+        if (iconEl) iconEl.textContent = '⏰';
+        if (actionBtn) {
+          actionBtn.innerHTML = uiIcon('edit', 'ui-icon-sm') + ' Update Collections Now';
+          actionBtn.onclick = function() {
+            closeReminderPopupModal();
+            switchMainTab('myteam');
+            setTimeout(function() {
+              var inputs = document.querySelectorAll('#callerTableBody input.input-amount');
+              for (var i = 0; i < inputs.length; i++) {
+                if (!inputs[i].value || inputs[i].value === '0') {
+                  inputs[i].focus();
+                  inputs[i].select();
+                  break;
+                }
+              }
+            }, 100);
+          };
+        }
       }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeReminderPopupModal() {
+      var modal = document.getElementById('reminderPopupModalBackdrop');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function snoozeReminderPopup(minutes) {
+      closeReminderPopupModal();
+      var snoozeMs = (minutes || 10) * 60 * 1000;
+      var cp = _activeCheckpointAlert;
+      localStorage.setItem('shaha_snooze_until', Date.now() + snoozeMs);
+      showToast("Reminder snoozed for " + (minutes || 10) + " minutes.", "info");
+      setTimeout(function() {
+        if (cp) {
+          localStorage.removeItem('shaha_snooze_until');
+          triggerCheckpointAlert(cp);
+        }
+      }, snoozeMs);
+    }
+
+    function openReminderPopupModalManual() {
+      var now = new Date();
+      var nowMin = now.getHours() * 60 + now.getMinutes();
+      var currentOrNext = SHIFT_CHECKPOINTS[0];
+      for (var i = 0; i < SHIFT_CHECKPOINTS.length; i++) {
+        var cpMin = SHIFT_CHECKPOINTS[i].targetHour * 60 + SHIFT_CHECKPOINTS[i].targetMinute;
+        if (nowMin < cpMin) {
+          currentOrNext = SHIFT_CHECKPOINTS[i];
+          break;
+        } else {
+          currentOrNext = SHIFT_CHECKPOINTS[i];
+        }
+      }
+      openReminderPopupModalForCheckpoint(currentOrNext);
     }
 
     function checkReminderStatus(showToastPrompt) {
@@ -4883,25 +6112,115 @@
         }
       }
 
-      var paceBadge = document.getElementById('aodPacingPercentBadge');
-      if (paceBadge) paceBadge.textContent = totals.pacingPct.toFixed(1) + '%';
+      // AOD Branch Wise Collections Table (Replaces Projections)
+      var aodBranchTbody = document.getElementById('aodBranchTableBody');
+      var aodBranchCountBadge = document.getElementById('aodBranchCountBadge');
+      var aodBranchFloorPill = document.getElementById('aodBranchFloorPill');
+      var aodTfootTarget = document.getElementById('aodTfootTotalTarget');
+      var aodTfootYesterday = document.getElementById('aodTfootTotalYesterday');
+      var aodTfootSdlm = document.getElementById('aodTfootTotalSdlm');
+      var aodTfootJulySdlm = document.getElementById('aodTfootTotalJulySdlm');
+      var aodTfootToday = document.getElementById('aodTfootTotalToday');
 
-      var paceBar = document.getElementById('aodPacingBarFill');
-      if (paceBar) paceBar.style.width = Math.min(100, Math.max(0, totals.pacingPct)) + '%';
+      if (aodBranchTbody) {
+        var branchDefs = getAllBranchDefinitions();
+        var floorGrandTarget = 0;
+        var floorGrandYesterday = 0;
+        var floorGrandSdlm = 0;
+        var floorGrandJulySdlm = 0;
+        var floorGrandToday = 0;
+        var branchRows = [];
 
-      var statCollected = document.getElementById('aodStatCollected');
-      if (statCollected) statCollected.textContent = formatIndianCurrency(totals.totalToday);
+        branchDefs.forEach(function(bDef) {
+          var branchMgrKeys = ALL_MANAGERS_ORDER.filter(function(mk) {
+            if (hiddenManagers.indexOf(mk) !== -1 && !showHiddenManagers) return false;
+            return bDef.isMember(mk);
+          });
 
-      var statProj = document.getElementById('aodStatProjection');
-      if (statProj) statProj.textContent = formatIndianCurrency(totals.projection);
+          var bToday = 0;
+          branchMgrKeys.forEach(function(mk) {
+            var cList = allFloorCallers.filter(function(c) {
+              return (c.manager_key || '').toLowerCase() === mk;
+            });
+            cList.forEach(function(c) { bToday += Number(c.today) || 0; });
+          });
 
-      var statGap = document.getElementById('aodStatGap');
-      if (statGap) {
-        if (totals.gap > 0) {
-          statGap.textContent = formatIndianCurrency(totals.gap);
-        } else {
-          statGap.textContent = "+" + formatIndianCurrency(Math.abs(totals.gap));
+          var bTarget = getBranchTarget(bDef.key);
+          var bYesterday = getBranchYesterdayCollection(bDef.key);
+          var bSdlm = getBranchSdlm(bDef.key);
+          var bJulySdlm = getBranchJulySdlm(bDef.key);
+
+          floorGrandTarget += bTarget;
+          floorGrandYesterday += bYesterday;
+          floorGrandSdlm += bSdlm;
+          floorGrandJulySdlm += bJulySdlm;
+          floorGrandToday += bToday;
+
+          branchRows.push({
+            key: bDef.key,
+            name: bDef.name,
+            badge: bDef.badge,
+            target: bTarget,
+            yesterday: bYesterday,
+            sdlm: bSdlm,
+            julySdlm: bJulySdlm,
+            today: bToday
+          });
+        });
+
+        if (aodBranchCountBadge) aodBranchCountBadge.textContent = branchDefs.length + ' Branches';
+        if (aodBranchFloorPill) aodBranchFloorPill.textContent = 'Floor Live: ' + formatIndianCurrency(floorGrandToday);
+        if (aodTfootTarget) aodTfootTarget.textContent = formatIndianCurrency(floorGrandTarget);
+        if (aodTfootYesterday) aodTfootYesterday.textContent = formatIndianCurrency(floorGrandYesterday);
+        if (aodTfootSdlm) aodTfootSdlm.textContent = formatIndianCurrency(floorGrandSdlm);
+        if (aodTfootJulySdlm) aodTfootJulySdlm.textContent = formatIndianCurrency(floorGrandJulySdlm);
+        if (aodTfootToday) aodTfootToday.textContent = formatIndianCurrency(floorGrandToday);
+
+        var aodHtml = '';
+        branchRows.forEach(function(br, idx) {
+          var share = floorGrandToday > 0 ? (br.today / floorGrandToday) * 100 : 0;
+          aodHtml += '<tr>' +
+            '<td style="text-align:center; font-weight:700;" class="tabular">' + (idx + 1) + '</td>' +
+            '<td>' +
+              '<div style="font-weight:800; font-size:13px; color:var(--text);">' + escapeHtml(br.name) + '</div>' +
+              '<div style="font-size:10.5px; color:var(--text-muted);">' + escapeHtml(br.badge) + '</div>' +
+            '</td>' +
+            '<td style="text-align:right; font-weight:700; font-size:12px;" class="tabular">' +
+              '<span title="Click to edit target" style="cursor:pointer;" onclick="promptEditBranchTarget(\'' + escapeHtml(br.key) + '\', \'' + escapeHtml(br.name) + '\')">' +
+                formatIndianCurrency(br.target) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span>' +
+              '</span>' +
+            '</td>' +
+            '<td style="text-align:right; font-weight:600; font-size:12px; color:var(--text-muted);" class="tabular">' +
+              '<span title="Click to edit yesterday collection" style="cursor:pointer;" onclick="promptEditBranchYesterday(\'' + escapeHtml(br.key) + '\', \'' + escapeHtml(br.name) + '\')">' +
+                formatIndianCurrency(br.yesterday) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span>' +
+              '</span>' +
+            '</td>' +
+            '<td style="text-align:right; font-weight:600; font-size:12px; color:var(--text-muted);" class="tabular">' +
+              '<span title="Click to edit SDLM" style="cursor:pointer;" onclick="promptEditBranchSdlm(\'' + escapeHtml(br.key) + '\', \'' + escapeHtml(br.name) + '\')">' +
+                formatIndianCurrency(br.sdlm) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span>' +
+              '</span>' +
+            '</td>' +
+            '<td style="text-align:right; font-weight:600; font-size:12px; color:var(--text-muted);" class="tabular">' +
+              '<span title="Click to edit July SDLM" style="cursor:pointer;" onclick="promptEditBranchJulySdlm(\'' + escapeHtml(br.key) + '\', \'' + escapeHtml(br.name) + '\')">' +
+                formatIndianCurrency(br.julySdlm) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span>' +
+              '</span>' +
+            '</td>' +
+            '<td style="text-align:right; font-weight:800; font-size:13px;" class="tabular">' +
+              formatIndianCurrency(br.today) +
+            '</td>' +
+            '<td style="text-align:center;" class="tabular">' +
+              '<span style="background:var(--accent-light); padding:1px 6px; border-radius:4px; font-weight:700; border:1px solid var(--border); font-size:11px;">' +
+                (share > 0 ? share.toFixed(1) + '%' : '0%') +
+              '</span>' +
+            '</td>' +
+          '</tr>';
+        });
+
+        if (branchRows.length === 0) {
+          aodHtml = '<tr><td colspan="8" style="text-align:center; padding:18px; color:var(--text-muted);">No branches configured.</td></tr>';
         }
+
+        aodBranchTbody.innerHTML = aodHtml;
       }
 
       var top5Wrap = document.getElementById('aodTop5Container');
@@ -5110,6 +6429,8 @@
     // CALLER MANAGEMENT (ADD, EDIT, HIDE/REMOVE)
     // ------------------------------------------------------------------------
     function toggleShowHiddenCallers(isChecked) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) return;
       showHiddenCallers = !!isChecked;
       loadManagerData();
     }
@@ -5139,6 +6460,12 @@
     }
 
     function openAddCallerModal(defaultMgrKey) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Adding callers is restricted to floor administrators.", "warning");
+        return;
+      }
+
       var errEl = document.getElementById('callerFormError');
       if (errEl) errEl.style.display = 'none';
 
@@ -5168,6 +6495,12 @@
     }
 
     function openEditCallerModal(callerId, callerName) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Editing callers is restricted to floor administrators.", "warning");
+        return;
+      }
+
       var errEl = document.getElementById('callerFormError');
       if (errEl) errEl.style.display = 'none';
 
@@ -5292,11 +6625,17 @@
         console.warn("Save caller error:", err);
         if (errEl) { errEl.textContent = "Failed to save: " + err.message; errEl.style.display = 'block'; }
       } finally {
-        if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = "💾 Save Caller"; }
+        if (saveBtn) { saveBtn.disabled = false; saveBtn.innerHTML = uiIcon("save", "ui-icon-sm") + " Save Caller"; }
       }
     }
 
     async function toggleHideCaller(callerId, callerName) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Hiding or restoring callers is restricted to floor administrators.", "warning");
+        return;
+      }
+
       var c = null;
       for (var i = 0; i < allLoadedCallers.length; i++) {
         if ((callerId && String(allLoadedCallers[i].id) === String(callerId)) ||
@@ -5325,6 +6664,12 @@
     }
 
     async function deleteCallerAction() {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Deleting callers is restricted to floor administrators.", "warning");
+        return;
+      }
+
       var id = document.getElementById('callerEditId').value.trim();
       var origName = document.getElementById('callerOriginalName').value.trim();
       var name = document.getElementById('callerFormName').value.trim() || origName;
@@ -5543,7 +6888,7 @@
         console.warn("Save manager error:", err);
         if (errEl) { errEl.textContent = "Failed to save: " + err.message; errEl.style.display = 'block'; }
       } finally {
-        if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = "💾 Save Manager"; }
+        if (saveBtn) { saveBtn.disabled = false; saveBtn.innerHTML = uiIcon("save", "ui-icon-sm") + " Save Manager"; }
       }
     }
 
@@ -5640,7 +6985,7 @@
       var tbody = document.getElementById('adminUsersTableBody');
       var countLbl = document.getElementById('adminUsersCountLabel');
       if (tbody) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 28px; color: var(--text-muted);"><div class="loading-spinner" style="margin: 0 auto 8px;"></div>Loading user directory...</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 28px; color: var(--text-muted);"><div class="loading-spinner" style="margin: 0 auto 8px;"></div>Loading user directory...</td></tr>';
       }
       if (countLbl) countLbl.textContent = 'Fetching accounts from database...';
 
@@ -5655,7 +7000,7 @@
       } catch(err) {
         console.warn("Error fetching users directory:", err);
         if (tbody) {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 24px; color: #dc2626;">Failed to load users: ' + escapeHtml(err.message) + '</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 24px; color: #dc2626;">Failed to load users: ' + escapeHtml(err.message) + '</td></tr>';
         }
         if (countLbl) countLbl.textContent = 'Error loading accounts';
       }
@@ -5689,7 +7034,7 @@
       if (!tbody) return;
 
       if (!usersList || usersList.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 28px; color: var(--text-muted);">No users match your criteria.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 28px; color: var(--text-muted);">No users match your criteria.</td></tr>';
         if (countLbl) countLbl.textContent = 'Showing 0 accounts';
         return;
       }
@@ -5718,6 +7063,8 @@
           teamName = MANAGER_NAMES[u.manager_key.toLowerCase()] || u.manager_key.toUpperCase();
         }
 
+        var passDisplay = u.password ? escapeHtml(u.password) : '<span style="color:var(--text-muted); font-size:11px;">••••</span>';
+
         html += '<tr>';
         html += '<td style="text-align:center; color: var(--text-muted); font-size: 11px;">' + (idx + 1) + '</td>';
         html += '<td>';
@@ -5737,11 +7084,13 @@
 
         html += '<td style="font-size: 12px; color: var(--text-muted);">' + escapeHtml(teamName) + '</td>';
 
+        html += '<td style="text-align:center;"><span class="tabular" style="font-family:monospace; font-weight:700; font-size:12px; background:#f4f4f5; padding:2px 7px; border-radius:4px; border:1px solid #e4e4e7;">' + passDisplay + '</span></td>';
+
         html += '<td style="text-align:center;">';
         html += '<div style="display:inline-flex; align-items:center; gap:5px;">';
-        html += '<button type="button" class="btn-outline" style="padding: 3px 8px; font-size: 11.5px; font-weight: 600;" onclick="openEditUserForm(\'' + escapeHtml(u.id) + '\')">✏️ Edit</button>';
+        html += '<button type="button" class="btn-outline" style="padding: 3px 8px; font-size: 11.5px; font-weight: 600;" onclick="openEditUserForm(\'' + escapeHtml(u.id) + '\')">' + uiIcon('edit', 'ui-icon-xs') + ' Edit</button>';
         if (!isSelf) {
-          html += '<button type="button" class="btn-outline" style="padding: 3px 7px; font-size: 11.5px; color: #dc2626; border-color: #fecaca;" onclick="deleteUserPrompt(\'' + escapeHtml(u.id) + '\', \'' + escapeHtml(u.username) + '\')" title="Delete user">🗑️</button>';
+          html += '<button type="button" class="btn-outline" style="padding: 3px 7px; font-size: 11.5px; color: #dc2626; border-color: #fecaca;" onclick="deleteUserPrompt(\'' + escapeHtml(u.id) + '\', \'' + escapeHtml(u.username) + '\')" title="Delete user">' + uiIcon('trash', 'ui-icon-xs') + '</button>';
         }
         html += '</div>';
         html += '</td>';
@@ -5781,8 +7130,8 @@
         if (dInp) dInp.value = user.display_name || '';
         if (rInp) rInp.value = user.role || 'manager';
         if (mInp) mInp.value = (user.manager_key || 'all').toLowerCase();
-        if (pInp) pInp.value = '';
-        if (hintEl) hintEl.textContent = "Leave empty to keep existing password";
+        if (pInp) pInp.value = user.password || '';
+        if (hintEl) hintEl.textContent = user.password ? ("Current password shown: " + user.password + " · Edit or click PIN to update") : "Leave empty to keep existing password";
 
         var isSelf = currentUser && (currentUser.username === user.username);
         if (delBtn) delBtn.style.display = (!isSelf) ? 'inline-flex' : 'none';
@@ -5796,7 +7145,7 @@
         if (rInp) rInp.value = 'manager';
         if (mInp) mInp.value = 'ambuj';
         if (pInp) pInp.value = '';
-        if (hintEl) hintEl.textContent = "Required for new accounts";
+        if (hintEl) hintEl.textContent = "Required for new accounts (e.g. 1234)";
         if (delBtn) delBtn.style.display = 'none';
       }
 
@@ -5923,7 +7272,7 @@
       } finally {
         if (saveBtn) {
           saveBtn.disabled = false;
-          saveBtn.textContent = "💾 Save User";
+          saveBtn.innerHTML = uiIcon("save", "ui-icon-sm") + " Save User";
         }
       }
     }
@@ -6092,7 +7441,7 @@
       // Option 2: Dedicated Bank Transfer Row
       var opt2 = document.createElement('option');
       opt2.value = '__NEW_BANK_CREDIT__';
-      opt2.textContent = '➕ Credit to "BANK TRANSFER (KOMAL)" Entry';
+      opt2.textContent = 'Credit to "BANK TRANSFER (KOMAL)" Entry';
       callerSelect.appendChild(opt2);
 
       // Option 3+: Individual callers in this manager's team
@@ -6298,7 +7647,7 @@
         console.error("Assign bank money error:", err);
         if (errEl) { errEl.textContent = "Failed to assign: " + err.message; errEl.style.display = 'block'; }
       } finally {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "💸 Confirm & Assign to Manager"; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = uiIcon("send", "ui-icon-sm") + " Confirm & Assign"; }
       }
     }
 
