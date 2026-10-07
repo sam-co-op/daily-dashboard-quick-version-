@@ -3491,6 +3491,13 @@
       currentUser = user;
       document.getElementById('loginScreen').style.display = 'none';
 
+      if (user) {
+        var uName = (user.username || '').toLowerCase();
+        if (uName === 'dhruv' || uName === 'customerservice') {
+          user.managerKey = 'customerservice';
+        }
+      }
+
       var isAdmin = (user.role === 'admin' || user.role === 'mis' || user.role === 'editor');
       var sel = document.getElementById('adminMgrSelect');
       var editToggleWrap = document.getElementById('adminEditToggleWrap');
@@ -3511,6 +3518,7 @@
       } else {
         // Manager Login: Strictly bound to their own team, no date filter (access to Today and Yesterday only)
         currentManagerKey = (user.managerKey || user.username || '').toLowerCase();
+        if (currentManagerKey === 'dhruv') currentManagerKey = 'customerservice';
         if (sel) sel.style.display = 'none';
         if (editToggleWrap) editToggleWrap.style.display = 'none';
         closeAdminEditMenu();
@@ -3680,7 +3688,7 @@
           { u: 'satish', p: '1234', r: 'admin', n: 'Satish (Admin)', m: 'all' },
           { u: 'samarth', p: '1234', r: 'admin', n: 'Samarth (Admin)', m: 'all' },
           { u: 'tejas', p: '1234', r: 'mis', n: 'Tejas (MIS)', m: 'all' },
-          { u: 'dhruv', p: '1234', r: 'editor', n: 'Dhruv (Customer Service)', m: 'all' }
+          { u: 'dhruv', p: '1234', r: 'manager', n: 'Dhruv (Customer Service)', m: 'customerservice' }
         ];
 
         var found = defaults.find(function(d) { return d.u === u && d.p === p; });
@@ -4138,6 +4146,7 @@
         // Strictly enforce manager key for non-admins
         if (!isAdmin && currentUser) {
           currentManagerKey = (currentUser.managerKey || currentUser.username || '').toLowerCase();
+          if (currentManagerKey === 'dhruv') currentManagerKey = 'customerservice';
         }
 
         // 1. Fetch Callers from Supabase (All floor callers loaded for floor stats & team isolation)
