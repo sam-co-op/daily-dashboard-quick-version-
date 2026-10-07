@@ -832,6 +832,19 @@
       border-color: #d4d4d8;
     }
 
+    .kpi-hero-split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .kpi-hero-split-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .kpi-card.hero-center {
       text-align: center;
       border: 1px solid rgba(0, 0, 0, 0.07);
@@ -843,24 +856,37 @@
       content: '';
       position: absolute;
       top: 0;
-      left: 20px;
-      right: 20px;
+      left: 16px;
+      right: 16px;
       height: 2px;
       background: #09090b;
       border-radius: 2px;
     }
-    .kpi-card.hero-center .kpi-header {
-      justify-content: center;
-      gap: 8px;
+    .kpi-card.hero-center.hero-floor-card::before {
+      background: #64748b;
     }
-    .kpi-card.hero-center .kpi-value {
-      font-size: 36px;
-      margin: 4px 0 8px;
+    .kpi-card.hero-center.hero-floor-card .kpi-badge {
+      background: #f1f5f9;
+      color: #09090b;
+      border: 1px solid #e2e8f0;
+    }
+    .kpi-hero-split-grid .kpi-card.hero-center {
+      padding: 14px 10px;
+    }
+    .kpi-hero-split-grid .kpi-card.hero-center .kpi-header {
+      justify-content: center;
+      gap: 6px;
+    }
+    .kpi-hero-split-grid .kpi-card.hero-center .kpi-value {
+      font-size: 24px;
+      margin: 4px 0 6px;
       color: #09090b;
     }
-    .kpi-card.hero-center .kpi-subtext {
+    .kpi-hero-split-grid .kpi-card.hero-center .kpi-subtext {
       justify-content: center;
-      gap: 12px;
+      gap: 6px;
+      font-size: 11px;
+      flex-wrap: wrap;
     }
 
     .kpi-header {
@@ -2023,16 +2049,32 @@
       <aside class="desk-left-col">
         <!-- KPI STRIP -->
         <section class="kpi-grid">
-          <!-- 1. Total Collection Today (HERO CARD ON TOP) -->
-          <div class="kpi-card hero-center">
-            <div class="kpi-header">
-              <span id="kpiActualLabel" class="kpi-label">TODAY'S TEAM COLLECTION</span>
-              <span class="kpi-badge" style="background:var(--text); color:#ffffff;">ACTUAL</span>
+          <!-- 1. DUAL HERO COLLECTION: MY TEAM & TOTAL TEAMS -->
+          <div class="kpi-hero-split-grid">
+            <!-- 1A. My Team Collection Today -->
+            <div class="kpi-card hero-center hero-team-card">
+              <div class="kpi-header">
+                <span id="kpiActualLabel" class="kpi-label">MY TEAM COLLECTION</span>
+                <span class="kpi-badge" style="background:var(--text); color:#ffffff;">MY TEAM</span>
+              </div>
+              <div id="kpiTotalToday" class="kpi-value tabular">₹ 0</div>
+              <div class="kpi-subtext">
+                <span id="kpiActiveCallersCount">0 of 0 Callers Contributed</span> ·
+                <span id="kpiAvgPerCaller" class="tabular">Avg ₹0</span>
+              </div>
             </div>
-            <div id="kpiTotalToday" class="kpi-value tabular">₹ 0</div>
-            <div class="kpi-subtext">
-              <span id="kpiActiveCallersCount">0 Active Callers</span> ·
-              <span id="kpiAvgPerCaller" class="tabular">Avg ₹0 / caller</span>
+
+            <!-- 1B. Total Teams Collection (All Teams / Floor Total) -->
+            <div class="kpi-card hero-center hero-floor-card">
+              <div class="kpi-header">
+                <span id="kpiFloorActualLabel" class="kpi-label">TOTAL TEAMS COLLECTION</span>
+                <span class="kpi-badge">ALL TEAMS</span>
+              </div>
+              <div id="kpiTotalFloorToday" class="kpi-value tabular">₹ 0</div>
+              <div class="kpi-subtext">
+                <span id="kpiFloorActiveCallersCount">0 Active Callers</span> ·
+                <span id="kpiFloorTeamsCount" class="tabular">Floor Total</span>
+              </div>
             </div>
           </div>
 
@@ -2249,7 +2291,10 @@
         </div>
         <div class="entry-tools" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
           <input type="text" id="branchFilterInput" class="search-input" placeholder="Search branch or manager..." oninput="renderBranchWiseTable()">
-          <button type="button" class="btn-solid" onclick="openBranchManagerModal()" style="font-weight:700;">
+          <button type="button" class="btn-solid" onclick="openBranchManagerModal('targets')" style="font-weight:700;">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit Branch Targets & Benchmarks
+          </button>
+          <button type="button" class="btn-outline" onclick="openBranchManagerModal('assign')" style="font-weight:700;">
             <svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg> Manage Branches & Assign Teams
           </button>
         </div>
@@ -2304,11 +2349,11 @@
         </div>
         <div class="entry-tools" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
           <input type="text" id="mgrFilterInput" class="search-input" placeholder="Search manager..." oninput="renderOverallManagersTable()">
-          <label style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:600; color:var(--text-muted); cursor:pointer; user-select:none;">
+          <label id="wrapShowHiddenManagers" style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:600; color:var(--text-muted); cursor:pointer; user-select:none;">
             <input type="checkbox" id="chkShowHiddenManagers" onchange="toggleShowHiddenManagers(this.checked)" style="accent-color:#09090b; cursor:pointer;">
             Show Hidden Managers
           </label>
-          <button type="button" class="btn-solid" onclick="openAddManagerModal()">
+          <button type="button" id="btnOpenAddManagerModal" class="btn-solid" onclick="openAddManagerModal()">
             <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Manager
           </button>
         </div>
@@ -2385,11 +2430,10 @@
         <span id="aodContributorsText">0 of 0 callers collected today</span> ·
         <span id="aodPacingSubText">0% of projection</span>
       </div>
-      <!-- Centered Yesterday Benchmark & Comparison -->
+      <!-- Centered Yesterday Benchmark & Comparison (Read-Only) -->
       <div class="aod-yesterday-pill-wrap">
         <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Yesterday Benchmark:</span>
         <span id="aodYesterdayVal" class="tabular" style="font-size:15px; font-weight:800; color:var(--text);">₹ 0</span>
-        <button type="button" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; display:inline-flex; align-items:center;" onclick="promptEditYesterdayCollection()" title="Edit Yesterday Amount"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
         <span id="aodYesterdayDiffPill" class="aod-yesterday-diff tabular">+₹ 0 vs Yesterday</span>
       </div>
     </div>
@@ -2405,7 +2449,6 @@
           </div>
           <div style="display:flex; align-items:center; gap:6px;">
             <span id="aodBranchFloorPill" class="tabular" style="font-size:11.5px; font-weight:800; color:#0f766e; background:#f0fdf4; padding:2px 8px; border-radius:12px; border:1px solid #bbf7d0;">Floor Live</span>
-            <button type="button" class="btn-outline" style="font-size:10.5px; padding:2px 7px;" onclick="openBranchManagerModal('targets')" title="Manage Targets & Branches"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Targets & Assign</button>
           </div>
         </div>
 
@@ -3474,9 +3517,8 @@
         if (btnDateHierarchy) btnDateHierarchy.style.display = 'none';
         if (dateHierarchyPop) dateHierarchyPop.style.display = 'none';
         if (tabBranches) tabBranches.style.display = 'none';
-        if (tabAllMgrs) tabAllMgrs.style.display = 'none';
+        if (tabAllMgrs) tabAllMgrs.style.display = 'inline-flex';
         if (viewBranches) viewBranches.style.display = 'none';
-        if (viewAllMgrs) viewAllMgrs.style.display = 'none';
 
         // Enforce that managers can only be on Today or Yesterday
         var todayStr = getTodayDateString();
@@ -4040,17 +4082,26 @@
           if (labelEl) labelEl.textContent = formatDisplayDateLabel(today) + " (Today)";
           if (quickTodayBtn) quickTodayBtn.classList.add('active');
           if (quickYdayBtn) quickYdayBtn.classList.remove('active');
-          document.getElementById('kpiActualLabel').textContent = "TODAY'S TEAM COLLECTION";
+          var lblMy = document.getElementById('kpiActualLabel');
+          if (lblMy) lblMy.textContent = "MY TEAM COLLECTION";
+          var lblFloor = document.getElementById('kpiFloorActualLabel');
+          if (lblFloor) lblFloor.textContent = "TOTAL TEAMS COLLECTION";
         } else if (activeDateStr === yday) {
           if (labelEl) labelEl.textContent = formatDisplayDateLabel(yday) + " (Yesterday)";
           if (quickTodayBtn) quickTodayBtn.classList.remove('active');
           if (quickYdayBtn) quickYdayBtn.classList.add('active');
-          document.getElementById('kpiActualLabel').textContent = "YESTERDAY'S COLLECTION";
+          var lblMy = document.getElementById('kpiActualLabel');
+          if (lblMy) lblMy.textContent = "YESTERDAY'S TEAM";
+          var lblFloor = document.getElementById('kpiFloorActualLabel');
+          if (lblFloor) lblFloor.textContent = "YESTERDAY'S TOTAL TEAMS";
         } else {
           if (labelEl) labelEl.textContent = formatDisplayDateLabel(activeDateStr);
           if (quickTodayBtn) quickTodayBtn.classList.remove('active');
           if (quickYdayBtn) quickYdayBtn.classList.remove('active');
-          document.getElementById('kpiActualLabel').textContent = "COLLECTION FOR " + activeDateStr;
+          var lblMy = document.getElementById('kpiActualLabel');
+          if (lblMy) lblMy.textContent = "MY TEAM " + activeDateStr;
+          var lblFloor = document.getElementById('kpiFloorActualLabel');
+          if (lblFloor) lblFloor.textContent = "TOTAL TEAMS " + activeDateStr;
         }
       } else {
         activeDateStr = selectedDatesList.join(',');
@@ -4089,44 +4140,25 @@
           currentManagerKey = (currentUser.managerKey || currentUser.username || '').toLowerCase();
         }
 
-        // 1. Fetch Callers from Supabase (Managers ONLY receive their own callers)
-        var callersUrl = 'callers';
-        if (!isAdmin) {
-          callersUrl += '?manager_key=eq.' + encodeURIComponent(currentManagerKey) + '&order=officer_name.asc';
-        } else {
-          callersUrl += '?order=manager_key.asc,officer_name.asc';
-        }
-
+        // 1. Fetch Callers from Supabase (All floor callers loaded for floor stats & team isolation)
+        var callersUrl = 'callers?order=manager_key.asc,officer_name.asc';
         var callers = await sbFetch(callersUrl);
         allLoadedCallers = callers || [];
         var activeCallers = allLoadedCallers.filter(function(c) {
           return c.status !== 'Inactive' && c.status !== 'Hidden';
         });
 
-        if (!isAdmin) {
-          teamCallers = showHiddenCallers ? allLoadedCallers.slice() : activeCallers.slice();
-          allFloorCallers = teamCallers.slice(); // Never store or leak other managers' callers in memory
-        } else {
-          allFloorCallers = showHiddenCallers ? allLoadedCallers : activeCallers;
-          teamCallers = allFloorCallers.filter(function(c) {
-            return c.manager_key === currentManagerKey;
-          });
-        }
+        allFloorCallers = showHiddenCallers ? allLoadedCallers : activeCallers;
+        teamCallers = allFloorCallers.filter(function(c) {
+          return (c.manager_key || '').toLowerCase() === currentManagerKey;
+        });
 
-        // 2. Fetch Projections (Managers ONLY receive their own projection)
+        // 2. Fetch Projections (All manager projections for floor calculation)
         var projQuery = 'manager_projections';
-        if (!isAdmin) {
-          if (selectedDatesList.length === 1) {
-            projQuery += '?manager_key=eq.' + encodeURIComponent(currentManagerKey) + '&date=eq.' + encodeURIComponent(selectedDatesList[0]);
-          } else {
-            projQuery += '?manager_key=eq.' + encodeURIComponent(currentManagerKey) + '&date=in.(' + selectedDatesList.map(encodeURIComponent).join(',') + ')';
-          }
+        if (selectedDatesList.length === 1) {
+          projQuery += '?date=eq.' + encodeURIComponent(selectedDatesList[0]);
         } else {
-          if (selectedDatesList.length === 1) {
-            projQuery += '?date=eq.' + encodeURIComponent(selectedDatesList[0]);
-          } else {
-            projQuery += '?date=in.(' + selectedDatesList.map(encodeURIComponent).join(',') + ')';
-          }
+          projQuery += '?date=in.(' + selectedDatesList.map(encodeURIComponent).join(',') + ')';
         }
 
         var projections = await sbFetch(projQuery);
@@ -4198,6 +4230,40 @@
         pacingPct: pacingPct,
         gap: gap
       };
+    }
+
+    function calculateFloorTotals() {
+      var floorTotToday = 0;
+      var floorActiveCount = 0;
+      var floorStaffCallers = allFloorCallers.filter(function(c) {
+        return c.status !== 'Inactive' && c.status !== 'Hidden';
+      });
+
+      floorStaffCallers.forEach(function(c) {
+        var t = Number(c.today) || 0;
+        floorTotToday += t;
+        if (t > 0) floorActiveCount++;
+      });
+
+      var floorProj = 0;
+      Object.keys(allManagerProjections || {}).forEach(function(k) {
+        floorProj += Number(allManagerProjections[k]) || 0;
+      });
+
+      return {
+        totalToday: floorTotToday,
+        activeCount: floorActiveCount,
+        totalCount: floorStaffCallers.length,
+        projection: floorProj
+      };
+    }
+
+    function getFloorYesterdayCollection() {
+      var sum = 0;
+      ALL_MANAGERS_ORDER.forEach(function(mk) {
+        sum += getManagerYesterdayCollection(mk);
+      });
+      return sum;
     }
 
     function getManagerYesterdayCollection(mgrKey) {
@@ -4456,22 +4522,59 @@
 
     function renderKPICards() {
       var totals = calculateTeamTotals();
+      var floorTotals = calculateFloorTotals();
+      var isYday = (activeDateStr === getYesterdayDateString(getTodayDateString()));
 
-      document.getElementById('kpiTotalToday').textContent = formatIndianCurrency(totals.totalToday);
-      document.getElementById('kpiActiveCallersCount').textContent = totals.activeCount + ' of ' + totals.totalCount + ' Callers Contributed';
+      // 1. My Team Card
+      var kpiTotEl = document.getElementById('kpiTotalToday');
+      if (kpiTotEl) kpiTotEl.textContent = formatIndianCurrency(totals.totalToday);
+
+      var actCallersEl = document.getElementById('kpiActiveCallersCount');
+      if (actCallersEl) actCallersEl.textContent = totals.activeCount + ' of ' + totals.totalCount + ' Callers Contributed';
+
       var avg = totals.totalCount > 0 ? Math.round(totals.totalToday / totals.totalCount) : 0;
-      document.getElementById('kpiAvgPerCaller').textContent = 'Avg ' + formatIndianCurrency(avg);
+      var avgEl = document.getElementById('kpiAvgPerCaller');
+      if (avgEl) avgEl.textContent = 'Avg ' + formatIndianCurrency(avg);
 
-      document.getElementById('kpiTodayProjection').textContent = formatIndianCurrency(totals.projection);
-      document.getElementById('kpiPacingPct').textContent = totals.pacingPct.toFixed(1) + '%';
-      document.getElementById('kpiPacingBadge').textContent = totals.pacingPct.toFixed(1) + '%';
+      // 2. Total Teams Collection (All Teams / Floor Total)
+      var floorTotEl = document.getElementById('kpiTotalFloorToday');
+      if (floorTotEl) {
+        if (isYday) {
+          floorTotEl.textContent = formatIndianCurrency(getFloorYesterdayCollection());
+        } else {
+          floorTotEl.textContent = formatIndianCurrency(floorTotals.totalToday);
+        }
+      }
 
-      if (totals.projection === 0) {
-        document.getElementById('kpiGapText').textContent = "Click 'Edit' above to set today's projection";
-      } else if (totals.gap > 0) {
-        document.getElementById('kpiGapText').textContent = formatIndianCurrency(totals.gap) + " remaining to goal";
-      } else {
-        document.getElementById('kpiGapText').textContent = "+" + formatIndianCurrency(Math.abs(totals.gap)) + " target exceeded!";
+      var floorActiveEl = document.getElementById('kpiFloorActiveCallersCount');
+      if (floorActiveEl) {
+        floorActiveEl.textContent = floorTotals.activeCount + ' of ' + floorTotals.totalCount + ' Callers';
+      }
+
+      var floorTeamsEl = document.getElementById('kpiFloorTeamsCount');
+      if (floorTeamsEl) {
+        floorTeamsEl.textContent = 'Floor Total';
+      }
+
+      // 3. Today's Projection & Pacing
+      var projEl = document.getElementById('kpiTodayProjection');
+      if (projEl) projEl.textContent = formatIndianCurrency(totals.projection);
+
+      var pacingPctEl = document.getElementById('kpiPacingPct');
+      if (pacingPctEl) pacingPctEl.textContent = totals.pacingPct.toFixed(1) + '%';
+
+      var pacingBadgeEl = document.getElementById('kpiPacingBadge');
+      if (pacingBadgeEl) pacingBadgeEl.textContent = totals.pacingPct.toFixed(1) + '%';
+
+      var gapTextEl = document.getElementById('kpiGapText');
+      if (gapTextEl) {
+        if (totals.projection === 0) {
+          gapTextEl.textContent = "Click 'Edit' above to set today's projection";
+        } else if (totals.gap > 0) {
+          gapTextEl.textContent = formatIndianCurrency(totals.gap) + " remaining to goal";
+        } else {
+          gapTextEl.textContent = "+" + formatIndianCurrency(Math.abs(totals.gap)) + " target exceeded!";
+        }
       }
     }
 
@@ -5443,10 +5546,10 @@
       if (!tbody) return;
 
       var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
-      if (!isAdmin) {
-        tbody.innerHTML = '';
-        return;
-      }
+      var btnAddMgr = document.getElementById('btnOpenAddManagerModal');
+      if (btnAddMgr) btnAddMgr.style.display = isAdmin ? 'inline-flex' : 'none';
+      var wrapHideMgr = document.getElementById('wrapShowHiddenManagers');
+      if (wrapHideMgr) wrapHideMgr.style.display = isAdmin ? 'inline-flex' : 'none';
 
       var searchTxt = (document.getElementById('mgrFilterInput') ? document.getElementById('mgrFilterInput').value : '').trim().toLowerCase();
 
@@ -5532,12 +5635,12 @@
           '<td style="text-align:center;" class="tabular"><span style="background:var(--accent-light); padding:2px 7px; border-radius:4px; font-weight:700; border:1px solid var(--border);">' + m.pacing.toFixed(1) + '%</span></td>' +
           '<td style="text-align:center;">' +
             '<div style="display:inline-flex; align-items:center; gap:4px;">' +
-              (m.key === 'bankmoney' ? '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px; background:#0f766e; color:#ffffff; border-color:#0f766e; font-weight:700;" onclick="event.stopPropagation(); openAssignBankMoneyModal();" title="Assign bank money to a manager">' + uiIcon('send', 'ui-icon-xs') + ' Assign</button>' : '') +
+              ((isAdmin || currentManagerKey === 'bankmoney' || (currentUser && currentUser.username === 'komal')) && m.key === 'bankmoney' ? '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px; background:#0f766e; color:#ffffff; border-color:#0f766e; font-weight:700;" onclick="event.stopPropagation(); openAssignBankMoneyModal();" title="Assign bank money to a manager">' + uiIcon('send', 'ui-icon-xs') + ' Assign</button>' : '') +
               '<button type="button" class="btn-toggle-team" data-mgr="' + escapeHtml(m.key) + '" onclick="event.stopPropagation(); toggleManagerAccordion(this.getAttribute(\'data-mgr\'));">' +
                 chevron + ' ' + (isExpanded ? 'Hide' : 'View (' + m.callers.length + ')') +
               '</button>' +
-              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;" onclick="event.stopPropagation(); openEditManagerModal(\'' + escapeHtml(m.key) + '\')" title="Edit manager details">' + uiIcon('edit', 'ui-icon-xs') + '</button>' +
-              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;' + (m.isHidden ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="event.stopPropagation(); toggleHideManager(\'' + escapeHtml(m.key) + '\')" title="' + (m.isHidden ? 'Unhide / Restore manager' : 'Hide manager from active floor') + '">' + (m.isHidden ? uiIcon('eye', 'ui-icon-xs') : uiIcon('eyeOff', 'ui-icon-xs')) + '</button>' +
+              (isAdmin ? '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;" onclick="event.stopPropagation(); openEditManagerModal(\'' + escapeHtml(m.key) + '\')" title="Edit manager details">' + uiIcon('edit', 'ui-icon-xs') + '</button>' : '') +
+              (isAdmin ? '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;' + (m.isHidden ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="event.stopPropagation(); toggleHideManager(\'' + escapeHtml(m.key) + '\')" title="' + (m.isHidden ? 'Unhide / Restore manager' : 'Hide manager from active floor') + '">' + (m.isHidden ? uiIcon('eye', 'ui-icon-xs') : uiIcon('eyeOff', 'ui-icon-xs')) + '</button>' : '') +
             '</div>' +
           '</td>' +
         '</tr>';
@@ -5558,10 +5661,10 @@
               '<td style="text-align:right; font-weight:700;" class="tabular">' + formatIndianCurrency(cAmt) + '</td>' +
               '<td style="text-align:center;" class="tabular">' + (cShare > 0 ? cShare.toFixed(1) + '%' : '0%') + '</td>' +
               '<td style="text-align:center;">' +
-                '<div style="display:inline-flex; align-items:center; gap:3px;">' +
+                (isAdmin ? '<div style="display:inline-flex; align-items:center; gap:3px;">' +
                   '<button type="button" class="btn-outline" style="padding:1px 6px; font-size:10px;" onclick="openEditCallerModal(\'' + escapeHtml(sc.id || '') + '\', \'' + escapeHtml(sc.officer_name) + '\')" title="Edit caller">' + uiIcon('edit', 'ui-icon-xs') + '</button>' +
                   '<button type="button" class="btn-outline" style="padding:1px 6px; font-size:10px;' + (isCallerInactive ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="toggleHideCaller(\'' + escapeHtml(sc.id || '') + '\', \'' + escapeHtml(sc.officer_name) + '\')" title="' + (isCallerInactive ? 'Unhide caller' : 'Hide caller') + '">' + (isCallerInactive ? uiIcon('eye', 'ui-icon-xs') : uiIcon('eyeOff', 'ui-icon-xs')) + '</button>' +
-                '</div>' +
+                '</div>' : '-') +
               '</td>' +
             '</tr>';
           });
@@ -5576,9 +5679,9 @@
                 '<div style="font-size:11.5px; font-weight:700; text-transform:uppercase; color:var(--text-muted);">' +
                   'Team Callers Breakdown · ' + escapeHtml(m.title) +
                 '</div>' +
-                '<button type="button" class="btn-outline" style="font-size:11px; padding:3px 9px; font-weight:700;" onclick="openAddCallerModal(\'' + escapeHtml(m.key) + '\')">' +
+                (isAdmin ? '<button type="button" class="btn-outline" style="font-size:11px; padding:3px 9px; font-weight:700;" onclick="openAddCallerModal(\'' + escapeHtml(m.key) + '\')">' +
                   uiIcon('plus', 'ui-icon-xs') + ' Add Caller to this Team' +
-                '</button>' +
+                '</button>' : '') +
               '</div>' +
               '<table class="nested-callers-table">' +
                 '<thead>' +
@@ -6186,24 +6289,16 @@
               '<div style="font-size:10.5px; color:var(--text-muted);">' + escapeHtml(br.badge) + '</div>' +
             '</td>' +
             '<td style="text-align:right; font-weight:700; font-size:12px;" class="tabular">' +
-              '<span title="Click to edit target" style="cursor:pointer;" onclick="promptEditBranchTarget(\'' + escapeHtml(br.key) + '\', \'' + escapeHtml(br.name) + '\')">' +
-                formatIndianCurrency(br.target) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span>' +
-              '</span>' +
+              formatIndianCurrency(br.target) +
             '</td>' +
             '<td style="text-align:right; font-weight:600; font-size:12px; color:var(--text-muted);" class="tabular">' +
-              '<span title="Click to edit yesterday collection" style="cursor:pointer;" onclick="promptEditBranchYesterday(\'' + escapeHtml(br.key) + '\', \'' + escapeHtml(br.name) + '\')">' +
-                formatIndianCurrency(br.yesterday) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span>' +
-              '</span>' +
+              formatIndianCurrency(br.yesterday) +
             '</td>' +
             '<td style="text-align:right; font-weight:600; font-size:12px; color:var(--text-muted);" class="tabular">' +
-              '<span title="Click to edit SDLM" style="cursor:pointer;" onclick="promptEditBranchSdlm(\'' + escapeHtml(br.key) + '\', \'' + escapeHtml(br.name) + '\')">' +
-                formatIndianCurrency(br.sdlm) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span>' +
-              '</span>' +
+              formatIndianCurrency(br.sdlm) +
             '</td>' +
             '<td style="text-align:right; font-weight:600; font-size:12px; color:var(--text-muted);" class="tabular">' +
-              '<span title="Click to edit July SDLM" style="cursor:pointer;" onclick="promptEditBranchJulySdlm(\'' + escapeHtml(br.key) + '\', \'' + escapeHtml(br.name) + '\')">' +
-                formatIndianCurrency(br.julySdlm) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;" title="Click to edit">' + uiIcon('edit', 'ui-icon-xs') + '</span>' +
-              '</span>' +
+              formatIndianCurrency(br.julySdlm) +
             '</td>' +
             '<td style="text-align:right; font-weight:800; font-size:13px;" class="tabular">' +
               formatIndianCurrency(br.today) +
