@@ -2635,7 +2635,6 @@
               <option value="customerservice">Customer Service</option>
               <option value="saroj">Saroj</option>
               <option value="satish">Satish Patil</option>
-              <option value="bankmoney">Bank Money (Direct Receipts)</option>
             </select>
           </div>
         </div>
@@ -3142,11 +3141,20 @@
       'anuraddha': "ANURADDHA",
       'customerservice': "CUSTOMER SERVICE",
       'saroj': "SAROJ",
-      'satish': "SATISH P",
-      'bankmoney': "BANK MONEY (KOMAL)"
+      'satish': "SATISH P"
     };
 
-    
+    // Deleted Managers Persistent Registry
+    var deletedManagers = [];
+    try {
+      var rawDm = localStorage.getItem('shaha_deleted_managers');
+      if (rawDm) deletedManagers = JSON.parse(rawDm);
+    } catch(e) {}
+    if (deletedManagers.indexOf('bankmoney') === -1) {
+      deletedManagers.push('bankmoney');
+      try { localStorage.setItem('shaha_deleted_managers', JSON.stringify(deletedManagers)); } catch(e) {}
+    }
+
     // ------------------------------------------------------------------------
     // ENTERPRISE VECTOR ICON SYSTEM (SVG Micro-Engine)
     // ------------------------------------------------------------------------
@@ -3190,9 +3198,17 @@
       return svg;
     }
 
-    var ALL_MANAGERS_ORDER = [
-      'ambuj', 'poonam', 'omkar', 'smita', 'aditi', 'shravanti', 'shweta', 'anuraddha', 'customerservice', 'saroj', 'satish', 'bankmoney'
+    var RAW_MANAGERS_ORDER = [
+      'ambuj', 'poonam', 'omkar', 'smita', 'aditi', 'shravanti', 'shweta', 'anuraddha', 'customerservice', 'saroj', 'satish'
     ];
+
+    var ALL_MANAGERS_ORDER = RAW_MANAGERS_ORDER.filter(function(k) {
+      return deletedManagers.indexOf(k) === -1;
+    });
+
+    deletedManagers.forEach(function(k) {
+      delete MANAGER_NAMES[k];
+    });
 
     // State
     var currentUser = null;
@@ -3227,8 +3243,10 @@
       if (rawCm) {
         customManagers = JSON.parse(rawCm);
         Object.keys(customManagers).forEach(function(k) {
-          MANAGER_NAMES[k] = customManagers[k].name;
-          if (ALL_MANAGERS_ORDER.indexOf(k) === -1) ALL_MANAGERS_ORDER.push(k);
+          if (deletedManagers.indexOf(k) === -1) {
+            MANAGER_NAMES[k] = customManagers[k].name;
+            if (ALL_MANAGERS_ORDER.indexOf(k) === -1) ALL_MANAGERS_ORDER.push(k);
+          }
         });
       }
     } catch(e) {}
@@ -3673,8 +3691,6 @@
 
         // 3. Default fallback accounts
         var defaults = [
-          { u: 'komal', p: '123', r: 'manager', n: 'Komal (Bank Money)', m: 'bankmoney' },
-          { u: 'komal', p: '1234', r: 'manager', n: 'Komal (Bank Money)', m: 'bankmoney' },
           { u: 'ambuj', p: '1234', r: 'manager', n: 'Ambuj (Manager)', m: 'ambuj' },
           { u: 'shravanti', p: '1234', r: 'manager', n: 'Shravanti (Manager)', m: 'shravanti' },
           { u: 'shweta', p: '1234', r: 'manager', n: 'Shweta (Manager)', m: 'shweta' },
@@ -3689,7 +3705,9 @@
           { u: 'samarth', p: '1234', r: 'admin', n: 'Samarth (Admin)', m: 'all' },
           { u: 'tejas', p: '1234', r: 'mis', n: 'Tejas (MIS)', m: 'all' },
           { u: 'dhruv', p: '1234', r: 'manager', n: 'Dhruv (Customer Service)', m: 'customerservice' }
-        ];
+        ].filter(function(d) {
+          return deletedManagers.indexOf(d.m) === -1;
+        });
 
         var found = defaults.find(function(d) { return d.u === u && d.p === p; });
         if (found) {
@@ -4152,7 +4170,10 @@
         // 1. Fetch Callers from Supabase (All floor callers loaded for floor stats & team isolation)
         var callersUrl = 'callers?order=manager_key.asc,officer_name.asc';
         var callers = await sbFetch(callersUrl);
-        allLoadedCallers = callers || [];
+        allLoadedCallers = (callers || []).filter(function(c) {
+          var mk = (c.manager_key || '').toLowerCase();
+          return deletedManagers.indexOf(mk) === -1;
+        });
         var activeCallers = allLoadedCallers.filter(function(c) {
           return c.status !== 'Inactive' && c.status !== 'Hidden';
         });
@@ -6439,6 +6460,8 @@
             .on('postgres_changes', { event: '*', schema: 'public', table: 'callers' }, function(payload) {
               if (payload.new) {
                 var updated = payload.new;
+                var updatedMk = (updated.manager_key || '').toLowerCase();
+                if (deletedManagers.indexOf(updatedMk) !== -1) return;
                 var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
                 if (!isAdmin && updated.manager_key && updated.manager_key.toLowerCase() !== currentManagerKey) {
                   return; // Strictly ignore other teams for managers
@@ -6462,6 +6485,8 @@
             })
             .on('postgres_changes', { event: '*', schema: 'public', table: 'manager_projections' }, function(payload) {
               if (payload.new) {
+                var projMk = (payload.new.manager_key || '').toLowerCase();
+                if (deletedManagers.indexOf(projMk) !== -1) return;
                 var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
                 if (!isAdmin && payload.new.manager_key && payload.new.manager_key.toLowerCase() !== currentManagerKey) {
                   return; // Strictly ignore other managers' projections
@@ -6935,6 +6960,10 @@
         if (ALL_MANAGERS_ORDER.indexOf(key) === -1) {
           ALL_MANAGERS_ORDER.push(key);
         }
+        if (deletedManagers.indexOf(key) !== -1) {
+          deletedManagers = deletedManagers.filter(function(x) { return x !== key; });
+          try { localStorage.setItem('shaha_deleted_managers', JSON.stringify(deletedManagers)); } catch(e) {}
+        }
 
         // Branch mapping
         managerBranchMap[key] = branch;
@@ -7020,44 +7049,108 @@
       var key = document.getElementById('managerEditKey').value.trim().toLowerCase();
       var name = MANAGER_NAMES[key] || key.toUpperCase();
 
-      if (!confirm("Are you sure you want to permanently delete Manager " + name + "?\n\nThis will remove their profile and login access.")) {
+      if (!confirm("Are you sure you want to permanently delete Manager " + name + "?\n\nThis will remove their profile, assigned callers, and portal credentials.")) {
         return;
       }
 
       var delBtn = document.getElementById('managerDeleteBtn');
-      if (delBtn) delBtn.disabled = true;
+      if (delBtn) {
+        delBtn.disabled = true;
+        delBtn.innerHTML = '<span class="status-indicator-dot"></span> Deleting...';
+      }
 
       try {
-        // Delete linked user from Supabase
-        var matchedUser = _cachedAdminUsers.find(function(u) {
-          return (u.manager_key && u.manager_key.toLowerCase() === key) || u.username === key;
-        });
-        if (matchedUser) {
-          await sbFetch('users?id=eq.' + encodeURIComponent(matchedUser.id), { method: 'DELETE' });
+        // 1. Delete callers from Supabase
+        try {
+          await sbFetch('callers?manager_key=eq.' + encodeURIComponent(key), { method: 'DELETE' });
+        } catch(eCallers) {
+          console.warn("Error deleting callers for manager:", eCallers);
         }
 
+        // 2. Delete projections from Supabase
+        try {
+          await sbFetch('manager_projections?manager_key=eq.' + encodeURIComponent(key), { method: 'DELETE' });
+        } catch(eProj) {
+          console.warn("Error deleting projections for manager:", eProj);
+        }
+
+        // 3. Delete user account from Supabase
+        try {
+          await sbFetch('users?or=(manager_key.eq.' + encodeURIComponent(key) + ',username.eq.' + encodeURIComponent(key) + ')', { method: 'DELETE' });
+          if (key === 'bankmoney') {
+            await sbFetch('users?username=eq.komal', { method: 'DELETE' });
+          }
+        } catch(eUsers) {
+          console.warn("Error deleting user accounts for manager:", eUsers);
+        }
+
+        // 4. Update in-memory collections and state
         delete MANAGER_NAMES[key];
         delete customManagers[key];
         delete managerBranchMap[key];
+
+        if (deletedManagers.indexOf(key) === -1) {
+          deletedManagers.push(key);
+        }
+
         ALL_MANAGERS_ORDER = ALL_MANAGERS_ORDER.filter(function(x) { return x !== key; });
         hiddenManagers = hiddenManagers.filter(function(x) { return x !== key; });
 
+        // Filter callers from in-memory arrays so they vanish immediately without page refresh
+        allFloorCallers = allFloorCallers.filter(function(c) {
+          return (c.manager_key || '').toLowerCase() !== key;
+        });
+        allLoadedCallers = allLoadedCallers.filter(function(c) {
+          return (c.manager_key || '').toLowerCase() !== key;
+        });
+        teamCallers = teamCallers.filter(function(c) {
+          return (c.manager_key || '').toLowerCase() !== key;
+        });
+
+        // 5. Update local storage
+        try { localStorage.setItem('shaha_deleted_managers', JSON.stringify(deletedManagers)); } catch(e) {}
         try { localStorage.setItem('shaha_custom_managers', JSON.stringify(customManagers)); } catch(e) {}
         try { localStorage.setItem('shaha_manager_branches', JSON.stringify(managerBranchMap)); } catch(e) {}
         try { localStorage.setItem('shaha_hidden_managers', JSON.stringify(hiddenManagers)); } catch(e) {}
 
+        // 6. If currently viewing this manager, gracefully switch to first available manager
+        if (currentManagerKey === key) {
+          currentManagerKey = ALL_MANAGERS_ORDER.length > 0 ? ALL_MANAGERS_ORDER[0] : 'ambuj';
+          var mgrTitle = MANAGER_NAMES[currentManagerKey] || currentManagerKey.toUpperCase();
+          var tPill = document.getElementById('tableTeamTitlePill');
+          if (tPill) tPill.textContent = mgrTitle + " Roster";
+          var aodTitle = document.getElementById('aodManagerTitle');
+          if (aodTitle) aodTitle.textContent = mgrTitle.toUpperCase();
+        }
+
+        // 7. Refresh all UI views
         closeManagerModal();
         setupAdminManagerDropdown();
         renderOverallManagersTable();
         renderBranchWiseTable();
-        document.getElementById('tabBadgeAllManagers').textContent = ALL_MANAGERS_ORDER.filter(function(k) { return hiddenManagers.indexOf(k) === -1 || showHiddenManagers; }).length;
-        showToast("Manager " + name + " deleted.", "warning");
+        renderKPICards();
+        renderCallerTable();
+        renderCallerBarsChart();
+        updateAodData();
+
+        var tabBadge = document.getElementById('tabBadgeAllManagers');
+        if (tabBadge) {
+          tabBadge.textContent = ALL_MANAGERS_ORDER.filter(function(k) { return hiddenManagers.indexOf(k) === -1 || showHiddenManagers; }).length;
+        }
+
+        showToast("Manager " + name + " and roster removed successfully.", "warning");
       } catch(err) {
         console.warn("Delete manager error:", err);
         var errEl = document.getElementById('managerFormError');
-        if (errEl) { errEl.textContent = "Failed to delete: " + err.message; errEl.style.display = 'block'; }
+        if (errEl) {
+          errEl.textContent = "Failed to delete: " + err.message;
+          errEl.style.display = 'block';
+        }
       } finally {
-        if (delBtn) delBtn.disabled = false;
+        if (delBtn) {
+          delBtn.disabled = false;
+          delBtn.innerHTML = uiIcon('trash') + ' Delete';
+        }
       }
     }
 
