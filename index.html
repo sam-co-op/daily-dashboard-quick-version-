@@ -1444,82 +1444,99 @@
       background: #1e293b;
     }
 
-    /* CENTERED AOD HERO CARD (TODAY'S COLLECTION AT CENTER) */
-    .aod-center-hero {
+    /* DUAL AOD HERO CARDS (TOTAL TEAMS & MY TEAM'S COLLECTION) */
+    .aod-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .aod-hero-card {
       background: #ffffff;
       border: 1px solid rgba(0, 0, 0, 0.06);
       border-radius: 16px;
-      padding: 30px 24px;
+      padding: 24px 20px;
       text-align: center;
       box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-      margin-bottom: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
     }
-    .aod-center-hero::before {
+    .aod-hero-card::before {
       content: '';
       position: absolute;
       top: 0;
-      left: 36px;
-      right: 36px;
+      left: 28px;
+      right: 28px;
       height: 2px;
       background: #09090b;
       border-radius: 2px;
     }
+    .aod-hero-card.floor-card::before {
+      background: #0f766e;
+    }
 
     .aod-hero-label {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #64748b;
     }
 
     .aod-hero-big-number {
-      font-size: 76px;
+      font-size: 56px;
       font-weight: 900;
       letter-spacing: -0.03em;
       color: #0f172a;
       line-height: 1.05;
-      margin: 10px 0 14px;
+      margin: 8px 0 10px;
     }
 
     .aod-hero-sub {
-      font-size: 14.5px;
+      font-size: 13.5px;
       color: #64748b;
       font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .aod-yesterday-pill-wrap {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: #f1f5f9;
       border: 1px solid #cbd5e1;
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 24px;
-      margin-top: 14px;
-      font-size: 13px;
+      margin-top: 12px;
+      font-size: 12px;
       font-weight: 700;
       color: #0f172a;
     }
 
     .aod-yesterday-diff {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       padding: 2px 7px;
       border-radius: 4px;
       border: 1px solid #cbd5e1;
       background: #ffffff;
       color: #0f172a;
+    }
+
+    .aod-scope-btn {
+      transition: all 0.15s ease;
+    }
+    .aod-scope-btn.active {
+      background: #09090b !important;
+      color: #ffffff !important;
+      border-color: #09090b !important;
     }
 
     .aod-lower-grid {
@@ -1530,11 +1547,14 @@
     }
 
     @media (max-width: 900px) {
+      .aod-hero-grid {
+        grid-template-columns: 1fr;
+      }
       .aod-lower-grid {
         grid-template-columns: 1fr;
       }
       .aod-hero-big-number {
-        font-size: 50px;
+        font-size: 42px;
       }
     }
 
@@ -2422,19 +2442,41 @@
       </div>
     </div>
 
-    <!-- CENTERED TODAY'S COLLECTION HERO CARD -->
-    <div class="aod-center-hero">
-      <div class="aod-hero-label">TODAY'S TEAM COLLECTION</div>
-      <div id="aodBigTodayVal" class="aod-hero-big-number tabular">₹ 0</div>
-      <div class="aod-hero-sub">
-        <span id="aodContributorsText">0 of 0 callers collected today</span> ·
-        <span id="aodPacingSubText">0% of projection</span>
+    <!-- DUAL HERO DISPLAY: TOTAL TEAMS (FLOOR) & MY TEAM'S COLLECTION -->
+    <div class="aod-hero-grid">
+      <!-- Card 1: Total Teams Collection (All Branches Combined / Floor Live) -->
+      <div class="aod-hero-card floor-card">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="aod-hero-label" style="color:#0f766e;">TOTAL TEAMS COLLECTION</span>
+          <span style="font-size:10.5px; font-weight:800; background:#f0fdf4; color:#166534; border:1px solid #bbf7d0; padding:1px 6px; border-radius:12px;">All Floor Live</span>
+        </div>
+        <div id="aodBigFloorTodayVal" class="aod-hero-big-number tabular" style="color:#0f766e;">₹ 0</div>
+        <div class="aod-hero-sub">
+          <span id="aodFloorContributorsText">0 callers active today across all branches</span>
+        </div>
+        <div class="aod-yesterday-pill-wrap" style="background:#f0fdf4; border-color:#bbf7d0;">
+          <span style="font-size:11px; font-weight:800; color:#166534; text-transform:uppercase;">Floor Target:</span>
+          <span id="aodFloorTargetVal" class="tabular" style="font-size:13.5px; font-weight:800; color:#0f766e;">₹ 0</span>
+          <span id="aodFloorTargetPacingPill" class="aod-yesterday-diff tabular" style="background:#ffffff; color:#166534; border-color:#bbf7d0;">0% Pacing</span>
+        </div>
       </div>
-      <!-- Centered Yesterday Benchmark & Comparison (Read-Only) -->
-      <div class="aod-yesterday-pill-wrap">
-        <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Yesterday Benchmark:</span>
-        <span id="aodYesterdayVal" class="tabular" style="font-size:15px; font-weight:800; color:var(--text);">₹ 0</span>
-        <span id="aodYesterdayDiffPill" class="aod-yesterday-diff tabular">+₹ 0 vs Yesterday</span>
+
+      <!-- Card 2: My Team's Collection (Logged-in or Selected Manager's Team) -->
+      <div class="aod-hero-card team-card">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="aod-hero-label" id="aodTeamHeroLabel">MY TEAM'S COLLECTION</span>
+          <span id="aodTeamPillBadge" style="font-size:10.5px; font-weight:800; background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; padding:1px 6px; border-radius:12px;">Team Roster</span>
+        </div>
+        <div id="aodBigTodayVal" class="aod-hero-big-number tabular">₹ 0</div>
+        <div class="aod-hero-sub">
+          <span id="aodContributorsText">0 of 0 callers collected today</span> ·
+          <span id="aodPacingSubText">0% of projection</span>
+        </div>
+        <div class="aod-yesterday-pill-wrap">
+          <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Yesterday:</span>
+          <span id="aodYesterdayVal" class="tabular" style="font-size:13.5px; font-weight:800; color:var(--text);">₹ 0</span>
+          <span id="aodYesterdayDiffPill" class="aod-yesterday-diff tabular">+₹ 0 vs Yesterday</span>
+        </div>
       </div>
     </div>
 
@@ -2486,12 +2528,18 @@
       </div>
 
       <!-- Right: Top 5 Collections Leaderboard -->
-      <div class="aod-card-white">
+      <div class="aod-card-white" style="display:flex; flex-direction:column;">
         <div class="aod-card-title">
-          <span>TOP 5 COLLECTIONS TODAY</span>
-          <span style="font-size:11px; color:var(--text-muted); font-weight:700;">Shift Leaders</span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span>TOP 5 COLLECTIONS TODAY</span>
+            <span id="aodTop5ScopeBadge" style="font-size:10.5px; font-weight:800; background:var(--accent-light); padding:2px 7px; border-radius:4px; border:1px solid var(--border);">Floor Leaders</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button type="button" class="btn-outline aod-scope-btn active" id="btnAodScopeFloor" onclick="toggleAodTop5Scope('floor')" style="font-size:11px; padding:2px 8px; font-weight:700;">All Floor</button>
+            <button type="button" class="btn-outline aod-scope-btn" id="btnAodScopeTeam" onclick="toggleAodTop5Scope('team')" style="font-size:11px; padding:2px 8px; font-weight:700;">My Team</button>
+          </div>
         </div>
-        <div id="aodTop5Container" class="aod-top5-list">
+        <div id="aodTop5Container" class="aod-top5-list" style="flex:1;">
           <!-- Populated dynamically -->
         </div>
       </div>
@@ -3222,6 +3270,8 @@
     var selectedDatesList = [ getTodayDateString() ];
     var isHistoricalView = false;
     var aodClockInterval = null;
+    var aodPollInterval = null;
+    var _aodTop5Scope = 'floor';
     var activeTab = 'myteam'; // 'myteam' | 'branches' | 'allmanagers'
     var expandedManagerAccordions = {};
     var expandedBranchAccordions = { 'jogeshwari': true, 'dadar': false, 'agencies': false, 'saroj': false };
@@ -3305,6 +3355,30 @@
       }
     ];
 
+    function getManagerAssignedBranch(mgrKey) {
+      var k = (mgrKey || '').toLowerCase();
+      if (managerBranchMap[k]) return managerBranchMap[k];
+      if (k === 'anuraddha' && managerBranchMap['anuradha']) return managerBranchMap['anuradha'];
+      if (k === 'anuradha' && managerBranchMap['anuraddha']) return managerBranchMap['anuraddha'];
+      if (k === 'smita') return 'dadar';
+      if (k === 'poonam' || k === 'satish') return 'agencies';
+      if (k === 'saroj') return 'saroj';
+      return 'jogeshwari';
+    }
+
+    function setManagerAssignedBranch(mgrKey, branchKey) {
+      var k = (mgrKey || '').toLowerCase();
+      var b = (branchKey || 'jogeshwari').toLowerCase();
+      managerBranchMap[k] = b;
+      if (k === 'anuradha' || k === 'anuraddha') {
+        managerBranchMap['anuradha'] = b;
+        managerBranchMap['anuraddha'] = b;
+      }
+      try {
+        localStorage.setItem('shaha_manager_branches', JSON.stringify(managerBranchMap));
+      } catch(e) {}
+    }
+
     function getAllBranchDefinitions() {
       var list = [];
       CORE_BRANCH_DEFINITIONS.forEach(function(b) {
@@ -3315,11 +3389,7 @@
           desc: b.desc,
           isCore: true,
           isMember: function(mk) {
-            var k = mk.toLowerCase();
-            if (managerBranchMap[k]) return managerBranchMap[k] === b.key;
-            if (b.defaultManagers) return b.defaultManagers.indexOf(k) !== -1;
-            if (b.defaultExcluded) return b.defaultExcluded.indexOf(k) === -1;
-            return false;
+            return getManagerAssignedBranch(mk) === b.key;
           }
         });
       });
@@ -3332,8 +3402,7 @@
           desc: cb.desc || cb.name,
           isCore: false,
           isMember: function(mk) {
-            var k = mk.toLowerCase();
-            return managerBranchMap[k] === cb.key;
+            return getManagerAssignedBranch(mk) === cb.key;
           }
         });
       });
@@ -3341,13 +3410,111 @@
       return list;
     }
 
-    function getManagerAssignedBranch(mgrKey) {
-      var k = (mgrKey || '').toLowerCase();
-      if (managerBranchMap[k]) return managerBranchMap[k];
-      if (k === 'smita') return 'dadar';
-      if (k === 'poonam' || k === 'satish') return 'agencies';
-      if (k === 'saroj') return 'saroj';
-      return 'jogeshwari';
+    // ------------------------------------------------------------------------
+    // SUPABASE CLOUD BRANCH & TARGET SYNC ENGINE
+    // Central single-source-of-truth across all floor devices and managers
+    // ------------------------------------------------------------------------
+    async function loadBranchConfigFromSupabase() {
+      try {
+        var res = await sbFetch('users?username=eq.__config_branches__&limit=1');
+        if (Array.isArray(res) && res.length > 0) {
+          var rec = res[0];
+          if (rec.display_name) {
+            try {
+              var parsedCb = JSON.parse(rec.display_name);
+              if (Array.isArray(parsedCb)) {
+                customBranches = parsedCb;
+                localStorage.setItem('shaha_custom_branches', JSON.stringify(customBranches));
+              }
+            } catch(e1) {}
+          }
+          if (rec.manager_key) {
+            try {
+              var parsedMap = JSON.parse(rec.manager_key);
+              if (parsedMap && typeof parsedMap === 'object') {
+                managerBranchMap = parsedMap;
+                localStorage.setItem('shaha_manager_branches', JSON.stringify(managerBranchMap));
+              }
+            } catch(e2) {}
+          }
+        }
+
+        var resT = await sbFetch('users?username=eq.__config_branch_targets__&limit=1');
+        if (Array.isArray(resT) && resT.length > 0 && resT[0].display_name) {
+          try {
+            var tObj = JSON.parse(resT[0].display_name);
+            if (tObj && typeof tObj === 'object') {
+              if (tObj.targets) localStorage.setItem('shaha_branch_targets', JSON.stringify(tObj.targets));
+              if (tObj.ydays) localStorage.setItem('shaha_branch_ydays', JSON.stringify(tObj.ydays));
+              if (tObj.sdlms) localStorage.setItem('shaha_branch_sdlms', JSON.stringify(tObj.sdlms));
+              if (tObj.julySdlms) localStorage.setItem('shaha_branch_july_sdlms', JSON.stringify(tObj.julySdlms));
+            }
+          } catch(e3) {}
+        }
+        BRANCH_DEFINITIONS = getAllBranchDefinitions();
+      } catch(err) {
+        console.warn("Notice loading branch config from Supabase:", err);
+      }
+    }
+
+    async function syncBranchConfigToSupabase() {
+      try {
+        var payload = {
+          display_name: JSON.stringify(customBranches),
+          manager_key: JSON.stringify(managerBranchMap)
+        };
+        var existing = await sbFetch('users?username=eq.__config_branches__&limit=1');
+        if (Array.isArray(existing) && existing.length > 0) {
+          await sbFetch('users?id=eq.' + encodeURIComponent(existing[0].id), {
+            method: 'PATCH',
+            body: payload
+          });
+        } else {
+          await sbFetch('users', {
+            method: 'POST',
+            body: {
+              username: '__config_branches__',
+              password: 'system_branch_store',
+              role: 'mis',
+              display_name: payload.display_name,
+              manager_key: payload.manager_key
+            }
+          });
+        }
+      } catch(e) {
+        console.warn("Error syncing branch config to Supabase:", e);
+      }
+    }
+
+    async function syncBranchTargetsToSupabase() {
+      try {
+        var allTargets = {
+          targets: JSON.parse(localStorage.getItem('shaha_branch_targets') || '{}'),
+          ydays: JSON.parse(localStorage.getItem('shaha_branch_ydays') || '{}'),
+          sdlms: JSON.parse(localStorage.getItem('shaha_branch_sdlms') || '{}'),
+          julySdlms: JSON.parse(localStorage.getItem('shaha_branch_july_sdlms') || '{}')
+        };
+        var existing = await sbFetch('users?username=eq.__config_branch_targets__&limit=1');
+        if (Array.isArray(existing) && existing.length > 0) {
+          await sbFetch('users?id=eq.' + encodeURIComponent(existing[0].id), {
+            method: 'PATCH',
+            body: { display_name: JSON.stringify(allTargets) }
+          });
+        } else {
+          await sbFetch('users', {
+            method: 'POST',
+            body: {
+              username: '__config_branch_targets__',
+              password: 'system_target_store',
+              role: 'mis',
+              display_name: JSON.stringify(allTargets),
+              manager_key: 'targets'
+            }
+          });
+        }
+      } catch(e) {
+        console.warn("Error syncing branch targets to Supabase:", e);
+      }
     }
 
     var BRANCH_DEFINITIONS = getAllBranchDefinitions();
@@ -3467,7 +3634,7 @@
     // ------------------------------------------------------------------------
     // INITIALIZATION & SESSION MANAGEMENT
     // ------------------------------------------------------------------------
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', async function() {
       var picker = document.getElementById('datePickerInp');
       if (picker) picker.value = activeDateStr;
 
@@ -3478,11 +3645,11 @@
         }
       });
 
-      checkSession();
+      await checkSession();
       initReminderCheckpoints();
     });
 
-    function checkSession() {
+    async function checkSession() {
       var raw = localStorage.getItem('shaha_manager_session');
       if (!raw) {
         raw = localStorage.getItem('shaha_session');
@@ -3494,9 +3661,33 @@
           if (sess && sess.user) {
             if (sess.expiresAt && Date.now() > sess.expiresAt) {
               localStorage.removeItem('shaha_manager_session');
+              localStorage.removeItem('shaha_session');
               showLoginModal("Session expired. Please sign in again.");
               return;
             }
+
+            // Realtime User Role & Access Verification against Supabase:
+            // Re-fetches the live role, display name, and manager key so promotions (Dhruv -> Admin)
+            // or role updates take effect immediately on page load / refresh!
+            try {
+              var liveUsers = await sbFetch('users?username=eq.' + encodeURIComponent((sess.user.username || '').toLowerCase()) + '&limit=1');
+              if (Array.isArray(liveUsers) && liveUsers.length > 0) {
+                var live = liveUsers[0];
+                sess.user.role = (live.role || 'manager').toLowerCase();
+                sess.user.displayName = live.display_name || sess.user.displayName;
+                sess.user.managerKey = (live.manager_key || sess.user.managerKey || '').toLowerCase();
+                localStorage.setItem('shaha_manager_session', JSON.stringify(sess));
+              } else if (Array.isArray(liveUsers) && liveUsers.length === 0) {
+                // User was deleted from Supabase
+                localStorage.removeItem('shaha_manager_session');
+                localStorage.removeItem('shaha_session');
+                showLoginModal("Account is no longer active. Please sign in with active credentials.");
+                return;
+              }
+            } catch(eVerify) {
+              console.warn("Live session verify notice:", eVerify);
+            }
+
             initUserSession(sess.user);
             return;
           }
@@ -3509,14 +3700,10 @@
       currentUser = user;
       document.getElementById('loginScreen').style.display = 'none';
 
-      if (user) {
-        var uName = (user.username || '').toLowerCase();
-        if (uName === 'dhruv' || uName === 'customerservice') {
-          user.managerKey = 'customerservice';
-        }
-      }
+      var userRole = (user.role || 'manager').toLowerCase();
+      var isAdmin = (userRole === 'admin' || userRole === 'mis' || userRole === 'editor');
+      var isViewer = (userRole === 'viewer');
 
-      var isAdmin = (user.role === 'admin' || user.role === 'mis' || user.role === 'editor');
       var sel = document.getElementById('adminMgrSelect');
       var editToggleWrap = document.getElementById('adminEditToggleWrap');
       var btnDateHierarchy = document.getElementById('btnDateHierarchyTrigger');
@@ -3525,18 +3712,38 @@
       var tabAllMgrs = document.getElementById('tabBtnAllManagers');
       var viewBranches = document.getElementById('tabContentBranches');
       var viewAllMgrs = document.getElementById('tabContentAllManagers');
-      
+      var btnAddCaller = document.getElementById('btnAddCallerMyTeam');
+      var btnEditBranchTargets = document.getElementById('btnEditBranchTargetsHeader');
+
       if (isAdmin) {
+        // ADMIN / MIS / EDITOR ACCESS:
+        // Full access to admin tools, all teams, all branches, historical date hierarchy
         currentManagerKey = user.managerKey && user.managerKey !== 'all' ? user.managerKey.toLowerCase() : 'ambuj';
         setupAdminManagerDropdown();
+        if (sel) sel.style.display = 'inline-block';
         if (editToggleWrap) editToggleWrap.style.display = 'inline-block';
         if (btnDateHierarchy) btnDateHierarchy.style.display = 'inline-flex';
         if (tabBranches) tabBranches.style.display = 'inline-flex';
         if (tabAllMgrs) tabAllMgrs.style.display = 'inline-flex';
+        if (btnAddCaller) btnAddCaller.style.display = 'inline-flex';
+        if (btnEditBranchTargets) btnEditBranchTargets.style.display = 'inline-flex';
+      } else if (isViewer) {
+        // VIEWER ACCESS (e.g. Rohit - CEO / Stakeholder):
+        // Full visibility across all teams, branches, and date hierarchy, but ALL editing disabled
+        currentManagerKey = user.managerKey && user.managerKey !== 'all' ? user.managerKey.toLowerCase() : 'ambuj';
+        setupAdminManagerDropdown();
+        if (sel) sel.style.display = 'inline-block';
+        if (editToggleWrap) editToggleWrap.style.display = 'none';
+        closeAdminEditMenu();
+        if (btnDateHierarchy) btnDateHierarchy.style.display = 'inline-flex';
+        if (tabBranches) tabBranches.style.display = 'inline-flex';
+        if (tabAllMgrs) tabAllMgrs.style.display = 'inline-flex';
+        if (btnAddCaller) btnAddCaller.style.display = 'none';
+        if (btnEditBranchTargets) btnEditBranchTargets.style.display = 'none';
       } else {
-        // Manager Login: Strictly bound to their own team, no date filter (access to Today and Yesterday only)
+        // MANAGER ACCESS (e.g. Ambuj, Poonam, Smita):
+        // Strictly isolated to their own team, no date filter (Today and Yesterday only)
         currentManagerKey = (user.managerKey || user.username || '').toLowerCase();
-        if (currentManagerKey === 'dhruv') currentManagerKey = 'customerservice';
         if (sel) sel.style.display = 'none';
         if (editToggleWrap) editToggleWrap.style.display = 'none';
         closeAdminEditMenu();
@@ -3545,6 +3752,8 @@
         if (tabBranches) tabBranches.style.display = 'none';
         if (tabAllMgrs) tabAllMgrs.style.display = 'inline-flex';
         if (viewBranches) viewBranches.style.display = 'none';
+        if (btnAddCaller) btnAddCaller.style.display = 'none';
+        if (btnEditBranchTargets) btnEditBranchTargets.style.display = 'none';
 
         // Enforce that managers can only be on Today or Yesterday
         var todayStr = getTodayDateString();
@@ -3557,8 +3766,13 @@
         switchMainTab('myteam');
       }
 
-      var mgrTitle = MANAGER_NAMES[currentManagerKey] || (currentManagerKey.toUpperCase() + " (Manager)");
-      document.getElementById('activeUserName').textContent = user.displayName || mgrTitle;
+      var mgrTitle = MANAGER_NAMES[currentManagerKey] || (currentManagerKey.toUpperCase() + (isAdmin ? ' (Admin)' : isViewer ? ' (Viewer)' : ' (Manager)'));
+      var roleBadge = isAdmin ? ' · Admin' : isViewer ? ' · Viewer' : '';
+      var activeNameEl = document.getElementById('activeUserName');
+      if (activeNameEl) {
+        var baseName = user.displayName || mgrTitle;
+        activeNameEl.textContent = baseName + (roleBadge && !baseName.includes(roleBadge) ? roleBadge : '');
+      }
       document.getElementById('aodManagerTitle').textContent = mgrTitle.toUpperCase();
       document.getElementById('tableTeamTitlePill').textContent = mgrTitle + " Roster";
 
@@ -3654,7 +3868,7 @@
       errBox.style.display = 'none';
 
       try {
-        // 1. Authenticate via PostgreSQL RPC (handles bcrypt hashed passwords)
+        // 1. Authenticate via PostgreSQL RPC (server-side bcrypt / plaintext auto-upgrade)
         try {
           var rpcUsers = await sbFetch('rpc/verify_user_login', {
             method: 'POST',
@@ -3665,8 +3879,8 @@
             var sessionUser = {
               username: matchedRpc.username,
               displayName: matchedRpc.display_name,
-              role: matchedRpc.role,
-              managerKey: matchedRpc.manager_key
+              role: (matchedRpc.role || 'manager').toLowerCase(),
+              managerKey: (matchedRpc.manager_key || '').toLowerCase()
             };
             saveAndStartSession(sessionUser);
             return;
@@ -3675,52 +3889,22 @@
           console.warn("RPC login check notice:", rpcErr);
         }
 
-        // 2. Direct query fallback
+        // 2. Direct query fallback against Supabase users table (handles direct plaintext credentials)
         var users = await sbFetch('users?username=eq.' + encodeURIComponent(u) + '&password=eq.' + encodeURIComponent(p) + '&limit=1');
         if (Array.isArray(users) && users.length > 0) {
           var matched = users[0];
           var sessionUser = {
             username: matched.username,
             displayName: matched.display_name,
-            role: matched.role,
-            managerKey: matched.manager_key
+            role: (matched.role || 'manager').toLowerCase(),
+            managerKey: (matched.manager_key || '').toLowerCase()
           };
           saveAndStartSession(sessionUser);
           return;
         }
 
-        // 3. Default fallback accounts
-        var defaults = [
-          { u: 'ambuj', p: '1234', r: 'manager', n: 'Ambuj (Manager)', m: 'ambuj' },
-          { u: 'shravanti', p: '1234', r: 'manager', n: 'Shravanti (Manager)', m: 'shravanti' },
-          { u: 'shweta', p: '1234', r: 'manager', n: 'Shweta (Manager)', m: 'shweta' },
-          { u: 'anuraddha', p: '1234', r: 'manager', n: 'Anuraddha (Manager)', m: 'anuraddha' },
-          { u: 'saroj', p: '1234', r: 'manager', n: 'Saroj (Manager)', m: 'saroj' },
-          { u: 'poonam', p: '1234', r: 'manager', n: 'Poonam (Manager)', m: 'poonam' },
-          { u: 'aditi', p: '1234', r: 'manager', n: 'Aditi (Manager)', m: 'aditi' },
-          { u: 'omkar', p: '1234', r: 'manager', n: 'Omkar (Manager)', m: 'omkar' },
-          { u: 'smita', p: '1234', r: 'manager', n: 'Smita (Manager)', m: 'smita' },
-          { u: 'customerservice', p: '1234', r: 'manager', n: 'Customer Service (Manager)', m: 'customerservice' },
-          { u: 'satish', p: '1234', r: 'admin', n: 'Satish (Admin)', m: 'all' },
-          { u: 'samarth', p: '1234', r: 'admin', n: 'Samarth (Admin)', m: 'all' },
-          { u: 'tejas', p: '1234', r: 'mis', n: 'Tejas (MIS)', m: 'all' },
-          { u: 'dhruv', p: '1234', r: 'manager', n: 'Dhruv (Customer Service)', m: 'customerservice' }
-        ].filter(function(d) {
-          return deletedManagers.indexOf(d.m) === -1;
-        });
-
-        var found = defaults.find(function(d) { return d.u === u && d.p === p; });
-        if (found) {
-          var sessionUser = {
-            username: found.u,
-            displayName: found.n,
-            role: found.r,
-            managerKey: found.m
-          };
-          saveAndStartSession(sessionUser);
-          return;
-        }
-
+        // STRICT DATABASE CREDENTIALS ENFORCEMENT:
+        // No hardcoded default passwords! Users must use the exact password set in the database.
         errBox.textContent = "Invalid username or password. Please verify credentials.";
         errBox.style.display = 'block';
       } catch(err) {
@@ -3729,7 +3913,7 @@
         errBox.style.display = 'block';
       } finally {
         btn.disabled = false;
-        btn.textContent = "Sign In";
+        btn.textContent = "Sign In to Dashboard";
       }
     }
 
@@ -3753,7 +3937,10 @@
     // ------------------------------------------------------------------------
     function switchMainTab(tabKey) {
       var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
-      if (!isAdmin) {
+      var isViewer = currentUser && (currentUser.role === 'viewer');
+
+      // Restrict access: Non-admins and non-viewers (standard managers) can only access 'myteam' and 'allmanagers'
+      if (!isAdmin && !isViewer && tabKey === 'branches') {
         tabKey = 'myteam';
       }
       activeTab = tabKey;
@@ -3769,22 +3956,20 @@
       if (btnMyTeam) btnMyTeam.classList.toggle('active', tabKey === 'myteam');
       if (btnBranches) {
         btnBranches.classList.toggle('active', tabKey === 'branches');
-        btnBranches.style.display = isAdmin ? 'inline-flex' : 'none';
+        btnBranches.style.display = (isAdmin || isViewer) ? 'inline-flex' : 'none';
       }
       if (btnAllMgrs) {
         btnAllMgrs.classList.toggle('active', tabKey === 'allmanagers');
-        btnAllMgrs.style.display = isAdmin ? 'inline-flex' : 'none';
+        btnAllMgrs.style.display = 'inline-flex';
       }
 
       if (viewMyTeam) viewMyTeam.style.display = tabKey === 'myteam' ? 'block' : 'none';
-      if (viewBranches) viewBranches.style.display = (isAdmin && tabKey === 'branches') ? 'block' : 'none';
-      if (viewAllMgrs) viewAllMgrs.style.display = (isAdmin && tabKey === 'allmanagers') ? 'block' : 'none';
+      if (viewBranches) viewBranches.style.display = ((isAdmin || isViewer) && tabKey === 'branches') ? 'block' : 'none';
+      if (viewAllMgrs) viewAllMgrs.style.display = tabKey === 'allmanagers' ? 'block' : 'none';
 
       if (subtitle) {
-        if (!isAdmin) {
-          subtitle.textContent = "Viewing your assigned team";
-        } else if (tabKey === 'myteam') {
-          subtitle.textContent = "Viewing team: " + (MANAGER_NAMES[currentManagerKey] || currentManagerKey);
+        if (tabKey === 'myteam') {
+          subtitle.textContent = (isAdmin || isViewer) ? ("Viewing team: " + (MANAGER_NAMES[currentManagerKey] || currentManagerKey)) : "Viewing your assigned team";
         } else if (tabKey === 'branches') {
           subtitle.textContent = "Viewing branch-wise collections (Jogeshwari · Dadar · Agencies · Saroj)";
         } else {
@@ -3792,8 +3977,8 @@
         }
       }
 
-      if (isAdmin && tabKey === 'branches') renderBranchWiseTable();
-      if (isAdmin && tabKey === 'allmanagers') renderOverallManagersTable();
+      if ((isAdmin || isViewer) && tabKey === 'branches') renderBranchWiseTable();
+      if (tabKey === 'allmanagers') renderOverallManagersTable();
     }
 
     // ------------------------------------------------------------------------
@@ -4167,6 +4352,9 @@
           if (currentManagerKey === 'dhruv') currentManagerKey = 'customerservice';
         }
 
+        // Sync live branches and manager branch mappings from Supabase
+        await loadBranchConfigFromSupabase();
+
         // 1. Fetch Callers from Supabase (All floor callers loaded for floor stats & team isolation)
         var callersUrl = 'callers?order=manager_key.asc,officer_name.asc';
         var callers = await sbFetch(callersUrl);
@@ -4206,7 +4394,7 @@
         var activeStaffBadge = teamCallers.filter(function(c) { return c.status !== 'Inactive' && c.status !== 'Hidden'; });
         document.getElementById('tabBadgeMyTeam').textContent = activeStaffBadge.length;
         var bBadge = document.getElementById('tabBadgeBranches');
-        if (bBadge) bBadge.textContent = BRANCH_DEFINITIONS.length;
+        if (bBadge) bBadge.textContent = getAllBranchDefinitions().length;
         var activeMgrsCount = ALL_MANAGERS_ORDER.filter(function(k) { return hiddenManagers.indexOf(k) === -1 || showHiddenManagers; }).length;
         document.getElementById('tabBadgeAllManagers').textContent = activeMgrsCount;
 
@@ -4222,14 +4410,15 @@
 
     function renderUI() {
       var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      var isViewer = currentUser && (currentUser.role === 'viewer');
       renderKPICards();
       renderPacingMeter();
       renderCallerBarsChart();
       renderCallerTable();
-      if (isAdmin) {
+      if (isAdmin || isViewer) {
         renderBranchWiseTable();
-        renderOverallManagersTable();
       }
+      renderOverallManagersTable();
       updateAodData();
     }
 
@@ -4410,6 +4599,7 @@
         updateAodData();
         if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
         showToast("Yesterday collection for " + (branchName || branchKey) + " set to " + formatIndianCurrency(val), "success");
+        syncBranchTargetsToSupabase();
       }
     }
 
@@ -4470,6 +4660,7 @@
         updateAodData();
         if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
         showToast("SDLM for " + (branchName || branchKey) + " set to " + formatIndianCurrency(val), "success");
+        syncBranchTargetsToSupabase();
       }
     }
 
@@ -4530,6 +4721,7 @@
         updateAodData();
         if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
         showToast("July SDLM for " + (branchName || branchKey) + " set to " + formatIndianCurrency(val), "success");
+        syncBranchTargetsToSupabase();
       }
     }
 
@@ -4547,6 +4739,7 @@
         updateAodData();
         if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
         showToast("Target for " + (branchName || branchKey) + " set to " + formatIndianCurrency(val), "success");
+        syncBranchTargetsToSupabase();
       }
     }
 
@@ -4724,6 +4917,7 @@
           statusBadge = '<span style="border:1px solid var(--border); color:var(--text-muted); font-size:11px; font-weight:600; padding:2px 8px; border-radius:12px;">Pending</span>';
         }
 
+        var isViewer = currentUser && (currentUser.role === 'viewer');
         var rowStyle = isInactive ? ' style="opacity: 0.72; background: #fafafa;"' : '';
 
         var actionsTd = '';
@@ -4732,6 +4926,7 @@
             '<div style="display:inline-flex; align-items:center; gap:4px;">' +
               '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;" onclick="openEditCallerModal(\'' + escapeHtml(c.id || '') + '\', \'' + escapeHtml(c.officer_name) + '\')" title="Edit caller details">' + uiIcon('edit', 'ui-icon-xs') + '</button>' +
               '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;' + (isInactive ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="toggleHideCaller(\'' + escapeHtml(c.id || '') + '\', \'' + escapeHtml(c.officer_name) + '\')" title="' + (isInactive ? 'Unhide / Restore caller' : 'Hide / Inactivate caller') + '">' + (isInactive ? uiIcon('eye', 'ui-icon-xs') : uiIcon('eyeOff', 'ui-icon-xs')) + '</button>' +
+              '<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px; color:#dc2626; border-color:#fca5a5;" onclick="deleteCallerDirect(\'' + escapeHtml(c.id || '') + '\', \'' + escapeHtml(c.officer_name) + '\')" title="Permanently delete caller">' + uiIcon('trash', 'ui-icon-xs') + '</button>' +
             '</div>' +
           '</td>';
         }
@@ -4747,8 +4942,8 @@
                 'data-caller="' + escapeHtml(c.officer_name) + '" ' +
                 'data-base="' + todayAmt + '" ' +
                 'value="' + (todayAmt > 0 ? todayAmt.toLocaleString('en-IN') : '') + '" ' +
-                'placeholder="' + (isInactive ? 'Hidden' : '0') + '" ' +
-                (isInactive ? 'disabled ' : '') +
+                'placeholder="' + (isInactive ? 'Hidden' : isViewer ? 'View Only' : '0') + '" ' +
+                (isInactive || isViewer ? 'disabled ' : '') +
                 'oninput="onCallerInputChanged(this)" ' +
                 'onkeydown="onCallerInputKeyDown(event, this)" ' +
                 'onblur="onCallerInputBlur(this)">' +
@@ -4964,7 +5159,8 @@
       if (!tbody) return;
 
       var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
-      if (!isAdmin) {
+      var isViewer = currentUser && (currentUser.role === 'viewer');
+      if (!isAdmin && !isViewer) {
         tbody.innerHTML = '';
         return;
       }
@@ -5387,6 +5583,7 @@
       updateAodData();
       if (typeof renderBranchWiseTable === 'function') renderBranchWiseTable();
       showToast("Updated targets & SDLM benchmarks for all branches", "success");
+      syncBranchTargetsToSupabase();
     }
 
     function renderBranchAssignMgrsTable() {
@@ -5469,7 +5666,7 @@
       }
     }
 
-    function submitCreateBranchForm() {
+    async function submitCreateBranchForm() {
       var nameInp = document.getElementById('newBranchNameInp');
       var keyInp = document.getElementById('newBranchKeyInp');
       var badgeInp = document.getElementById('newBranchBadgeInp');
@@ -5505,32 +5702,35 @@
         localStorage.setItem('shaha_custom_branches', JSON.stringify(customBranches));
       } catch(e) {}
 
+      await syncBranchConfigToSupabase();
+
       nameInp.value = '';
       keyInp.value = '';
       badgeInp.value = '';
       descInp.value = '';
 
-      showToast("Branch '" + name + "' created!", "success");
+      showToast("Branch '" + name + "' created and synced to all devices!", "success");
       renderExistingBranchesList();
       renderBranchAssignMgrsTable();
       renderBranchWiseTable();
       updateAodData();
     }
 
-    function deleteCustomBranch(key) {
+    async function deleteCustomBranch(key) {
       if (!confirm("Are you sure you want to delete this custom branch?\n\nAny managers currently assigned to it will be reassigned to Jogeshwari.")) {
         return;
       }
 
       ALL_MANAGERS_ORDER.forEach(function(mk) {
-        if (managerBranchMap[mk] === key) {
-          managerBranchMap[mk] = 'jogeshwari';
+        if (getManagerAssignedBranch(mk) === key) {
+          setManagerAssignedBranch(mk, 'jogeshwari');
         }
       });
-      try { localStorage.setItem('shaha_manager_branches', JSON.stringify(managerBranchMap)); } catch(e) {}
 
       customBranches = customBranches.filter(function(b) { return b.key !== key; });
       try { localStorage.setItem('shaha_custom_branches', JSON.stringify(customBranches)); } catch(e) {}
+
+      await syncBranchConfigToSupabase();
 
       showToast("Custom branch deleted.", "warning");
       renderExistingBranchesList();
@@ -5539,27 +5739,28 @@
       updateAodData();
     }
 
-    function resetBranchAssignmentsToDefault() {
+    async function resetBranchAssignmentsToDefault() {
       managerBranchMap = {};
       try { localStorage.removeItem('shaha_manager_branches'); } catch(e) {}
+      await syncBranchConfigToSupabase();
       renderBranchAssignMgrsTable();
       renderExistingBranchesList();
+      renderBranchWiseTable();
+      updateAodData();
       showToast("Assignments reset to standard rules (Jogeshwari HQ, Dadar, Agencies, Saroj).", "info");
     }
 
-    function saveBranchAssignmentsModal() {
+    async function saveBranchAssignmentsModal() {
       var selects = document.querySelectorAll('.branch-assign-select');
       selects.forEach(function(sel) {
         var mk = sel.getAttribute('data-mgr');
         var bKey = sel.value;
         if (mk && bKey) {
-          managerBranchMap[mk.toLowerCase()] = bKey;
+          setManagerAssignedBranch(mk, bKey);
         }
       });
 
-      try {
-        localStorage.setItem('shaha_manager_branches', JSON.stringify(managerBranchMap));
-      } catch(e) {}
+      await syncBranchConfigToSupabase();
 
       closeBranchManagerModal();
       renderBranchWiseTable();
@@ -5694,6 +5895,7 @@
                 (isAdmin ? '<div style="display:inline-flex; align-items:center; gap:3px;">' +
                   '<button type="button" class="btn-outline" style="padding:1px 6px; font-size:10px;" onclick="openEditCallerModal(\'' + escapeHtml(sc.id || '') + '\', \'' + escapeHtml(sc.officer_name) + '\')" title="Edit caller">' + uiIcon('edit', 'ui-icon-xs') + '</button>' +
                   '<button type="button" class="btn-outline" style="padding:1px 6px; font-size:10px;' + (isCallerInactive ? ' color:#16a34a; border-color:#bbf7d0;' : ' color:#dc2626; border-color:#fecaca;') + '" onclick="toggleHideCaller(\'' + escapeHtml(sc.id || '') + '\', \'' + escapeHtml(sc.officer_name) + '\')" title="' + (isCallerInactive ? 'Unhide caller' : 'Hide caller') + '">' + (isCallerInactive ? uiIcon('eye', 'ui-icon-xs') : uiIcon('eyeOff', 'ui-icon-xs')) + '</button>' +
+                  '<button type="button" class="btn-outline" style="padding:1px 6px; font-size:10px; color:#dc2626; border-color:#fca5a5;" onclick="deleteCallerDirect(\'' + escapeHtml(sc.id || '') + '\', \'' + escapeHtml(sc.officer_name) + '\')" title="Permanently delete caller">' + uiIcon('trash', 'ui-icon-xs') + '</button>' +
                 '</div>' : '-') +
               '</td>' +
             '</tr>';
@@ -6180,6 +6382,26 @@
     // ------------------------------------------------------------------------
     // ALWAYS ON DISPLAY (AOD) ENGINE
     // ------------------------------------------------------------------------
+    function toggleAodTop5Scope(scope) {
+      _aodTop5Scope = scope || 'floor';
+      var fBtn = document.getElementById('btnAodScopeFloor');
+      var tBtn = document.getElementById('btnAodScopeTeam');
+      var bBadge = document.getElementById('aodTop5ScopeBadge');
+      if (fBtn && tBtn) {
+        if (_aodTop5Scope === 'floor') {
+          fBtn.classList.add('active');
+          tBtn.classList.remove('active');
+          if (bBadge) bBadge.textContent = 'Floor Leaders';
+        } else {
+          tBtn.classList.add('active');
+          fBtn.classList.remove('active');
+          var mgrName = MANAGER_NAMES[currentManagerKey] || (currentManagerKey ? currentManagerKey.toUpperCase() : 'Team');
+          if (bBadge) bBadge.textContent = mgrName + ' Team';
+        }
+      }
+      updateAodData();
+    }
+
     function openAodMode() {
       var screen = document.getElementById('aodScreen');
       if (!screen) return;
@@ -6189,6 +6411,26 @@
       if (aodClockInterval) clearInterval(aodClockInterval);
       aodClockInterval = setInterval(updateAodClock, 1000);
       updateAodClock();
+
+      if (aodPollInterval) clearInterval(aodPollInterval);
+      aodPollInterval = setInterval(async function() {
+        try {
+          var callers = await sbFetch('callers?order=manager_key.asc,officer_name.asc');
+          if (Array.isArray(callers) && callers.length > 0) {
+            allLoadedCallers = callers.filter(function(c) {
+              return deletedManagers.indexOf((c.manager_key || '').toLowerCase()) === -1;
+            });
+            var activeCallers = allLoadedCallers.filter(function(c) {
+              return c.status !== 'Inactive' && c.status !== 'Hidden';
+            });
+            allFloorCallers = showHiddenCallers ? allLoadedCallers : activeCallers;
+            teamCallers = allFloorCallers.filter(function(c) {
+              return (c.manager_key || '').toLowerCase() === currentManagerKey;
+            });
+            updateAodData();
+          }
+        } catch(e) {}
+      }, 12000);
 
       try {
         if (document.documentElement.requestFullscreen) {
@@ -6200,7 +6442,8 @@
     function closeAodMode() {
       var screen = document.getElementById('aodScreen');
       if (screen) screen.style.display = 'none';
-      if (aodClockInterval) clearInterval(aodClockInterval);
+      if (aodClockInterval) { clearInterval(aodClockInterval); aodClockInterval = null; }
+      if (aodPollInterval) { clearInterval(aodPollInterval); aodPollInterval = null; }
 
       try {
         if (document.fullscreenElement && document.exitFullscreen) {
@@ -6219,6 +6462,11 @@
     function updateAodData() {
       var totals = calculateTeamTotals();
       var ydayAmt = getYesterdayTeamCollection();
+
+      // Team Card Elements
+      var activeMgrTitle = MANAGER_NAMES[currentManagerKey] || (currentManagerKey ? currentManagerKey.toUpperCase() : 'FLOOR');
+      var teamLabel = document.getElementById('aodTeamHeroLabel');
+      if (teamLabel) teamLabel.textContent = "MY TEAM'S COLLECTION (" + activeMgrTitle + ")";
 
       var bigToday = document.getElementById('aodBigTodayVal');
       if (bigToday) bigToday.textContent = formatIndianCurrency(totals.totalToday);
@@ -6245,7 +6493,7 @@
         }
       }
 
-      // AOD Branch Wise Collections Table (Replaces Projections)
+      // Calculate Branch & Floor Totals
       var aodBranchTbody = document.getElementById('aodBranchTableBody');
       var aodBranchCountBadge = document.getElementById('aodBranchCountBadge');
       var aodBranchFloorPill = document.getElementById('aodBranchFloorPill');
@@ -6255,60 +6503,80 @@
       var aodTfootJulySdlm = document.getElementById('aodTfootTotalJulySdlm');
       var aodTfootToday = document.getElementById('aodTfootTotalToday');
 
-      if (aodBranchTbody) {
-        var branchDefs = getAllBranchDefinitions();
-        var floorGrandTarget = 0;
-        var floorGrandYesterday = 0;
-        var floorGrandSdlm = 0;
-        var floorGrandJulySdlm = 0;
-        var floorGrandToday = 0;
-        var branchRows = [];
+      var branchDefs = getAllBranchDefinitions();
+      var floorGrandTarget = 0;
+      var floorGrandYesterday = 0;
+      var floorGrandSdlm = 0;
+      var floorGrandJulySdlm = 0;
+      var floorGrandToday = 0;
+      var branchRows = [];
 
-        branchDefs.forEach(function(bDef) {
-          var branchMgrKeys = ALL_MANAGERS_ORDER.filter(function(mk) {
-            if (hiddenManagers.indexOf(mk) !== -1 && !showHiddenManagers) return false;
-            return bDef.isMember(mk);
-          });
-
-          var bToday = 0;
-          branchMgrKeys.forEach(function(mk) {
-            var cList = allFloorCallers.filter(function(c) {
-              return (c.manager_key || '').toLowerCase() === mk;
-            });
-            cList.forEach(function(c) { bToday += Number(c.today) || 0; });
-          });
-
-          var bTarget = getBranchTarget(bDef.key);
-          var bYesterday = getBranchYesterdayCollection(bDef.key);
-          var bSdlm = getBranchSdlm(bDef.key);
-          var bJulySdlm = getBranchJulySdlm(bDef.key);
-
-          floorGrandTarget += bTarget;
-          floorGrandYesterday += bYesterday;
-          floorGrandSdlm += bSdlm;
-          floorGrandJulySdlm += bJulySdlm;
-          floorGrandToday += bToday;
-
-          branchRows.push({
-            key: bDef.key,
-            name: bDef.name,
-            badge: bDef.badge,
-            target: bTarget,
-            yesterday: bYesterday,
-            sdlm: bSdlm,
-            julySdlm: bJulySdlm,
-            today: bToday
-          });
+      branchDefs.forEach(function(bDef) {
+        var branchMgrKeys = ALL_MANAGERS_ORDER.filter(function(mk) {
+          if (hiddenManagers.indexOf(mk) !== -1 && !showHiddenManagers) return false;
+          return bDef.isMember(mk);
         });
 
-        if (aodBranchCountBadge) aodBranchCountBadge.textContent = branchDefs.length + ' Branches';
-        if (aodBranchFloorPill) aodBranchFloorPill.textContent = 'Floor Live: ' + formatIndianCurrency(floorGrandToday);
-        if (aodTfootTarget) aodTfootTarget.textContent = formatIndianCurrency(floorGrandTarget);
-        if (aodTfootYesterday) aodTfootYesterday.textContent = formatIndianCurrency(floorGrandYesterday);
-        if (aodTfootSdlm) aodTfootSdlm.textContent = formatIndianCurrency(floorGrandSdlm);
-        if (aodTfootJulySdlm) aodTfootJulySdlm.textContent = formatIndianCurrency(floorGrandJulySdlm);
-        if (aodTfootToday) aodTfootToday.textContent = formatIndianCurrency(floorGrandToday);
+        var bToday = 0;
+        branchMgrKeys.forEach(function(mk) {
+          var cList = allFloorCallers.filter(function(c) {
+            return (c.manager_key || '').toLowerCase() === mk;
+          });
+          cList.forEach(function(c) { bToday += Number(c.today) || 0; });
+        });
 
+        var bTarget = getBranchTarget(bDef.key);
+        var bYesterday = getBranchYesterdayCollection(bDef.key);
+        var bSdlm = getBranchSdlm(bDef.key);
+        var bJulySdlm = getBranchJulySdlm(bDef.key);
+
+        floorGrandTarget += bTarget;
+        floorGrandYesterday += bYesterday;
+        floorGrandSdlm += bSdlm;
+        floorGrandJulySdlm += bJulySdlm;
+        floorGrandToday += bToday;
+
+        branchRows.push({
+          key: bDef.key,
+          name: bDef.name,
+          badge: bDef.badge,
+          target: bTarget,
+          yesterday: bYesterday,
+          sdlm: bSdlm,
+          julySdlm: bJulySdlm,
+          today: bToday
+        });
+      });
+
+      // Update Floor Hero Card Elements
+      var bigFloorToday = document.getElementById('aodBigFloorTodayVal');
+      if (bigFloorToday) bigFloorToday.textContent = formatIndianCurrency(floorGrandToday);
+
+      var floorActiveCallersCount = allFloorCallers.filter(function(c) {
+        return c.status !== 'Inactive' && c.status !== 'Hidden' && (Number(c.today) || 0) > 0;
+      }).length;
+      var floorContribEl = document.getElementById('aodFloorContributorsText');
+      if (floorContribEl) floorContribEl.textContent = floorActiveCallersCount + ' callers collected today across ' + branchDefs.length + ' branches';
+
+      var floorTgtEl = document.getElementById('aodFloorTargetVal');
+      if (floorTgtEl) floorTgtEl.textContent = formatIndianCurrency(floorGrandTarget);
+
+      var floorPacePill = document.getElementById('aodFloorTargetPacingPill');
+      if (floorPacePill) {
+        var floorPacePct = floorGrandTarget > 0 ? ((floorGrandToday / floorGrandTarget) * 100).toFixed(1) : 0;
+        floorPacePill.textContent = floorPacePct + '% of Floor Target';
+      }
+
+      // Render Branch Table in AOD
+      if (aodBranchCountBadge) aodBranchCountBadge.textContent = branchDefs.length + ' Branches';
+      if (aodBranchFloorPill) aodBranchFloorPill.textContent = 'Floor Live: ' + formatIndianCurrency(floorGrandToday);
+      if (aodTfootTarget) aodTfootTarget.textContent = formatIndianCurrency(floorGrandTarget);
+      if (aodTfootYesterday) aodTfootYesterday.textContent = formatIndianCurrency(floorGrandYesterday);
+      if (aodTfootSdlm) aodTfootSdlm.textContent = formatIndianCurrency(floorGrandSdlm);
+      if (aodTfootJulySdlm) aodTfootJulySdlm.textContent = formatIndianCurrency(floorGrandJulySdlm);
+      if (aodTfootToday) aodTfootToday.textContent = formatIndianCurrency(floorGrandToday);
+
+      if (aodBranchTbody) {
         var aodHtml = '';
         branchRows.forEach(function(br, idx) {
           var share = floorGrandToday > 0 ? (br.today / floorGrandToday) * 100 : 0;
@@ -6348,26 +6616,47 @@
         aodBranchTbody.innerHTML = aodHtml;
       }
 
+      // Render Top 5 Collections Leaderboard
       var top5Wrap = document.getElementById('aodTop5Container');
       if (top5Wrap) {
-        var sorted = teamCallers.slice().sort(function(a, b) {
+        var sourceCallers = (_aodTop5Scope === 'team') ? teamCallers : allFloorCallers;
+        var activeSource = sourceCallers.filter(function(c) {
+          return c.status !== 'Inactive' && c.status !== 'Hidden';
+        });
+
+        var sorted = activeSource.slice().sort(function(a, b) {
           return (Number(b.today) || 0) - (Number(a.today) || 0);
         });
-        var top5 = sorted.slice(0, 5);
+
+        var positiveCallers = sorted.filter(function(c) { return (Number(c.today) || 0) > 0; });
+        var top5 = positiveCallers.length > 0 ? positiveCallers.slice(0, 5) : sorted.slice(0, 5);
 
         var html = '';
-        top5.forEach(function(c, i) {
-          var amt = Number(c.today) || 0;
-          var aodCallerName = getCallerPlainText(c.officer_name, currentManagerKey);
-          html += '<div class="aod-top5-item">' +
-            '<div class="aod-top5-rank tabular">' + (i + 1) + '</div>' +
-            '<div class="aod-top5-name">' + escapeHtml(aodCallerName) + '</div>' +
-            '<div class="aod-top5-amt tabular">' + formatIndianCurrency(amt) + '</div>' +
-          '</div>';
-        });
+        var hasPositive = top5.some(function(c) { return (Number(c.today) || 0) > 0; });
 
-        if (top5.length === 0) {
-          html = '<div style="color:#71717a; padding:16px 0; text-align:center;">No caller collections recorded yet.</div>';
+        if (!hasPositive) {
+          html = '<div style="color:#71717a; padding:28px 0; text-align:center; font-weight:600; font-size:13px;">No caller collections recorded yet today.</div>';
+        } else {
+          top5.forEach(function(c, i) {
+            var amt = Number(c.today) || 0;
+            var cMk = (c.manager_key || '').toLowerCase();
+            var cMgrName = MANAGER_NAMES[cMk] || (cMk ? cMk.toUpperCase() : 'Floor');
+            var cBranchKey = getManagerAssignedBranch(cMk);
+            var bDefs = getAllBranchDefinitions();
+            var cBranch = bDefs.find(function(b) { return b.key === cBranchKey; });
+            var bName = cBranch ? cBranch.name : 'Branch';
+
+            html += '<div class="aod-top5-item">' +
+              '<div class="aod-top5-rank tabular">' + (i + 1) + '</div>' +
+              '<div class="aod-top5-name">' +
+                '<div style="font-size:13px; font-weight:800; color:var(--text);">' + escapeHtml(c.officer_name) + '</div>' +
+                '<div style="font-size:10.5px; color:var(--text-muted); font-weight:600;">' +
+                  escapeHtml(cMgrName) + ' · ' + escapeHtml(bName) +
+                '</div>' +
+              '</div>' +
+              '<div class="aod-top5-amt tabular">' + formatIndianCurrency(amt) + '</div>' +
+            '</div>';
+          });
         }
 
         top5Wrap.innerHTML = html;
@@ -6462,24 +6751,33 @@
                 var updated = payload.new;
                 var updatedMk = (updated.manager_key || '').toLowerCase();
                 if (deletedManagers.indexOf(updatedMk) !== -1) return;
-                var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
-                if (!isAdmin && updated.manager_key && updated.manager_key.toLowerCase() !== currentManagerKey) {
-                  return; // Strictly ignore other teams for managers
-                }
-                // Update global caller
+
+                // 1. Update in allFloorCallers and allLoadedCallers for live floor & branch metrics
                 for (var i = 0; i < allFloorCallers.length; i++) {
-                  if (allFloorCallers[i].officer_name === updated.officer_name) {
+                  if (allFloorCallers[i].officer_name === updated.officer_name || (updated.id && String(allFloorCallers[i].id) === String(updated.id))) {
                     allFloorCallers[i].today = Number(updated.today) || 0;
                     break;
                   }
                 }
-                // Update team caller if belongs to team
-                for (var j = 0; j < teamCallers.length; j++) {
-                  if (teamCallers[j].officer_name === updated.officer_name) {
-                    teamCallers[j].today = Number(updated.today) || 0;
+                for (var k = 0; k < allLoadedCallers.length; k++) {
+                  if (allLoadedCallers[k].officer_name === updated.officer_name || (updated.id && String(allLoadedCallers[k].id) === String(updated.id))) {
+                    allLoadedCallers[k].today = Number(updated.today) || 0;
                     break;
                   }
                 }
+
+                // 2. Update team caller if belongs to active manager's team
+                var isMyTeam = updatedMk === currentManagerKey;
+                if (isMyTeam) {
+                  for (var j = 0; j < teamCallers.length; j++) {
+                    if (teamCallers[j].officer_name === updated.officer_name || (updated.id && String(teamCallers[j].id) === String(updated.id))) {
+                      teamCallers[j].today = Number(updated.today) || 0;
+                      break;
+                    }
+                  }
+                }
+
+                // 3. Always re-render UI so AOD, Branch table, and KPI cards stay synchronized live
                 renderUI();
               }
             })
@@ -6488,9 +6786,6 @@
                 var projMk = (payload.new.manager_key || '').toLowerCase();
                 if (deletedManagers.indexOf(projMk) !== -1) return;
                 var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
-                if (!isAdmin && payload.new.manager_key && payload.new.manager_key.toLowerCase() !== currentManagerKey) {
-                  return; // Strictly ignore other managers' projections
-                }
                 allManagerProjections[payload.new.manager_key] = Number(payload.new.projection_amount) || 0;
                 if (payload.new.manager_key === currentManagerKey) {
                   teamProjection = Number(payload.new.projection_amount) || 0;
@@ -6721,10 +7016,18 @@
         } else {
           // CREATE NEW CALLER
           var maxNum = 0;
-          allLoadedCallers.forEach(function(c) {
-            var m = String(c.id || '').match(/^C(\d+)$/i);
-            if (m) maxNum = Math.max(maxNum, parseInt(m[1], 10));
-          });
+          try {
+            var dbCallers = await sbFetch('callers?select=id');
+            (dbCallers || []).forEach(function(c) {
+              var m = String(c.id || '').match(/^C(\d+)$/i);
+              if (m) maxNum = Math.max(maxNum, parseInt(m[1], 10));
+            });
+          } catch(eDb) {
+            allLoadedCallers.forEach(function(c) {
+              var m = String(c.id || '').match(/^C(\d+)$/i);
+              if (m) maxNum = Math.max(maxNum, parseInt(m[1], 10));
+            });
+          }
           var newId = 'C' + String(maxNum + 1).padStart(2, '0');
 
           var newPayload = {
@@ -6825,6 +7128,28 @@
       }
     }
 
+    async function deleteCallerDirect(callerId, callerName) {
+      var isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'mis' || currentUser.role === 'editor');
+      if (!isAdmin) {
+        showToast("Deleting callers is restricted to floor administrators.", "warning");
+        return;
+      }
+
+      if (!confirm("Are you sure you want to permanently delete caller " + callerName + "?\n\nThis will remove them from the database.")) {
+        return;
+      }
+
+      try {
+        var delQuery = callerId ? ('callers?id=eq.' + encodeURIComponent(callerId)) : ('callers?officer_name=eq.' + encodeURIComponent(callerName));
+        await sbFetch(delQuery, { method: 'DELETE' });
+        showToast("Caller " + callerName + " deleted successfully.", "success");
+        await loadManagerData();
+      } catch(err) {
+        console.warn("Delete caller error:", err);
+        showToast("Error deleting caller: " + err.message, "warning");
+      }
+    }
+
     // ------------------------------------------------------------------------
     // MANAGER MANAGEMENT (ADD, EDIT, HIDE/REMOVE)
     // ------------------------------------------------------------------------
@@ -6854,6 +7179,21 @@
       showToast("Generated PIN: " + pin);
     }
 
+    function populateManagerBranchSelect(selectedBranchKey) {
+      var sel = document.getElementById('managerFormBranch');
+      if (!sel) return;
+      sel.innerHTML = '';
+      var allBranches = getAllBranchDefinitions();
+      allBranches.forEach(function(b) {
+        var opt = document.createElement('option');
+        opt.value = b.key;
+        opt.textContent = b.name + ' (' + (b.badge || 'Branch') + ')';
+        if (b.key === selectedBranchKey) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      if (selectedBranchKey) sel.value = selectedBranchKey;
+    }
+
     function openAddManagerModal() {
       var errEl = document.getElementById('managerFormError');
       if (errEl) errEl.style.display = 'none';
@@ -6874,7 +7214,7 @@
       if (origKeyInp) origKeyInp.value = '';
       if (nameInp) nameInp.value = '';
       if (keyInp) { keyInp.value = ''; keyInp.disabled = false; }
-      if (branchInp) branchInp.value = 'jogeshwari';
+      populateManagerBranchSelect('jogeshwari');
       if (statusInp) statusInp.value = 'Active';
       if (userInp) userInp.value = '';
       if (passInp) passInp.value = '1234';
@@ -6907,7 +7247,9 @@
       if (origKeyInp) origKeyInp.value = k;
       if (nameInp) nameInp.value = mgrName;
       if (keyInp) { keyInp.value = k; keyInp.disabled = true; }
-      if (branchInp) branchInp.value = managerBranchMap[k] || 'jogeshwari';
+      
+      var currentBranch = getManagerAssignedBranch(k);
+      populateManagerBranchSelect(currentBranch);
 
       var isHidden = hiddenManagers.indexOf(k) !== -1;
       if (statusInp) statusInp.value = isHidden ? 'Hidden' : 'Active';
@@ -6966,8 +7308,8 @@
         }
 
         // Branch mapping
-        managerBranchMap[key] = branch;
-        try { localStorage.setItem('shaha_manager_branches', JSON.stringify(managerBranchMap)); } catch(e) {}
+        setManagerAssignedBranch(key, branch);
+        await syncBranchConfigToSupabase();
 
         // Custom managers persistence
         customManagers[key] = { name: cleanTitle, branch: branch };
@@ -6983,9 +7325,18 @@
 
         // Supabase users sync
         if (username) {
-          var matchedUser = _cachedAdminUsers.find(function(u) {
-            return u.username.toLowerCase() === username || (u.manager_key && u.manager_key.toLowerCase() === key);
-          });
+          var matchedUser = null;
+          try {
+            var fetchedUsers = await sbFetch('users?or=(username.eq.' + encodeURIComponent(username) + ',manager_key.eq.' + encodeURIComponent(key) + ')&limit=1');
+            if (Array.isArray(fetchedUsers) && fetchedUsers.length > 0) {
+              matchedUser = fetchedUsers[0];
+            }
+          } catch(eFind) {}
+          if (!matchedUser && Array.isArray(_cachedAdminUsers)) {
+            matchedUser = _cachedAdminUsers.find(function(u) {
+              return (u.username || '').toLowerCase() === username || ((u.manager_key || '').toLowerCase() === key);
+            });
+          }
 
           if (matchedUser) {
             var patchBody = {
@@ -7015,6 +7366,7 @@
         setupAdminManagerDropdown();
         renderOverallManagersTable();
         renderBranchWiseTable();
+        updateAodData();
         document.getElementById('tabBadgeAllManagers').textContent = ALL_MANAGERS_ORDER.filter(function(k) { return hiddenManagers.indexOf(k) === -1 || showHiddenManagers; }).length;
         showToast("Manager " + cleanTitle + " saved successfully.", "success");
       } catch(err) {
@@ -7088,6 +7440,8 @@
         delete MANAGER_NAMES[key];
         delete customManagers[key];
         delete managerBranchMap[key];
+        if (key === 'anuradha') delete managerBranchMap['anuraddha'];
+        if (key === 'anuraddha') delete managerBranchMap['anuradha'];
 
         if (deletedManagers.indexOf(key) === -1) {
           deletedManagers.push(key);
@@ -7112,6 +7466,7 @@
         try { localStorage.setItem('shaha_custom_managers', JSON.stringify(customManagers)); } catch(e) {}
         try { localStorage.setItem('shaha_manager_branches', JSON.stringify(managerBranchMap)); } catch(e) {}
         try { localStorage.setItem('shaha_hidden_managers', JSON.stringify(hiddenManagers)); } catch(e) {}
+        await syncBranchConfigToSupabase();
 
         // 6. If currently viewing this manager, gracefully switch to first available manager
         if (currentManagerKey === key) {
@@ -7189,7 +7544,7 @@
       try {
         var users = await sbFetch('users?select=*&order=role.asc,username.asc');
         if (Array.isArray(users)) {
-          _cachedAdminUsers = users;
+          _cachedAdminUsers = users.filter(function(u) { return !((u.username || '').startsWith('__')); });
         } else {
           _cachedAdminUsers = [];
         }
