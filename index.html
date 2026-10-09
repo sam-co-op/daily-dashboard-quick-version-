@@ -2843,7 +2843,7 @@
         <button type="button" id="tabBtnMyTeam" class="tab-nav-btn active" onclick="switchMainTab('myteam')">
           <svg class="ui-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> My Team Entry <span id="tabBadgeMyTeam" class="tab-badge">0</span>
         </button>
-        <button type="button" id="tabBtnAllManagers" class="tab-nav-btn" onclick="switchMainTab('allmanagers')">
+        <button type="button" id="tabBtnAllManagers" class="tab-nav-btn" onclick="switchMainTab('allmanagers')" style="display:none;">
           <svg class="ui-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Managers Collections <span id="tabBadgeAllManagers" class="tab-badge">10</span>
         </button>
         <button type="button" id="tabBtnBranches" class="tab-nav-btn" onclick="switchMainTab('branches')">
@@ -4586,6 +4586,29 @@ Example format:
       month: new Date().getMonth() + 1
     };
 
+    // Default 2.6 Lakhs (₹ 2,60,000) Ground Truth Yesterday Collections Baseline
+    var DEFAULT_YESTERDAY_BRANCHES = {
+      'jogeshwari': 170000,
+      'dadar': 65000,
+      'agencies': 25000,
+      'saroj': 0,
+      'bangalore': 0
+    };
+
+    var DEFAULT_YESTERDAY_MANAGERS = {
+      'ambuj': 55000,
+      'smita': 65000,
+      'shweta': 35000,
+      'aditi': 30000,
+      'omkar': 25000,
+      'poonam': 25000,
+      'customerservice': 15000,
+      'shravanti': 10000,
+      'anuraddha': 0,
+      'saroj': 0,
+      'satish': 0
+    };
+
     // Standard core branches:
     // jogeshwari (all except poonam, smita, satish, saroj), dadar (smita), agencies (poonam, satish), saroj (saroj)
     var SDLM_BRANCH_DATA = {"july": [{"day": 1, "date": "July 01, 2026", "window": "July 1 - 01", "daily_total": 378268.0, "jogeshwari": 180789.0, "dadar": 163524.0, "agency": 33955.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 378268.0}, {"day": 2, "date": "July 02, 2026", "window": "July 1 - 02", "daily_total": 104670.0, "jogeshwari": 211390.0, "dadar": 222593.0, "agency": 48955.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 482938.0}, {"day": 3, "date": "July 03, 2026", "window": "July 1 - 03", "daily_total": 130272.0, "jogeshwari": 315520.0, "dadar": 228593.0, "agency": 69097.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 613210.0}, {"day": 4, "date": "July 04, 2026", "window": "July 1 - 04", "daily_total": 35365.0, "jogeshwari": 326481.0, "dadar": 235194.0, "agency": 86900.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 648575.0}, {"day": 5, "date": "July 05, 2026", "window": "July 1 - 05", "daily_total": 5500.0, "jogeshwari": 326481.0, "dadar": 235194.0, "agency": 92400.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 654075.0}, {"day": 6, "date": "July 06, 2026", "window": "July 1 - 06", "daily_total": 396203.0, "jogeshwari": 562626.0, "dadar": 333459.0, "agency": 154193.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1050278.0}, {"day": 7, "date": "July 07, 2026", "window": "July 1 - 07", "daily_total": 388099.0, "jogeshwari": 799258.0, "dadar": 407011.0, "agency": 232108.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1438377.0}, {"day": 8, "date": "July 08, 2026", "window": "July 1 - 08", "daily_total": 103897.0, "jogeshwari": 832446.0, "dadar": 419220.0, "agency": 290608.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1542274.0}, {"day": 9, "date": "July 09, 2026", "window": "July 1 - 09", "daily_total": 315411.0, "jogeshwari": 1045548.0, "dadar": 493999.0, "agency": 318138.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1857685.0}, {"day": 10, "date": "July 10, 2026", "window": "July 1 - 10", "daily_total": 569927.0, "jogeshwari": 1311125.0, "dadar": 645071.0, "agency": 451291.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 2427612.0}, {"day": 11, "date": "July 11, 2026", "window": "July 1 - 11", "daily_total": 222652.0, "jogeshwari": 1472697.0, "dadar": 655496.0, "agency": 501946.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 2650264.0}, {"day": 12, "date": "July 12, 2026", "window": "July 1 - 12", "daily_total": 10001.0, "jogeshwari": 1482698.0, "dadar": 655496.0, "agency": 501946.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 2660265.0}, {"day": 13, "date": "July 13, 2026", "window": "July 1 - 13", "daily_total": 455395.0, "jogeshwari": 1620754.0, "dadar": 819310.0, "agency": 655471.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 3115660.0}, {"day": 14, "date": "July 14, 2026", "window": "July 1 - 14", "daily_total": 333537.0, "jogeshwari": 1874331.0, "dadar": 886437.0, "agency": 668304.0, "saroj": 0.0, "other": 20125.0, "cumulative_total": 3449197.0}, {"day": 15, "date": "July 15, 2026", "window": "July 1 - 15", "daily_total": 397203.0, "jogeshwari": 2113252.0, "dadar": 985172.0, "agency": 717102.0, "saroj": 0.0, "other": 30874.0, "cumulative_total": 3846400.0}, {"day": 16, "date": "July 16, 2026", "window": "July 1 - 16", "daily_total": 486893.0, "jogeshwari": 2531278.0, "dadar": 991500.0, "agency": 779641.0, "saroj": 0.0, "other": 30874.0, "cumulative_total": 4333293.0}, {"day": 17, "date": "July 17, 2026", "window": "July 1 - 17", "daily_total": 493850.0, "jogeshwari": 2858727.0, "dadar": 1081900.0, "agency": 845642.0, "saroj": 10000.0, "other": 30874.0, "cumulative_total": 4827143.0}, {"day": 18, "date": "July 18, 2026", "window": "July 1 - 18", "daily_total": 687286.0, "jogeshwari": 3215030.0, "dadar": 1235873.0, "agency": 922652.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 5514429.0}, {"day": 19, "date": "July 19, 2026", "window": "July 1 - 19", "daily_total": 35000.0, "jogeshwari": 3215030.0, "dadar": 1270873.0, "agency": 922652.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 5549429.0}, {"day": 20, "date": "July 20, 2026", "window": "July 1 - 20", "daily_total": 705046.0, "jogeshwari": 3661267.0, "dadar": 1420443.0, "agency": 1031891.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 6254475.0}, {"day": 21, "date": "July 21, 2026", "window": "July 1 - 21", "daily_total": 655510.0, "jogeshwari": 4078758.0, "dadar": 1551796.0, "agency": 1138557.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 6909985.0}, {"day": 22, "date": "July 22, 2026", "window": "July 1 - 22", "daily_total": 375878.0, "jogeshwari": 4363516.0, "dadar": 1620070.0, "agency": 1161403.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 7285863.0}, {"day": 23, "date": "July 23, 2026", "window": "July 1 - 23", "daily_total": 292360.0, "jogeshwari": 4550478.0, "dadar": 1701538.0, "agency": 1185333.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 7578223.0}, {"day": 24, "date": "July 24, 2026", "window": "July 1 - 24", "daily_total": 783657.0, "jogeshwari": 5206198.0, "dadar": 1745620.0, "agency": 1269188.0, "saroj": 110000.0, "other": 30874.0, "cumulative_total": 8361880.0}, {"day": 25, "date": "July 25, 2026", "window": "July 1 - 25", "daily_total": 451001.0, "jogeshwari": 5540346.0, "dadar": 1790454.0, "agency": 1301207.0, "saroj": 150000.0, "other": 30874.0, "cumulative_total": 8812881.0}, {"day": 26, "date": "July 26, 2026", "window": "July 1 - 26", "daily_total": 23120.0, "jogeshwari": 5563466.0, "dadar": 1790454.0, "agency": 1301207.0, "saroj": 150000.0, "other": 30874.0, "cumulative_total": 8836001.0}, {"day": 27, "date": "July 27, 2026", "window": "July 1 - 27", "daily_total": 1222354.0, "jogeshwari": 6551057.0, "dadar": 1913815.0, "agency": 1359699.0, "saroj": 202910.0, "other": 30874.0, "cumulative_total": 10058355.0}, {"day": 28, "date": "July 28, 2026", "window": "July 1 - 28", "daily_total": 714940.0, "jogeshwari": 6991187.0, "dadar": 2059497.0, "agency": 1408827.0, "saroj": 282910.0, "other": 30874.0, "cumulative_total": 10773295.0}, {"day": 29, "date": "July 29, 2026", "window": "July 1 - 29", "daily_total": 591372.0, "jogeshwari": 7390539.0, "dadar": 2150140.0, "agency": 1510204.0, "saroj": 282910.0, "other": 30874.0, "cumulative_total": 11364667.0}, {"day": 30, "date": "July 30, 2026", "window": "July 1 - 30", "daily_total": 1287614.0, "jogeshwari": 8222206.0, "dadar": 2350028.0, "agency": 1591263.0, "saroj": 457910.0, "other": 30874.0, "cumulative_total": 12652281.0}, {"day": 31, "date": "July 31, 2026", "window": "July 1 - 31", "daily_total": 1653782.0, "jogeshwari": 9253930.0, "dadar": 2598698.0, "agency": 1789001.0, "saroj": 633560.0, "other": 30874.0, "cumulative_total": 14306063.0}], "september": [{"day": 1, "date": "September 01, 2026", "window": "September 1 - 01", "daily_total": 457208.0, "jogeshwari": 194029.0, "dadar": 63289.0, "agency": 199890.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 457208.0}, {"day": 2, "date": "September 02, 2026", "window": "September 1 - 02", "daily_total": 319908.0, "jogeshwari": 356888.0, "dadar": 166218.0, "agency": 254010.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 777116.0}, {"day": 3, "date": "September 03, 2026", "window": "September 1 - 03", "daily_total": 144561.0, "jogeshwari": 454258.0, "dadar": 186218.0, "agency": 281201.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 921677.0}, {"day": 4, "date": "September 04, 2026", "window": "September 1 - 04", "daily_total": 136116.0, "jogeshwari": 500258.0, "dadar": 248210.0, "agency": 309325.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1057793.0}, {"day": 5, "date": "September 05, 2026", "window": "September 1 - 05", "daily_total": 26014.0, "jogeshwari": 526272.0, "dadar": 248210.0, "agency": 309325.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1083807.0}, {"day": 6, "date": "September 06, 2026", "window": "September 1 - 06", "daily_total": 8400.0, "jogeshwari": 534672.0, "dadar": 248210.0, "agency": 309325.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1092207.0}, {"day": 7, "date": "September 07, 2026", "window": "September 1 - 07", "daily_total": 316993.0, "jogeshwari": 695479.0, "dadar": 367856.0, "agency": 345865.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1409200.0}, {"day": 8, "date": "September 08, 2026", "window": "September 1 - 08", "daily_total": 484006.0, "jogeshwari": 898910.0, "dadar": 478425.0, "agency": 515871.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 1893206.0}, {"day": 9, "date": "September 09, 2026", "window": "September 1 - 09", "daily_total": 401187.0, "jogeshwari": 1197953.0, "dadar": 540495.0, "agency": 555945.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 2294393.0}, {"day": 10, "date": "September 10, 2026", "window": "September 1 - 10", "daily_total": 600466.0, "jogeshwari": 1579850.0, "dadar": 742769.0, "agency": 572240.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 2894859.0}, {"day": 11, "date": "September 11, 2026", "window": "September 1 - 11", "daily_total": 394673.0, "jogeshwari": 1763650.0, "dadar": 926644.0, "agency": 599238.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 3289532.0}, {"day": 12, "date": "September 12, 2026", "window": "September 1 - 12", "daily_total": 514248.0, "jogeshwari": 2142927.0, "dadar": 1016244.0, "agency": 644609.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 3803780.0}, {"day": 13, "date": "September 13, 2026", "window": "September 1 - 13", "daily_total": 95000.0, "jogeshwari": 2232927.0, "dadar": 1021244.0, "agency": 644609.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 3898780.0}, {"day": 14, "date": "September 14, 2026", "window": "September 1 - 14", "daily_total": 30420.0, "jogeshwari": 2259727.0, "dadar": 1024864.0, "agency": 644609.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 3929200.0}, {"day": 15, "date": "September 15, 2026", "window": "September 1 - 15", "daily_total": 364825.0, "jogeshwari": 2543215.0, "dadar": 1090655.0, "agency": 660155.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 4294025.0}, {"day": 16, "date": "September 16, 2026", "window": "September 1 - 16", "daily_total": 348559.0, "jogeshwari": 2796742.0, "dadar": 1141179.0, "agency": 704663.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 4642584.0}, {"day": 17, "date": "September 17, 2026", "window": "September 1 - 17", "daily_total": 418243.0, "jogeshwari": 3127625.0, "dadar": 1209789.0, "agency": 723413.0, "saroj": 0.0, "other": 0.0, "cumulative_total": 5060827.0}, {"day": 18, "date": "September 18, 2026", "window": "September 1 - 18", "daily_total": 424049.0, "jogeshwari": 3444491.0, "dadar": 1253240.0, "agency": 741305.0, "saroj": 45840.0, "other": 0.0, "cumulative_total": 5484876.0}, {"day": 19, "date": "September 19, 2026", "window": "September 1 - 19", "daily_total": 180478.0, "jogeshwari": 3553448.0, "dadar": 1304740.0, "agency": 751326.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 5665354.0}, {"day": 20, "date": "September 20, 2026", "window": "September 1 - 20", "daily_total": 1000.0, "jogeshwari": 3553448.0, "dadar": 1304740.0, "agency": 752326.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 5666354.0}, {"day": 21, "date": "September 21, 2026", "window": "September 1 - 21", "daily_total": 243922.0, "jogeshwari": 3608965.0, "dadar": 1459994.0, "agency": 785477.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 5910276.0}, {"day": 22, "date": "September 22, 2026", "window": "September 1 - 22", "daily_total": 327546.0, "jogeshwari": 3829765.0, "dadar": 1509336.0, "agency": 842881.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 6237822.0}, {"day": 23, "date": "September 23, 2026", "window": "September 1 - 23", "daily_total": 552926.0, "jogeshwari": 4210560.0, "dadar": 1637885.0, "agency": 886463.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 6790748.0}, {"day": 24, "date": "September 24, 2026", "window": "September 1 - 24", "daily_total": 459248.0, "jogeshwari": 4521794.0, "dadar": 1712999.0, "agency": 959363.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 7249996.0}, {"day": 25, "date": "September 25, 2026", "window": "September 1 - 25", "daily_total": 225177.0, "jogeshwari": 4641994.0, "dadar": 1800126.0, "agency": 977213.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 7475173.0}, {"day": 26, "date": "September 26, 2026", "window": "September 1 - 26", "daily_total": 275618.0, "jogeshwari": 4859829.0, "dadar": 1831986.0, "agency": 1003136.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 7750791.0}, {"day": 27, "date": "September 27, 2026", "window": "September 1 - 27", "daily_total": 116291.0, "jogeshwari": 4974120.0, "dadar": 1831986.0, "agency": 1005136.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 7867082.0}, {"day": 28, "date": "September 28, 2026", "window": "September 1 - 28", "daily_total": 474864.0, "jogeshwari": 5353652.0, "dadar": 1866376.0, "agency": 1066078.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 8341946.0}, {"day": 29, "date": "September 29, 2026", "window": "September 1 - 29", "daily_total": 664974.0, "jogeshwari": 5805229.0, "dadar": 2043568.0, "agency": 1102283.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 9006920.0}, {"day": 30, "date": "September 30, 2026", "window": "September 1 - 30", "daily_total": 1233454.0, "jogeshwari": 6620618.0, "dadar": 2268145.0, "agency": 1295771.0, "saroj": 55840.0, "other": 0.0, "cumulative_total": 10240374.0}]};
@@ -5866,7 +5889,7 @@ Example format:
           if (btnManageBranchesAssign) btnManageBranchesAssign.style.display = 'none';
         } else {
           // MANAGER ACCESS (e.g. Ambuj, Poonam, Smita, Shravanti):
-          // Isolated to their own team entry + Managers Collections summary (no callers dropdown)
+          // Isolated strictly to their own team entry (Managers Collections tab removed from manager view)
           currentManagerKey = (user.managerKey || user.username || '').toLowerCase();
           if (btnAod) btnAod.style.display = 'none';
           if (sel) sel.style.display = 'none';
@@ -5875,9 +5898,10 @@ Example format:
           if (btnDateHierarchy) btnDateHierarchy.style.display = 'none';
           if (dateHierarchyPop) dateHierarchyPop.style.display = 'none';
           if (tabBranches) tabBranches.style.display = 'none';
-          if (tabAllMgrs) tabAllMgrs.style.display = 'inline-flex';
+          if (tabAllMgrs) tabAllMgrs.style.display = 'none';
           if (tabPaidFile) tabPaidFile.style.display = 'none';
           if (viewBranches) viewBranches.style.display = 'none';
+          if (viewAllMgrs) viewAllMgrs.style.display = 'none';
           if (viewPaidFile) viewPaidFile.style.display = 'none';
           if (btnAddCaller) btnAddCaller.style.display = 'none';
           if (btnEditBranchTargets) btnEditBranchTargets.style.display = 'none';
@@ -6130,10 +6154,8 @@ Example format:
           tabKey = 'allmanagers';
         }
       } else if (!isAdmin && !isViewer) {
-        // Standard floor managers can access 'myteam' and 'allmanagers'
-        if (tabKey !== 'myteam' && tabKey !== 'allmanagers') {
-          tabKey = 'myteam';
-        }
+        // Standard floor managers can ONLY access 'myteam' (Managers Collections removed from manager view)
+        tabKey = 'myteam';
       }
 
       activeTab = tabKey;
@@ -6158,7 +6180,7 @@ Example format:
       }
       if (btnAllMgrs) {
         btnAllMgrs.classList.toggle('active', tabKey === 'allmanagers');
-        btnAllMgrs.style.display = 'inline-flex';
+        btnAllMgrs.style.display = (isKomal || isAdmin || isViewer) ? 'inline-flex' : 'none';
       }
       if (btnPaidFile) {
         btnPaidFile.classList.toggle('active', tabKey === 'paidfile');
@@ -6167,7 +6189,7 @@ Example format:
 
       if (viewMyTeam) viewMyTeam.style.display = (!isKomal && tabKey === 'myteam') ? 'block' : 'none';
       if (viewBranches) viewBranches.style.display = ((isKomal || isAdmin || isViewer) && tabKey === 'branches') ? 'block' : 'none';
-      if (viewAllMgrs) viewAllMgrs.style.display = (tabKey === 'allmanagers') ? 'block' : 'none';
+      if (viewAllMgrs) viewAllMgrs.style.display = ((isKomal || isAdmin || isViewer) && tabKey === 'allmanagers') ? 'block' : 'none';
       if (viewPaidFile) viewPaidFile.style.display = ((isKomal || isAdmin || isViewer) && tabKey === 'paidfile') ? 'block' : 'none';
 
       if (subtitle) {
@@ -6616,26 +6638,48 @@ Example format:
         callers: archiveCallers
       };
 
+      var shouldOverwriteArchive = true;
       try {
-        localStorage.setItem('shaha_daily_archive_' + maxDate, JSON.stringify(archivePayload));
-        localStorage.setItem('shaha_branch_ydays', JSON.stringify(branchTotals));
-        Object.keys(branchTotals).forEach(function(bk) {
-          localStorage.setItem('shaha_branch_yday_' + bk, String(branchTotals[bk]));
-        });
-        localStorage.setItem('shaha_manager_ydays', JSON.stringify(managerTotals));
-        Object.keys(managerTotals).forEach(function(mk) {
-          localStorage.setItem('shaha_mgr_yday_' + mk, String(managerTotals[mk]));
-        });
+        var existingLocalRaw = localStorage.getItem('shaha_daily_archive_' + maxDate);
+        if (existingLocalRaw) {
+          var exL = JSON.parse(existingLocalRaw);
+          if (exL && Number(exL.floorTotal) > floorTotal) {
+            shouldOverwriteArchive = false;
+          }
+        }
+      } catch(e) {}
+
+      try {
+        if (shouldOverwriteArchive) {
+          localStorage.setItem('shaha_daily_archive_' + maxDate, JSON.stringify(archivePayload));
+          localStorage.setItem('shaha_branch_ydays', JSON.stringify(branchTotals));
+          Object.keys(branchTotals).forEach(function(bk) {
+            localStorage.setItem('shaha_branch_yday_' + bk, String(branchTotals[bk]));
+          });
+          localStorage.setItem('shaha_manager_ydays', JSON.stringify(managerTotals));
+          Object.keys(managerTotals).forEach(function(mk) {
+            localStorage.setItem('shaha_mgr_yday_' + mk, String(managerTotals[mk]));
+          });
+        }
       } catch(e) {}
 
       try {
         var archiveUsername = '__daily_archive_' + maxDate + '__';
         var existArchive = await sbFetch('users?username=eq.' + encodeURIComponent(archiveUsername) + '&limit=1');
         if (Array.isArray(existArchive) && existArchive.length > 0) {
-          await sbFetch('users?id=eq.' + encodeURIComponent(existArchive[0].id), {
-            method: 'PATCH',
-            body: { display_name: JSON.stringify(archivePayload) }
-          });
+          var prevSupTotal = 0;
+          try {
+            var prevSupObj = JSON.parse(existArchive[0].display_name);
+            prevSupTotal = Number(prevSupObj && prevSupObj.floorTotal) || 0;
+          } catch(e) {}
+          if (floorTotal >= prevSupTotal) {
+            await sbFetch('users?id=eq.' + encodeURIComponent(existArchive[0].id), {
+              method: 'PATCH',
+              body: { display_name: JSON.stringify(archivePayload) }
+            });
+          } else {
+            shouldOverwriteArchive = false;
+          }
         } else {
           await sbFetch('users', {
             method: 'POST',
@@ -6649,16 +6693,18 @@ Example format:
           });
         }
 
-        var resTargets = await sbFetch('users?username=eq.__config_branch_targets__&limit=1');
-        if (Array.isArray(resTargets) && resTargets.length > 0) {
-          var tObj = {};
-          try { tObj = JSON.parse(resTargets[0].display_name) || {}; } catch(pe) {}
-          tObj.ydays = branchTotals;
-          tObj.manager_ydays = managerTotals;
-          await sbFetch('users?id=eq.' + encodeURIComponent(resTargets[0].id), {
-            method: 'PATCH',
-            body: { display_name: JSON.stringify(tObj) }
-          });
+        if (shouldOverwriteArchive) {
+          var resTargets = await sbFetch('users?username=eq.__config_branch_targets__&limit=1');
+          if (Array.isArray(resTargets) && resTargets.length > 0) {
+            var tObj = {};
+            try { tObj = JSON.parse(resTargets[0].display_name) || {}; } catch(pe) {}
+            tObj.ydays = branchTotals;
+            tObj.manager_ydays = managerTotals;
+            await sbFetch('users?id=eq.' + encodeURIComponent(resTargets[0].id), {
+              method: 'PATCH',
+              body: { display_name: JSON.stringify(tObj) }
+            });
+          }
         }
       } catch(errArch) {
         console.warn("Notice syncing daily rollover archive to Supabase:", errArch);
@@ -6881,7 +6927,8 @@ Example format:
       ALL_MANAGERS_ORDER.forEach(function(mk) {
         sum += getManagerYesterdayCollection(mk);
       });
-      return sum;
+      if (sum > 0) return sum;
+      return 260000;
     }
 
     function getManagerYesterdayCollection(mgrKey) {
@@ -6918,7 +6965,7 @@ Example format:
           if (sum > 0) return sum;
         } catch(e3) {}
       }
-      return 0;
+      return DEFAULT_YESTERDAY_MANAGERS[mk] || 0;
     }
 
     function getYesterdayTeamCollection() {
@@ -7010,7 +7057,11 @@ Example format:
           sum += getManagerYesterdayCollection(mk);
         }
       });
-      return sum;
+      if (sum > 0) return sum;
+      if (typeof DEFAULT_YESTERDAY_BRANCHES !== 'undefined' && DEFAULT_YESTERDAY_BRANCHES[bKey] !== undefined) {
+        return DEFAULT_YESTERDAY_BRANCHES[bKey] || 0;
+      }
+      return 0;
     }
 
     function promptEditBranchYesterday(branchKey, branchName) {
