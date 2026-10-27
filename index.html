@@ -2285,8 +2285,8 @@
       --cp-muted: var(--text-muted);
       --cp-signal: var(--signal);
       --cp-alert: var(--alert);
-      --cp-display: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
-      --cp-body: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --cp-display: "Bricolage Grotesque", "Figtree", "Segoe UI", sans-serif;
+      --cp-body: "Figtree", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       max-width: 440px;
       width: 100%;
       padding: 0;
@@ -2575,7 +2575,7 @@
     /* ==========================================================================
        [CSS-20] DESK THEME (manager desk, header, tabs, tables, KPI column)
        Same language as the AOD and the checkpoint popup: navy ink, one saffron
-       signal colour, Big Shoulders Display for figures and titles, IBM Plex Sans
+       signal colour, Bricolage Grotesque for figures and titles, Figtree
        for everything else. This section sits last on purpose: the older sections
        above keep the layout mechanics; this one owns the look.
        ========================================================================== */
@@ -3402,6 +3402,10 @@
 
     /* ---------- Wallboard: SDLM at the right of the hero, branch total row ---------- */
     .aod-hero-side-right { text-align: right; }
+    /* Checkpoint popup: sentence case with the softer fonts */
+    .cp-title { text-transform: none; letter-spacing: -0.01em; font-weight: 700; }
+    .cp-action { text-transform: none; letter-spacing: 0; font-size: 17px; font-weight: 700; }
+    .cp-time { font-weight: 800; letter-spacing: -0.02em; }
     /* Compact branch table: one line per branch, so 5+ branches and the total fit */
     #aodScreen .aod-table .aod-row-sub { display: none; }
     #aodScreen .aod-table .aod-row-name { font-size: 20px; white-space: nowrap; }
@@ -3688,6 +3692,15 @@
     .caller-table:has(#branchWiseTableBody) tfoot td { white-space: nowrap; }
     #branchWiseTableBody > tr.mgr-row > td { padding-top: 12px; padding-bottom: 12px; }
 
+    /* ---------- Entry history popup ---------- */
+    .modal-card.elog-card { max-width: 760px; width: 95%; max-height: 85vh; display: flex; flex-direction: column; }
+    .elog-list { flex: 1 1 auto; min-height: 80px; overflow: auto; border: 1px solid var(--border); border-radius: 12px; }
+    .elog-table th { position: sticky; top: 0; background: var(--surface-2); }
+    .elog-table td, .elog-table th { white-space: nowrap; }
+    .elog-time { font-weight: 700; color: var(--text); }
+    .elog-diff.is-up { color: var(--live); font-weight: 700; }
+    .elog-diff.is-down { color: var(--alert); font-weight: 700; }
+
     /* ---------- Calmer desk: softer type, fewer boxes ---------- */
     .date-day-seg { display: none; gap: 2px; }
     .date-range.is-day-seg { padding: 3px; }
@@ -3772,6 +3785,30 @@
     :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
     .login-overlay .theme-toggle { position: absolute; top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; }
     html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after { transition: none !important; }
+    /* ---------- Desk tables fit the column: no side scroll bar ---------- */
+    .desk-right-col .caller-table th { width: auto !important; white-space: normal; }
+    .desk-right-col .caller-table td.tabular { white-space: nowrap; }
+    @media (min-width: 1024px) and (max-width: 1699px) {
+      .desk-split-layout:not(.komal-layout) { grid-template-columns: 330px minmax(0, 1fr); gap: 20px; }
+      .desk-right-col .caller-table th,
+      .desk-right-col .caller-table td { padding-inline: 8px; }
+      .desk-right-col .caller-table td { font-size: 13px; }
+      .desk-right-col .branch-cell-note { max-width: 150px; }
+    }
+    @media (min-width: 1024px) and (max-width: 1439px) {
+      .desk-split-layout:not(.komal-layout) { grid-template-columns: 300px minmax(0, 1fr); gap: 16px; }
+      .desk-right-col .caller-table th,
+      .desk-right-col .caller-table td { padding-inline: 6px; }
+      .desk-right-col .caller-table th { font-size: 10px; letter-spacing: 0.04em; }
+      .desk-right-col .caller-table td { font-size: 12.5px; }
+      .desk-right-col .branch-cell-note { max-width: 96px; }
+      #overallManagersTableBody > tr > td:nth-child(2) { white-space: normal; }
+      .caller-table:has(#overallManagersTableBody) tfoot td,
+      .caller-table:has(#branchWiseTableBody) tfoot td { white-space: normal; }
+      #branchWiseTableBody > tr.mgr-row > td:nth-child(2),
+      #branchWiseTableBody > tr.mgr-row > td:nth-child(3) { min-width: 0; }
+    }
+
   </style>
 </head>
 <body>
@@ -4154,6 +4191,9 @@
             <input type="checkbox" id="chkShowHiddenCallers" onchange="toggleShowHiddenCallers(this.checked)" style="accent-color: var(--accent); cursor:pointer;">
             Show Hidden Callers
           </label>
+          <button type="button" id="btnEntryLog" class="btn-outline" onclick="openEntryLogModal()" style="font-weight:700;" title="When each collection amount was entered">
+            <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> History
+          </button>
           <button type="button" id="btnAddCallerMyTeam" class="btn-outline" onclick="openAddCallerModal()" style="display:none; font-weight:700;">
             <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Caller
           </button>
@@ -4439,6 +4479,17 @@
   <!-- ========================================================================
        [HTML-10] MODAL: EDIT SHIFT PROJECTION
        ======================================================================== -->
+  <div id="entryLogModalBackdrop" class="modal-backdrop" onclick="if(event.target===this) closeEntryLogModal()">
+    <div class="modal-card elog-card">
+      <h3 class="modal-title">Entry history</h3>
+      <p id="entryLogSub" class="modal-desc"></p>
+      <div id="entryLogList" class="elog-list"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-outline" onclick="closeEntryLogModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
   <div id="projModalBackdrop" class="modal-backdrop" onclick="if(event.target===this) closeProjectionModal()">
     <div class="modal-card">
       <div id="projModalNotice" style="display:none; margin-bottom:12px; padding:8px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:6px; font-size:12px; font-weight:700; color:var(--text);">
@@ -5584,7 +5635,7 @@
     var _aodTop5Scope = 'floor';
     var activeTab = 'myteam'; // 'myteam' | 'branches' | 'allmanagers'
     var expandedManagerAccordions = {};
-    var expandedBranchAccordions = { 'jogeshwari': true, 'dadar': false, 'agencies': false, 'saroj': false };
+    var expandedBranchAccordions = { 'jogeshwari': false, 'dadar': false, 'agencies': false, 'saroj': false };
     var expandedBranchManagerAccordions = {};
 
     // Caller & Manager Active/Hidden State
@@ -6354,6 +6405,88 @@
         showToast("Targets were changed, but the change log could not be saved.", "warning");
         return false;
       }
+    }
+
+    // Collection entry history: one config row per changed amount.
+    // The date is in the row name, so one day's log loads with one LIKE filter.
+    async function logCollectionEntry(caller, officerName, oldAmt, newAmt) {
+      var now = new Date();
+      var mk = (caller && caller.manager_key) || currentManagerKey || '';
+      var entry = {
+        at: now.toISOString(),
+        by: currentUser ? (currentUser.displayName || currentUser.username) : '',
+        mk: mk,
+        caller: officerName,
+        id: (caller && caller.id) || '',
+        old: Number(oldAmt) || 0,
+        new: Number(newAmt) || 0
+      };
+      try {
+        await sbFetch('users', {
+          method: 'POST',
+          body: {
+            username: '__entry_log_' + activeDateStr.replace(/-/g, '') + '_' + now.getTime() + '_' + Math.floor(Math.random() * 1000) + '__',
+            password: 'system_entry_log',
+            role: 'config',
+            manager_key: mk,
+            display_name: JSON.stringify(entry)
+          }
+        });
+      } catch(e) {
+        console.warn("Entry log save notice:", e);
+      }
+    }
+
+    function getEntryLogDate() {
+      return selectedDatesList.length === 1 ? selectedDatesList[0] : getTodayDateString();
+    }
+
+    async function openEntryLogModal() {
+      var modal = document.getElementById('entryLogModalBackdrop');
+      var list = document.getElementById('entryLogList');
+      var sub = document.getElementById('entryLogSub');
+      if (!modal || !list) return;
+      var day = getEntryLogDate();
+      var mk = currentManagerKey;
+      if (sub) sub.textContent = (MANAGER_NAMES[mk] || mk) + ' · ' + formatDisplayDateLabel(day);
+      list.innerHTML = '<div class="tlog-empty">Loading the entry history…</div>';
+      modal.style.display = 'flex';
+      var rows = [];
+      try {
+        rows = await sbFetch('users?username=like.__entry_log_' + day.replace(/-/g, '') + '_*&manager_key=eq.' + encodeURIComponent(mk) +
+          '&select=username,display_name&order=username.desc&limit=1000');
+      } catch(e) {
+        list.innerHTML = '<div class="tlog-empty">Could not load the entry history. Check the connection.</div>';
+        return;
+      }
+      var entries = (rows || []).map(function(r) {
+        try { return JSON.parse(r.display_name || '{}'); } catch(e) { return null; }
+      }).filter(function(e) { return e && e.at; });
+      if (entries.length === 0) {
+        list.innerHTML = '<div class="tlog-empty">No collection entries logged for this team on this day.</div>';
+        return;
+      }
+      list.innerHTML = '<table class="tlog-table elog-table"><thead><tr>' +
+          '<th>Time</th><th>Caller</th><th style="text-align:right;">Previous</th><th style="text-align:right;">New</th><th style="text-align:right;">Change</th><th>Entered by</th>' +
+        '</tr></thead><tbody>' +
+        entries.map(function(e) {
+          var diff = (Number(e.new) || 0) - (Number(e.old) || 0);
+          var t = new Date(e.at).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+          return '<tr>' +
+            '<td class="tabular elog-time">' + escapeHtml(t) + '</td>' +
+            '<td style="font-weight:700;">' + escapeHtml(e.caller || '') + '</td>' +
+            '<td class="tabular" style="text-align:right; color:var(--text-muted);">' + formatIndianCurrency(e.old) + '</td>' +
+            '<td class="tabular" style="text-align:right; font-weight:700;">' + formatIndianCurrency(e.new) + '</td>' +
+            '<td class="tabular elog-diff ' + (diff < 0 ? 'is-down' : 'is-up') + '" style="text-align:right;">' + (diff < 0 ? '−' : '+') + formatIndianCurrency(Math.abs(diff)) + '</td>' +
+            '<td style="color:var(--text-muted);">' + escapeHtml(e.by || '') + '</td>' +
+          '</tr>';
+        }).join('') +
+      '</tbody></table>';
+    }
+
+    function closeEntryLogModal() {
+      var modal = document.getElementById('entryLogModalBackdrop');
+      if (modal) modal.style.display = 'none';
     }
 
     async function renderTargetChangeLog() {
@@ -9051,7 +9184,7 @@
       inp.setAttribute('data-base', computedVal);
 
       updateCallerOptimistic(callerName, computedVal);
-      saveSingleCallerToDb(callerName, computedVal);
+      saveSingleCallerToDb(callerName, computedVal, baseVal);
     }
 
     function onCallerInputKeyDown(e, inp) {
@@ -9105,7 +9238,7 @@
       return null;
     }
 
-    async function saveSingleCallerToDb(officerName, amount) {
+    async function saveSingleCallerToDb(officerName, amount, previousAmount) {
       if (isHistoricalView) {
         showToast("Past dates are read-only. Switch to Today to log collections.", "warning");
         return;
@@ -9128,6 +9261,9 @@
             updated_at: new Date().toISOString()
           }
         });
+        if (previousAmount !== undefined && (Number(previousAmount) || 0) !== (Number(amount) || 0)) {
+          logCollectionEntry(findTeamCallerByName(officerName), officerName, previousAmount, amount);
+        }
 
         if (indicator) {
           indicator.innerHTML = uiIcon("check", "ui-icon-xs") + " Saved";
@@ -10555,8 +10691,8 @@
     // Load the AOD fonts at start-up (hidden text does not load them), then re-fit the big numbers
     if (document.fonts && document.fonts.load) {
       Promise.all([
-        document.fonts.load('900 124px "Big Shoulders Display"'),
-        document.fonts.load('600 14px "IBM Plex Sans"')
+        document.fonts.load('800 124px "Bricolage Grotesque"'),
+        document.fonts.load('600 14px "Figtree"')
       ]).then(function() { if (isAodOpen()) updateAodData(); }).catch(function() {});
     }
 
@@ -12856,7 +12992,7 @@
       if (countLbl) countLbl.textContent = 'Fetching accounts from database...';
 
       try {
-        var users = await sbFetch('users?select=*&order=role.asc,username.asc');
+        var users = await sbFetch('users?select=*&username=not.like.__entry_log_*&order=role.asc,username.asc');
         if (Array.isArray(users)) {
           _cachedAdminUsers = users.filter(function(u) { return !((u.username || '').startsWith('__')); });
         } else {
