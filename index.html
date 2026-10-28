@@ -3238,7 +3238,8 @@
     html, body { background: var(--bg); color: var(--text); }
     ::selection { background: var(--text); color: var(--on-accent); }
     input, textarea { caret-color: var(--text); }
-    * { scrollbar-color: var(--border-strong) transparent; }
+    /* Chrome ignores ::-webkit-scrollbar once scrollbar-color is set, so only Firefox gets it */
+    @supports not selector(::-webkit-scrollbar) { * { scrollbar-color: var(--border-strong) transparent; } }
     ::-webkit-scrollbar { width: 10px; height: 10px; }
     ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; border: 2px solid var(--bg); }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -3701,6 +3702,42 @@
     .elog-diff.is-up { color: var(--live); font-weight: 700; }
     .elog-diff.is-down { color: var(--alert); font-weight: 700; }
 
+    /* ---------- Left KPI column: no scroll bar, tighter on short screens ---------- */
+    .desk-left-col { scrollbar-width: none; -ms-overflow-style: none; }
+    .desk-left-col::-webkit-scrollbar { display: none; width: 0; height: 0; }
+    @media (min-width: 1024px) and (max-width: 1599px) {
+      .desk-left-col .kpi-value,
+      .desk-left-col .kpi-hero-split-grid .kpi-card.hero-center .kpi-value { font-size: clamp(18px, 1.55vw, 24px); white-space: nowrap; }
+    }
+    @media (min-width: 1024px) and (min-height: 600px) and (max-height: 820px) {
+      .desk-left-col .kpi-card { padding: 8px 12px; }
+      .desk-left-col .kpi-value,
+      .desk-left-col .kpi-hero-split-grid .kpi-card.hero-center .kpi-value { font-size: clamp(18px, 1.55vw, 24px); margin: 1px 0; }
+      .desk-left-col .kpi-grid,
+      .desk-left-col .kpi-hero-split-grid,
+      .desk-left-col .kpi-sub-grid,
+      .desk-left-col .kpi-list { gap: 6px; }
+      .desk-left-col .kpi-subtext { font-size: 11px; }
+    }
+
+    /* Short screens: the KPI column drops its second lines so all cards fit without scrolling */
+    @media (min-width: 1024px) and (min-height: 600px) and (max-height: 800px) {
+      .desk-left-col .kpi-hero-split-grid .kpi-subtext,
+      .desk-left-col .kpi-sub-grid .kpi-card:first-child .kpi-subtext,
+      .desk-left-col #cardYetToCome .kpi-subtext,
+      .desk-left-col #cardYesterdayMyTeam .kpi-subtext { display: none; }
+      .desk-left-col .pacing-bar-container { margin-top: 4px; }
+      .desk-left-col .kpi-header { margin-bottom: 0; }
+    }
+    @media (min-width: 1024px) and (min-height: 600px) and (max-height: 700px) {
+      .desk-left-col .kpi-card { padding: 6px 12px; }
+      .desk-left-col .kpi-label { font-size: 9.5px; }
+      .desk-left-col .kpi-value,
+      .desk-left-col .kpi-hero-split-grid .kpi-card.hero-center .kpi-value { font-size: clamp(17px, 1.4vw, 22px); margin: 0; }
+      .desk-left-col .kpi-sub-grid .kpi-card:last-child .kpi-subtext { display: none; }
+      .desk-left-col .pacing-bar-container { display: none; }
+    }
+
     /* ---------- Calmer desk: softer type, fewer boxes ---------- */
     .date-day-seg { display: none; gap: 2px; }
     .date-range.is-day-seg { padding: 3px; }
@@ -4078,24 +4115,14 @@
           </div>
 
           <!-- Staff: active callers and managers -->
-          <div class="kpi-sub-grid" style="margin-top: 10px;">
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span class="kpi-label">ACTIVE CALLERS</span>
-              </div>
-              <div id="kpiStaffCallers" class="kpi-value tabular">0</div>
-              <div class="kpi-subtext">
-                <span id="kpiStaffCallersSub" class="tabular">My team: 0</span>
-              </div>
+          <div class="kpi-card" style="margin-top: 10px;">
+            <div class="kpi-header">
+              <span class="kpi-label">ACTIVE CALLERS</span>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span class="kpi-label">MANAGERS</span>
-              </div>
-              <div id="kpiStaffManagers" class="kpi-value tabular">0</div>
-              <div class="kpi-subtext">
-                <span id="kpiStaffManagersSub" class="tabular">0 collecting today</span>
-              </div>
+            <div id="kpiStaffCallers" class="kpi-value tabular">0</div>
+            <div class="kpi-subtext">
+              <span id="kpiStaffCallersSub" class="tabular">0 collecting today</span>
+              <span id="kpiStaffCallersFloor" class="tabular">Floor: 0</span>
             </div>
           </div>
 
@@ -8857,26 +8884,14 @@
         floorActiveEl.textContent = floorTotals.activeCount + ' of ' + floorTotals.totalCount + ' Callers';
       }
 
-      // Staff KPIs: active callers (floor, with my team) and listed managers
+      // Staff KPI: active callers in the selected team (floor count on the right)
       var staffCallersEl = document.getElementById('kpiStaffCallers');
       if (staffCallersEl) {
-        staffCallersEl.textContent = floorTotals.totalCount;
+        staffCallersEl.textContent = totals.totalCount;
         var staffSubEl = document.getElementById('kpiStaffCallersSub');
-        if (staffSubEl) staffSubEl.textContent = 'My team: ' + totals.totalCount;
-      }
-      var staffMgrEl = document.getElementById('kpiStaffManagers');
-      if (staffMgrEl) {
-        var mgrTeams = {}, mgrCollecting = {};
-        ALL_MANAGERS_ORDER.forEach(function(mk) { if (hiddenManagers.indexOf(mk) === -1) mgrTeams[mk] = true; });
-        allFloorCallers.forEach(function(c) {
-          if (c.status === 'Inactive' || c.status === 'Hidden') return;
-          var mk = (c.manager_key || '').toLowerCase();
-          if (ALL_MANAGERS_ORDER.indexOf(mk) === -1 || hiddenManagers.indexOf(mk) !== -1) return;
-          if ((Number(c.today) || 0) > 0) mgrCollecting[mk] = true;
-        });
-        staffMgrEl.textContent = Object.keys(mgrTeams).length;
-        var staffMgrSubEl = document.getElementById('kpiStaffManagersSub');
-        if (staffMgrSubEl) staffMgrSubEl.textContent = Object.keys(mgrCollecting).length + ' collecting today';
+        if (staffSubEl) staffSubEl.textContent = totals.activeCount + ' collecting today';
+        var staffFloorEl = document.getElementById('kpiStaffCallersFloor');
+        if (staffFloorEl) staffFloorEl.textContent = 'Floor: ' + floorTotals.totalCount;
       }
 
       var floorTeamsEl = document.getElementById('kpiFloorTeamsCount');
