@@ -4077,6 +4077,28 @@
             </div>
           </div>
 
+          <!-- Staff: active callers and managers -->
+          <div class="kpi-sub-grid" style="margin-top: 10px;">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">ACTIVE CALLERS</span>
+              </div>
+              <div id="kpiStaffCallers" class="kpi-value tabular">0</div>
+              <div class="kpi-subtext">
+                <span id="kpiStaffCallersSub" class="tabular">My team: 0</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">MANAGERS</span>
+              </div>
+              <div id="kpiStaffManagers" class="kpi-value tabular">0</div>
+              <div class="kpi-subtext">
+                <span id="kpiStaffManagersSub" class="tabular">0 collecting today</span>
+              </div>
+            </div>
+          </div>
+
           <div class="kpi-list">
           <!-- Yet to come: payment promised for today, not received yet -->
           <div class="kpi-card" id="cardYetToCome" style="margin-top: 10px;">
@@ -6574,6 +6596,8 @@
 
     function parseTargetWorkbook(wb, fileName) {
       parsedBulkTargetsData = { callers: [], managers: {}, branches: {} };
+      var notes = { unmatched: [], blank: 0, same: 0 };
+      var isBlankCell = function(v) { return v === undefined || v === null || String(v).trim() === ''; };
 
       // 1. Parse Callers Sheet (or first sheet)
       var callerSheetName = wb.SheetNames.find(function(n) { return /caller|officer/i.test(n); }) || wb.SheetNames[0];
@@ -6593,13 +6617,18 @@
               var rawName = String(r[nameIdx] || '').trim();
               if (!rawName) continue;
               var rawId = idIdx !== -1 ? String(r[idIdx] || '').trim() : '';
+              if (isBlankCell(r[targetIdx])) { notes.blank++; continue; }
               var targetVal = parseNumeric(r[targetIdx]);
 
               var matchedCaller = allLoadedCallers.find(function(c) {
                 return (rawId && String(c.id) === rawId) || c.officer_name.trim().toLowerCase() === rawName.toLowerCase();
               });
 
-              if (matchedCaller) {
+              if (!matchedCaller) {
+                notes.unmatched.push(rawName);
+              } else if ((Number(matchedCaller.target) || 0) === targetVal) {
+                notes.same++;
+              } else {
                 parsedBulkTargetsData.callers.push({
                   id: matchedCaller.id,
                   officer_name: matchedCaller.officer_name,
@@ -6630,6 +6659,7 @@
               if (!mr || mr.length === 0) continue;
               var mKey = mKeyIdx !== -1 ? String(mr[mKeyIdx] || '').trim().toLowerCase() : '';
               var mName = mNameIdx !== -1 ? String(mr[mNameIdx] || '').trim().toLowerCase() : '';
+              if (isBlankCell(mr[mTgtIdx])) { notes.blank++; continue; }
               var mTgtVal = parseNumeric(mr[mTgtIdx]);
 
               var resolvedKey = null;
@@ -6640,7 +6670,11 @@
                   return (MANAGER_NAMES[mk] || '').toLowerCase() === mName || mk === mName;
                 });
               }
-              if (resolvedKey) {
+              if (!resolvedKey) {
+                notes.unmatched.push(mNameIdx !== -1 ? String(mr[mNameIdx] || mKey) : mKey);
+              } else if (getManagerTarget(resolvedKey) === mTgtVal) {
+                notes.same++;
+              } else {
                 parsedBulkTargetsData.managers[resolvedKey] = mTgtVal;
               }
             }
@@ -6666,12 +6700,17 @@
               if (!br || br.length === 0) continue;
               var bKey = bKeyIdx !== -1 ? String(br[bKeyIdx] || '').trim().toLowerCase() : '';
               var bName = bNameIdx !== -1 ? String(br[bNameIdx] || '').trim().toLowerCase() : '';
+              if (isBlankCell(br[bTgtIdx])) { notes.blank++; continue; }
               var bTgtVal = parseNumeric(br[bTgtIdx]);
 
               var matchedDef = allDefs.find(function(d) {
                 return (bKey && d.key === bKey) || (bName && d.name.toLowerCase() === bName);
               });
-              if (matchedDef) {
+              if (!matchedDef) {
+                notes.unmatched.push(bName || bKey);
+              } else if (getBranchTarget(matchedDef.key) === bTgtVal) {
+                notes.same++;
+              } else {
                 parsedBulkTargetsData.branches[matchedDef.key] = bTgtVal;
               }
             }
@@ -6699,6 +6738,10 @@
           '<span style="background:var(--surface-2); color:var(--text); border:1px solid var(--border); padding:3px 8px; border-radius:6px; font-weight:700;">' + callerCount + ' Callers (Total ' + formatIndianCurrency(totalCallerTgt) + ')</span>' +
           (mgrCount > 0 ? '<span style="background:var(--surface-2); color:var(--text); border:1px solid var(--border); padding:3px 8px; border-radius:6px; font-weight:700;">' + mgrCount + ' Managers</span>' : '') +
           (branchCount > 0 ? '<span style="background:var(--surface-2); color:var(--text); border:1px solid var(--border); padding:3px 8px; border-radius:6px; font-weight:700;">' + branchCount + ' Branches</span>' : '');
+        var noteStyle = 'background:var(--alert-bg); color:var(--alert); border:1px solid var(--alert-line); padding:3px 8px; border-radius:6px; font-weight:700;';
+        if (notes.unmatched.length) pillsWrap.innerHTML += '<span style="' + noteStyle + '" title="These names are not in the system, so they are skipped">' + notes.unmatched.length + ' Not found: ' + escapeHtml(notes.unmatched.slice(0, 5).join(', ')) + (notes.unmatched.length > 5 ? ' …' : '') + '</span>';
+        if (notes.blank) pillsWrap.innerHTML += '<span style="background:var(--surface-2); color:var(--text-muted); border:1px solid var(--border); padding:3px 8px; border-radius:6px; font-weight:700;" title="An empty target cell does not change the target">' + notes.blank + ' Empty (skipped)</span>';
+        if (notes.same) pillsWrap.innerHTML += '<span style="background:var(--surface-2); color:var(--text-muted); border:1px solid var(--border); padding:3px 8px; border-radius:6px; font-weight:700;">' + notes.same + ' Unchanged</span>';
       }
 
       var tbody = document.getElementById('targetParsedPreviewTbody');
@@ -6740,6 +6783,7 @@
       if (btnApply) {
         var totalChanges = callerCount + mgrCount + branchCount;
         btnApply.disabled = (totalChanges === 0);
+        if (totalChanges === 0) showToast("No target changes found in this file.", "warning");
         btnApply.innerHTML = '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Update ' + totalChanges + ' Targets in Supabase';
       }
     }
@@ -6770,7 +6814,7 @@
         var bDef = getAllBranchDefinitions().find(function(d) { return d.key === bk; });
         logChanges.push({ type: 'Branch', name: bDef ? bDef.name : bk, oldTarget: getBranchTarget(bk), newTarget: branchTargets[bk] });
       });
-      await logTargetChanges('Excel upload', logChanges);
+      var failedNames = [];
 
       try {
         var batchSize = 10;
@@ -6791,6 +6835,7 @@
               if (c2) c2.target = item.newTarget;
             } catch(eCaller) {
               console.warn("Notice updating caller target:", item.officer_name, eCaller);
+              failedNames.push(item.officer_name);
             }
           }));
           completed += chunk.length;
@@ -6799,6 +6844,9 @@
           if (progPct) progPct.textContent = pct + '%';
           if (progText) progText.textContent = "Updating callers: " + completed + " / " + totalCount + "...";
         }
+
+        // Log only the changes that were saved
+        await logTargetChanges('Excel upload', logChanges.filter(function(l) { return !(l.type === 'Caller' && failedNames.indexOf(l.name) !== -1); }));
 
         Object.keys(branchTargets).forEach(function(bk) {
           setBranchTarget(bk, branchTargets[bk]);
@@ -6819,10 +6867,15 @@
         renderKPICards();
         updateAodData();
 
-        showToast("Successfully updated targets in Supabase!", "success");
-        setTimeout(function() {
-          closeBulkUploadTargetsModal();
-        }, 800);
+        if (failedNames.length) {
+          showToast((callersToUpdate.length - failedNames.length) + " of " + callersToUpdate.length + " caller targets updated. Failed: " + failedNames.join(', '), "error");
+          if (progText) progText.textContent = "Failed: " + failedNames.join(', ');
+        } else {
+          showToast("Successfully updated targets in Supabase!", "success");
+          setTimeout(function() {
+            closeBulkUploadTargetsModal();
+          }, 800);
+        }
       } catch(err) {
         console.error("Error applying bulk targets:", err);
         showToast("Error updating targets: " + (err.message || err), "error");
@@ -8802,6 +8855,28 @@
       var floorActiveEl = document.getElementById('kpiFloorActiveCallersCount');
       if (floorActiveEl) {
         floorActiveEl.textContent = floorTotals.activeCount + ' of ' + floorTotals.totalCount + ' Callers';
+      }
+
+      // Staff KPIs: active callers (floor, with my team) and listed managers
+      var staffCallersEl = document.getElementById('kpiStaffCallers');
+      if (staffCallersEl) {
+        staffCallersEl.textContent = floorTotals.totalCount;
+        var staffSubEl = document.getElementById('kpiStaffCallersSub');
+        if (staffSubEl) staffSubEl.textContent = 'My team: ' + totals.totalCount;
+      }
+      var staffMgrEl = document.getElementById('kpiStaffManagers');
+      if (staffMgrEl) {
+        var mgrTeams = {}, mgrCollecting = {};
+        ALL_MANAGERS_ORDER.forEach(function(mk) { if (hiddenManagers.indexOf(mk) === -1) mgrTeams[mk] = true; });
+        allFloorCallers.forEach(function(c) {
+          if (c.status === 'Inactive' || c.status === 'Hidden') return;
+          var mk = (c.manager_key || '').toLowerCase();
+          if (ALL_MANAGERS_ORDER.indexOf(mk) === -1 || hiddenManagers.indexOf(mk) !== -1) return;
+          if ((Number(c.today) || 0) > 0) mgrCollecting[mk] = true;
+        });
+        staffMgrEl.textContent = Object.keys(mgrTeams).length;
+        var staffMgrSubEl = document.getElementById('kpiStaffManagersSub');
+        if (staffMgrSubEl) staffMgrSubEl.textContent = Object.keys(mgrCollecting).length + ' collecting today';
       }
 
       var floorTeamsEl = document.getElementById('kpiFloorTeamsCount');
