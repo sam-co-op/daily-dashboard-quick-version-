@@ -4724,7 +4724,7 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px;">
           <button type="button" id="callerDeleteBtn" class="btn-outline" style="color: var(--alert); border-color: var(--alert-line); display: none;" onclick="closeCallerModal(); openRemoveCallerModal(document.getElementById('callerEditId').value, document.getElementById('callerOriginalName').value, document.getElementById('callerFormManager').value);">
-            <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete
+            <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Mark Inactive
           </button>
           <div style="display: flex; gap: 8px; margin-left: auto;">
             <button type="button" class="btn-outline" onclick="closeCallerModal()">Cancel</button>
@@ -4742,8 +4742,8 @@
     <div class="modal-card" style="max-width: 440px; width: 95%;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
         <div>
-          <h3 class="modal-title" id="removeCallerModalTitle" style="margin: 0; font-size: 16px; color:var(--alert);">Request Caller Removal</h3>
-          <div id="removeCallerModalSubtitle" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Sent to the admin for approval</div>
+          <h3 class="modal-title" id="removeCallerModalTitle" style="margin: 0; font-size: 16px; color:var(--alert);">Request Inactive</h3>
+          <div id="removeCallerModalSubtitle" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Sent to the admin for approval. The caller stays in the list as Inactive.</div>
         </div>
         <button type="button" class="btn-outline" style="padding: 2px 8px; font-size: 12px;" onclick="closeRemoveCallerModal()"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
@@ -4762,7 +4762,7 @@
         </div>
 
         <div class="form-group" hidden>
-          <label class="form-label" for="removeCallerResignationDate">Removal Date</label>
+          <label class="form-label" for="removeCallerResignationDate">Inactive From</label>
           <input type="date" id="removeCallerResignationDate" class="form-input" required>
         </div>
 
@@ -4777,7 +4777,7 @@
           <button type="button" class="btn-outline" onclick="closeRemoveCallerModal()">Cancel</button>
           <button type="submit" id="btnConfirmRemoveCaller" class="btn-solid" style="background: var(--alert); border-color: var(--alert); color: var(--on-accent);">
             <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-            <span id="btnConfirmRemoveCallerText">Submit Removal Request</span>
+            <span id="btnConfirmRemoveCallerText">Submit Request</span>
           </button>
         </div>
       </form>
@@ -4793,7 +4793,7 @@
         <div>
           <div class="req-eyebrow">Admin · Staff</div>
           <h3 class="req-title">Staff Requests</h3>
-          <div class="req-sub">Approve or reject the add and removal requests from managers</div>
+          <div class="req-sub">Approve or reject the add and inactive requests from managers</div>
         </div>
         <button type="button" class="req-close" onclick="closeEmployeeRequestsModal()" aria-label="Close"><svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
@@ -4801,7 +4801,7 @@
       <div class="req-stats">
         <div class="req-stat is-pending"><span id="reqStatPending" class="req-stat-num tabular">0</span><span class="req-stat-label">Pending</span></div>
         <div class="req-stat is-add"><span id="reqStatAdd" class="req-stat-num tabular">0</span><span class="req-stat-label">Add (pending)</span></div>
-        <div class="req-stat is-remove"><span id="reqStatRemove" class="req-stat-num tabular">0</span><span class="req-stat-label">Removal (pending)</span></div>
+        <div class="req-stat is-remove"><span id="reqStatRemove" class="req-stat-num tabular">0</span><span class="req-stat-label">Inactive (pending)</span></div>
         <div class="req-stat"><span id="reqStatDone" class="req-stat-num tabular">0</span><span class="req-stat-label">Reviewed</span></div>
       </div>
 
@@ -9027,7 +9027,7 @@
         var rowStyle = isInactive ? ' style="opacity: 0.72; background: var(--surface-2);"' : '';
 
         var isPendingRemoval = hasPendingRemovalRequest(c.id, c.officer_name);
-        var pendingRemovalBadge = isPendingRemoval ? ' <span style="background:var(--surface-2); color:var(--text-muted); border:1px solid var(--border-strong); font-size:10px; font-weight:700; padding:1px 6px; border-radius:10px;" title="Removal request submitted to admin">Pending Removal</span>' : '';
+        var pendingRemovalBadge = isPendingRemoval ? ' <span style="background:var(--surface-2); color:var(--text-muted); border:1px solid var(--border-strong); font-size:10px; font-weight:700; padding:1px 6px; border-radius:10px;" title="Inactive request submitted to admin">Pending Inactive</span>' : '';
 
         var actionsTd = '';
         if (canManageCallers) {
@@ -9036,8 +9036,8 @@
             btnList.push('<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;" onclick="openEditCallerModal(\'' + escapeJsArg(c.id || '') + '\', \'' + escapeJsArg(c.officer_name) + '\')" title="Edit caller details">' + uiIcon('edit', 'ui-icon-xs') + '</button>');
             btnList.push('<button type="button" class="btn-outline" style="padding:2px 7px; font-size:11px;' + (isInactive ? ' color:var(--text); border-color:var(--border-strong);' : ' color:var(--text-muted); border-color:var(--border);') + '" onclick="toggleHideCaller(\'' + escapeJsArg(c.id || '') + '\', \'' + escapeJsArg(c.officer_name) + '\')" title="' + (isInactive ? 'Unhide / Restore caller' : 'Hide / Inactivate caller') + '">' + (isInactive ? uiIcon('eye', 'ui-icon-xs') : uiIcon('eyeOff', 'ui-icon-xs')) + '</button>');
           }
-          var removeBtnText = isPendingRemoval ? 'Req Pending' : (isManager && !isAdmin ? 'Request Removal' : 'Remove');
-          btnList.push('<button type="button" class="btn-outline btn-row-remove"' + (isPendingRemoval ? ' style="opacity:0.65;"' : '') + ' onclick="openRemoveCallerModal(\'' + escapeJsArg(c.id || '') + '\', \'' + escapeJsArg(c.officer_name) + '\', \'' + escapeJsArg(c.manager_key || currentManagerKey) + '\')" title="' + (isPendingRemoval ? 'Removal already requested for admin review' : 'Request removal or record resignation') + '">' + uiIcon('trash', 'ui-icon-xs') + ' <span class="row-btn-text">' + removeBtnText + '</span></button>');
+          var removeBtnText = isPendingRemoval ? 'Req Pending' : (isManager && !isAdmin ? 'Request Inactive' : 'Mark Inactive');
+          btnList.push('<button type="button" class="btn-outline btn-row-remove"' + (isPendingRemoval ? ' style="opacity:0.65;"' : '') + ' onclick="openRemoveCallerModal(\'' + escapeJsArg(c.id || '') + '\', \'' + escapeJsArg(c.officer_name) + '\', \'' + escapeJsArg(c.manager_key || currentManagerKey) + '\')" title="' + (isPendingRemoval ? 'Inactive request already sent for admin review' : 'Mark this caller as inactive') + '">' + uiIcon('trash', 'ui-icon-xs') + ' <span class="row-btn-text">' + removeBtnText + '</span></button>');
           actionsTd = '<td style="text-align: center;"><div style="display:inline-flex; align-items:center; gap:4px;">' + btnList.join('') + '</div></td>';
         }
 
@@ -11716,12 +11716,15 @@
       } else {
         // Admin / MIS View: detailed form with full control (manager dropdown, target, status)
         if (titleEl) titleEl.textContent = "Add New Caller (" + mgrName + ")";
-        if (mgrWrap) mgrWrap.style.display = 'block';
+        // Add: ask only name + target. Team is in the title; joining date = today; status = Active.
+        if (mgrWrap) mgrWrap.style.display = 'none';
         if (targetWrap) targetWrap.style.display = 'block';
-        if (statusWrap) statusWrap.style.display = 'block';
-        if (datesTargetGrid) { datesTargetGrid.style.display = 'grid'; datesTargetGrid.style.gridTemplateColumns = '1fr 1fr'; }
+        if (statusWrap) statusWrap.style.display = 'none';
+        var joinWrapA = document.getElementById('callerFormJoiningDateWrap');
+        if (joinWrapA) joinWrapA.style.display = 'none';
+        if (datesTargetGrid) { datesTargetGrid.style.display = 'grid'; datesTargetGrid.style.gridTemplateColumns = '1fr'; }
         var hrGridA = document.getElementById('callerHrFieldsGrid');
-        if (hrGridA) hrGridA.style.display = 'grid';
+        if (hrGridA) hrGridA.style.display = 'none';
         if (saveBtn) {
           saveBtn.innerHTML = '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Caller';
         }
@@ -11805,6 +11808,8 @@
       if (targetWrap) targetWrap.style.display = 'block';
       if (statusWrap) statusWrap.style.display = 'block';
       if (datesTargetGrid) { datesTargetGrid.style.display = 'grid'; datesTargetGrid.style.gridTemplateColumns = '1fr 1fr'; }
+      var joinWrapE = document.getElementById('callerFormJoiningDateWrap');
+      if (joinWrapE) joinWrapE.style.display = 'block';
       var hrGridE = document.getElementById('callerHrFieldsGrid');
       if (hrGridE) hrGridE.style.display = 'grid';
 
@@ -12161,13 +12166,13 @@
       var btnText = document.getElementById('btnConfirmRemoveCallerText');
 
       if (isManager && !isAdmin) {
-        if (titleEl) titleEl.textContent = "Request Caller Removal";
-        if (subTitleEl) subTitleEl.textContent = "Sent to the admin for approval";
-        if (btnText) btnText.textContent = "Submit Removal Request";
+        if (titleEl) titleEl.textContent = "Request Inactive";
+        if (subTitleEl) subTitleEl.textContent = "Sent to the admin for approval. The caller stays in the list as Inactive.";
+        if (btnText) btnText.textContent = "Submit Request";
       } else {
-        if (titleEl) titleEl.textContent = "Remove Caller";
-        if (subTitleEl) subTitleEl.textContent = "Removes the caller from the active floor";
-        if (btnText) btnText.textContent = "Confirm & Remove Caller";
+        if (titleEl) titleEl.textContent = "Mark Caller Inactive";
+        if (subTitleEl) subTitleEl.textContent = "The caller stays in the list as Inactive. You can restore the caller later.";
+        if (btnText) btnText.textContent = "Confirm Inactive";
       }
 
       modal.style.display = 'flex';
@@ -12190,7 +12195,7 @@
 
       if (!resDate) {
         var errEl = document.getElementById('removeCallerError');
-        if (errEl) { errEl.textContent = "Please select a removal date."; errEl.style.display = 'block'; }
+        if (errEl) { errEl.textContent = "Please select the inactive date."; errEl.style.display = 'block'; }
         return;
       }
 
@@ -12219,7 +12224,7 @@
           employeeRequestsList.unshift(reqRecord);
           await saveEmployeeRequests();
 
-          showToast("Removal request for " + callerName + " submitted! Waiting for administrator approval.", "success");
+          showToast("Inactive request for " + callerName + " submitted! Waiting for administrator approval.", "success");
           closeRemoveCallerModal();
           renderCallerTable();
         } else {
@@ -12239,7 +12244,7 @@
             approved_by: currentUser.username
           });
 
-          showToast("Caller " + callerName + " marked as resigned (" + resDate + ") and removed from floor.", "success");
+          showToast("Caller " + callerName + " marked as inactive from " + resDate + ".", "success");
           closeRemoveCallerModal();
           await loadManagerData();
         }
@@ -12250,7 +12255,7 @@
       } finally {
         if (confirmBtn) {
           confirmBtn.disabled = false;
-          confirmBtn.innerHTML = uiIcon('trash', 'ui-icon-xs') + ' <span id="btnConfirmRemoveCallerText">' + (isAdmin ? 'Confirm & Remove Caller' : 'Submit Removal Request') + '</span>';
+          confirmBtn.innerHTML = uiIcon('trash', 'ui-icon-xs') + ' <span id="btnConfirmRemoveCallerText">' + (isAdmin ? 'Confirm Inactive' : 'Submit Request') + '</span>';
         }
       }
     }
@@ -12411,7 +12416,7 @@
       var html = '';
       list.forEach(function(r) {
         var isAdd = r.type === 'add';
-        var typeBadge = isAdd ? '<span class="req-type is-add">+ Add</span>' : '<span class="req-type is-remove">− Remove</span>';
+        var typeBadge = isAdd ? '<span class="req-type is-add">+ Add</span>' : '<span class="req-type is-remove">− Inactive</span>';
         var mgrTitle = MANAGER_NAMES[r.manager_key] || (r.manager_key ? r.manager_key.toUpperCase() : '—');
         var effDate = isAdd ? r.joining_date : r.resignation_date;
         var initials = String(r.officer_name || '?').trim().split(/\s+/).slice(0, 2).map(function(w) { return w.charAt(0); }).join('').toUpperCase();
@@ -12518,7 +12523,7 @@
             approved_by: adminName
           });
 
-          showToast("Approved! Caller " + req.officer_name + " marked as resigned and removed from floor.", "success");
+          showToast("Approved! Caller " + req.officer_name + " marked as inactive.", "success");
         }
 
         req.status = 'approved';
