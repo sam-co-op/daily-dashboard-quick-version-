@@ -4306,9 +4306,6 @@
             <input type="checkbox" id="chkShowHiddenCallers" onchange="toggleShowHiddenCallers(this.checked)" style="accent-color: var(--accent); cursor:pointer;">
             Show Hidden Callers
           </label>
-          <button type="button" id="btnTeamView" class="btn-outline" onclick="toggleTeamView()" style="font-weight:700;" title="Switch between cards and table">
-            <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> <span id="lblTeamView">Table</span>
-          </button>
           <button type="button" id="btnEntryLog" class="btn-outline" onclick="openEntryLogModal()" style="font-weight:700;" title="When each collection amount was entered">
             <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> History
           </button>
@@ -7672,25 +7669,10 @@
     // ========================================================================
     // [JS-11] TAB NAVIGATION & VIEW SWITCHING LOGIC
     // ========================================================================
-    // My Team Entry: cards (default) or table. Same inputs, so saving works the same.
+    // My Team Entry shows cards for the floor manager's own login. Admin, MIS and viewer keep the table.
     function applyTeamView() {
-      // Cards are for the floor manager's own login only. Admin, MIS and viewer keep the table.
-      var isFloorManager = !!(currentUser && currentUser.role === 'manager');
-      var mode = 'cards';
-      try { if (localStorage.getItem('sf-team-view') === 'table') mode = 'table'; } catch(e) {}
-      if (!isFloorManager) mode = 'table';
-      var viewBtn = document.getElementById('btnTeamView');
-      if (viewBtn) viewBtn.style.display = isFloorManager ? '' : 'none';
       var sec = document.getElementById('tabContentMyTeam');
-      if (sec) sec.classList.toggle('view-cards', mode === 'cards');
-      var lbl = document.getElementById('lblTeamView');
-      if (lbl) lbl.textContent = mode === 'cards' ? 'Table' : 'Cards';
-    }
-    function toggleTeamView() {
-      var sec = document.getElementById('tabContentMyTeam');
-      var next = (sec && sec.classList.contains('view-cards')) ? 'table' : 'cards';
-      try { localStorage.setItem('sf-team-view', next); } catch(e) {}
-      applyTeamView();
+      if (sec) sec.classList.toggle('view-cards', !!(currentUser && currentUser.role === 'manager'));
     }
 
     // Managers only: hide every caller view and keep the managers' collection
