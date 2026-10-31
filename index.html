@@ -3644,6 +3644,59 @@
       .req-list-wrap { margin-inline: 16px; }
     }
 
+    /* ---------- Users & Access (same frame as Staff Requests) ---------- */
+    .modal-card.usr-card { max-width: 820px; }
+    .usr-filters { display: flex; gap: 8px; flex-wrap: wrap; flex: 1 1 320px; }
+    .usr-filters .search-input { flex: 1 1 200px; min-width: 0; }
+    .usr-filters .usr-role-select { flex: 0 0 auto; width: auto; font-weight: 600; }
+    .usr-table td { padding-block: 9px; }
+    .usr-teamcell { color: var(--text-muted); font-size: 12.5px; }
+    .usr-you { font-size: 10.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; background: var(--signal); color: var(--on-signal); border-radius: 999px; padding: 1px 7px; margin-left: 4px; vertical-align: 1px; }
+    .usr-role { display: inline-block; font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 10px; white-space: nowrap; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); }
+    .usr-role.is-admin { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+    .usr-role.is-mis, .usr-role.is-editor { background: var(--accent-light); border-color: var(--border-strong); }
+    .usr-role.is-viewer { color: var(--text-muted); }
+    .usr-btn { font-size: 12.5px; padding: 6px 12px; border-radius: 10px; }
+    .usr-btn-del { padding: 6px 9px; }
+    @media (max-width: 640px) {
+      .usr-table th:nth-child(3), .usr-teamcell { display: none; }
+    }
+
+    .usr-role.usr-mode { background: transparent; border-style: dashed; color: var(--text-muted); font-weight: 600; }
+
+    /* ---------- MIS view (admin switch): managers and branches tables, full width ---------- */
+    html.mis-view .sticky-actions-bar, html.mis-view #reminderBanner, html.mis-view #btnHeaderAlertsStatus,
+    html.mis-view #btnAodTrigger, html.mis-view #adminMgrSelect, html.mis-view #btnDateHierarchyTrigger,
+    html.mis-view #tabBtnMyTeam, html.mis-view #tabContentMyTeam { display: none !important; }
+
+    /* ---------- Mobile mode (viewer): manager cards, tap for caller cards ---------- */
+    .mv { display: none; }
+    html.mobile-view, html.mobile-view body { overflow: hidden; }
+    html.mobile-view .mv { display: flex; flex-direction: column; position: fixed; inset: 0; z-index: 9000; background: var(--bg); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .mv-top { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 10px; padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px; background: var(--accent); color: var(--on-accent); }
+    .mv-head { flex: 1; min-width: 0; }
+    .mv-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--signal-on-ink); }
+    .mv-title { font-family: var(--display); font-size: 20px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mv-back, .mv-out { flex: none; min-height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.22); background: rgba(255, 255, 255, 0.1); color: inherit; font: 700 13px var(--font); cursor: pointer; }
+    .mv-back { width: 40px; padding: 0; display: grid; place-items: center; }
+    .mv-back[hidden] { display: none; }
+    .mv-body { width: 100%; max-width: 560px; margin: 0 auto; padding: 14px 16px calc(24px + env(safe-area-inset-bottom, 0px)); box-sizing: border-box; }
+    .mv-total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 16px; margin-bottom: 12px; border-radius: var(--radius-lg); background: var(--card-bg); border: 1px solid var(--border); }
+    .mv-total-label { font-size: 12.5px; font-weight: 700; color: var(--text-muted); }
+    .mv-total-num { font-family: var(--display); font-size: 26px; font-weight: 800; color: var(--text); }
+    .mv-list { display: flex; flex-direction: column; gap: 8px; }
+    .mv-card { display: flex; align-items: center; gap: 12px; width: 100%; box-sizing: border-box; padding: 14px; text-align: left; border-radius: var(--radius-lg); background: var(--card-bg); border: 1px solid var(--border); color: var(--text); font: inherit; }
+    button.mv-card { min-height: 64px; cursor: pointer; }
+    button.mv-card:active { background: var(--surface-2); }
+    .mv-rank { flex: none; width: 24px; text-align: center; font-size: 12.5px; font-weight: 800; color: var(--text-subtle); }
+    .mv-name { flex: 1; min-width: 0; }
+    .mv-name b { display: block; font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mv-name span { font-size: 12px; color: var(--text-muted); }
+    .mv-amt { font-family: var(--display); font-size: 18px; font-weight: 800; white-space: nowrap; }
+    .mv-amt.is-zero { color: var(--text-subtle); font-weight: 600; }
+    .mv-chev { flex: none; color: var(--text-subtle); }
+    .mv-empty { padding: 32px 0; text-align: center; color: var(--text-muted); }
+
     /* Wallboard theme button sits in the wallboard top bar */
     .aod-theme-toggle { width: 38px; height: 38px; }
 
@@ -4014,6 +4067,13 @@
               <div style="text-align:left;">
                 <div style="font-weight:700; font-size:12.5px; color:var(--text);">Managers Only</div>
                 <div id="lblManagersOnly" style="font-size:10.5px; color:var(--text-muted);">Off · callers shown</div>
+              </div>
+            </button>
+            <button type="button" class="admin-menu-item" onclick="toggleMisView(); closeAdminEditMenu();">
+              <svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="10" x2="9" y2="20"/></svg>
+              <div style="text-align:left;">
+                <div style="font-weight:700; font-size:12.5px; color:var(--text);">MIS View</div>
+                <div id="lblMisView" style="font-size:10.5px; color:var(--text-muted);">Off · full desk</div>
               </div>
             </button>
             <div style="height:1px; background:var(--border); margin:4px 0;"></div>
@@ -4629,27 +4689,44 @@
   <!-- ========================================================================
        [HTML-11] MODAL: ADMIN USER & PERMISSION MANAGEMENT (Admin Only)
        ======================================================================== -->
+  <div id="mobileView" class="mv" aria-live="polite">
+    <header class="mv-top">
+      <button type="button" id="mvBack" class="mv-back" onclick="mvShowManagers()" aria-label="Back to managers" hidden><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="mv-head">
+        <div id="mvEyebrow" class="mv-eyebrow">Collection</div>
+        <div id="mvTitle" class="mv-title">Managers</div>
+      </div>
+      <button type="button" class="mv-out" onclick="handleLogout()">Sign out</button>
+    </header>
+    <div class="mv-body">
+      <div class="mv-total"><span id="mvTotalLabel" class="mv-total-label">Floor collection</span><span id="mvTotal" class="mv-total-num tabular">₹0</span></div>
+      <div id="mvList" class="mv-list"></div>
+    </div>
+  </div>
+
   <div id="adminUsersModal" class="modal-backdrop" onclick="if(event.target===this) closeAdminUsersModal()">
-    <div class="modal-card" style="max-width: 820px; width: 95%; max-height: 90vh; display: flex; flex-direction: column;">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+    <div class="modal-card req-card usr-card">
+      <div class="req-head">
         <div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <h3 class="modal-title" style="margin: 0; font-size: 16.5px;">Users, Passwords & Access Control</h3>
-            <span class="brand-badge" style="font-size: 10px; padding: 2px 6px;">ADMIN ONLY</span>
-          </div>
-          <p class="modal-desc" style="margin: 3px 0 0; font-size: 12px;">
-            Manage portal users, reset PINs/passwords, update roles (Admin/Manager/MIS), and reassign calling rosters.
-          </p>
+          <div class="req-eyebrow">Admin · Access</div>
+          <h3 class="req-title">Users &amp; Access</h3>
+          <div class="req-sub">Add people, set their role and team, and change passwords</div>
         </div>
-        <button type="button" class="btn-outline" style="padding: 4px 10px; font-size: 13px; font-weight: 700;" onclick="closeAdminUsersModal()"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <button type="button" class="req-close" onclick="closeAdminUsersModal()" aria-label="Close"><svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
 
-      <!-- Action Bar: Search, Role Filter, Add User -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
-        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-          <input type="text" id="adminUserSearchInput" class="search-input" placeholder="Search username or name..." oninput="filterAdminUsersTable()">
-          <select id="adminUserRoleFilter" class="search-input" style="width: auto; font-weight: 600;" onchange="filterAdminUsersTable()">
-            <option value="">All Roles</option>
+      <div class="req-stats">
+        <div class="req-stat"><span id="usrStatTotal" class="req-stat-num tabular">0</span><span class="req-stat-label">Accounts</span></div>
+        <div class="req-stat"><span id="usrStatAdmin" class="req-stat-num tabular">0</span><span class="req-stat-label">Admins</span></div>
+        <div class="req-stat"><span id="usrStatManager" class="req-stat-num tabular">0</span><span class="req-stat-label">Managers</span></div>
+        <div class="req-stat"><span id="usrStatOther" class="req-stat-num tabular">0</span><span class="req-stat-label">MIS · Viewer · Editor</span></div>
+      </div>
+
+      <div class="req-toolbar usr-toolbar">
+        <div class="usr-filters">
+          <input type="text" id="adminUserSearchInput" class="search-input" placeholder="Search name or username" oninput="filterAdminUsersTable()">
+          <select id="adminUserRoleFilter" class="search-input usr-role-select" onchange="filterAdminUsersTable()">
+            <option value="">All roles</option>
             <option value="admin">Admin</option>
             <option value="manager">Manager</option>
             <option value="mis">MIS</option>
@@ -4657,23 +4734,19 @@
             <option value="viewer">Viewer</option>
           </select>
         </div>
-        <button type="button" class="btn-solid" style="font-size: 12px; padding: 6px 12px;" onclick="openEditUserForm(null)">
-          <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add New User
+        <button type="button" class="btn-solid" onclick="openEditUserForm(null)">
+          <svg class="ui-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add user
         </button>
       </div>
 
-      <!-- Users Table Scroll Container -->
-      <div style="overflow-y: auto; flex: 1; border: 1px solid var(--border); border-radius: var(--radius); min-height: 220px; max-height: 480px;">
-        <table class="caller-table" style="font-size: 12.5px;">
-          <thead style="position: sticky; top: 0; z-index: 2; background: var(--surface-2);">
+      <div class="req-list-wrap">
+        <table class="req-table usr-table">
+          <thead>
             <tr>
-              <th style="width: 36px; text-align: center;">#</th>
-              <th>USERNAME</th>
-              <th>DISPLAY NAME</th>
-              <th style="text-align: center;">ROLE</th>
-              <th>ASSIGNED TEAM</th>
-              <th style="text-align: center; width: 110px;">PIN / PASS</th>
-              <th style="text-align: center; width: 140px;">ACTIONS</th>
+              <th>User</th>
+              <th>Role</th>
+              <th>Team</th>
+              <th style="text-align: right;">Action</th>
             </tr>
           </thead>
           <tbody id="adminUsersTableBody">
@@ -4682,8 +4755,8 @@
         </table>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-muted);">
-        <span id="adminUsersCountLabel">Loading accounts...</span>
+      <div class="req-foot">
+        <span id="adminUsersCountLabel" class="req-foot-text">Loading accounts...</span>
         <button type="button" class="btn-outline" onclick="closeAdminUsersModal()">Close</button>
       </div>
     </div>
@@ -4716,7 +4789,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
           <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label" for="formInputRole">Role *</label>
-            <select id="formInputRole" class="form-input" style="font-weight: 700;">
+            <select id="formInputRole" class="form-input" style="font-weight: 700;" onchange="syncViewModeField()">
               <option value="manager">Manager</option>
               <option value="admin">Admin</option>
               <option value="mis">MIS</option>
@@ -4726,9 +4799,9 @@
           </div>
 
           <div class="form-group" style="margin-bottom: 0;">
-            <label class="form-label" for="formInputMgrKey">Assigned Team *</label>
+            <label class="form-label" for="formInputMgrKey">Assigned Teams *</label>
             <select id="formInputMgrKey" class="form-input" style="font-weight: 600;">
-              <option value="all">All Teams (Admin)</option>
+              <option value="all">All Teams</option>
               <option value="ambuj">Ambuj Tripathi</option>
               <option value="poonam">Poonam Indulkar</option>
               <option value="omkar">Omkar Singh</option>
@@ -4744,14 +4817,21 @@
           </div>
         </div>
 
+        <div class="form-group" id="formViewModeWrap" style="display: none;">
+          <label class="form-label" for="formInputViewMode">View mode</label>
+          <select id="formInputViewMode" class="form-input" style="font-weight: 600;">
+            <option value="desk">Desk · full tables</option>
+            <option value="mobile">Mobile · manager cards, tap for callers</option>
+          </select>
+        </div>
+
         <div class="form-group">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
             <label class="form-label" for="formInputPassword" style="margin-bottom: 0;">Password / PIN</label>
             <span id="formPasswordHint" style="font-size: 10.5px; color: var(--text-muted);">Leave empty to keep current</span>
           </div>
           <div style="display: flex; gap: 6px;">
-            <input type="text" id="formInputPassword" class="form-input tabular" placeholder="Enter new password (e.g. 1234)" autocomplete="new-password">
-            <button type="button" class="btn-outline" style="padding: 0 10px; font-size: 11px;" onclick="generateRandomPin()" title="Generate 4-digit PIN"><svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> PIN</button>
+            <input type="text" id="formInputPassword" class="form-input tabular" placeholder="Type a new password" autocomplete="new-password">
           </div>
         </div>
 
@@ -7149,6 +7229,12 @@
       await checkSession();
       loadCallerLifecycleLog();
       loadEmployeeRequests();
+      setInterval(function() {
+        if (currentUser && document.visibilityState === 'visible') refreshEmployeeRequests();
+      }, 10000);
+      document.addEventListener('visibilitychange', function() {
+        if (currentUser && document.visibilityState === 'visible') refreshEmployeeRequests();
+      });
       initReminderCheckpoints();
       initAutoRefreshEngine();
     });
@@ -7331,7 +7417,7 @@
           if (btnManageBranchesAssign) btnManageBranchesAssign.style.display = 'none';
         } else {
           // MANAGER ACCESS (e.g. Ambuj, Poonam, Smita, Shravanti):
-          // Isolated strictly to their own team entry (Managers Collections tab removed from manager view)
+          // Own team entry, plus the managers' collection table without other teams' callers
           currentManagerKey = (user.managerKey || user.username || '').toLowerCase();
           if (btnEmpReq) btnEmpReq.style.display = 'none';
           if (btnAod) btnAod.style.display = 'none';
@@ -7341,7 +7427,7 @@
           if (btnDateHierarchy) btnDateHierarchy.style.display = 'none';
           if (dateHierarchyPop) dateHierarchyPop.style.display = 'none';
           if (tabBranches) tabBranches.style.display = 'none';
-          if (tabAllMgrs) tabAllMgrs.style.display = 'none';
+          if (tabAllMgrs) tabAllMgrs.style.display = 'inline-flex';
           if (viewBranches) viewBranches.style.display = 'none';
           if (viewAllMgrs) viewAllMgrs.style.display = 'none';
           if (btnAddCaller) btnAddCaller.style.display = 'inline-flex';
@@ -7370,8 +7456,11 @@
       document.getElementById('aodManagerTitle').textContent = mgrTitle.toUpperCase();
       document.getElementById('tableTeamTitlePill').textContent = mgrTitle + " Roster";
 
+      applyMisView();
+      if (isMisView() && activeTab === 'myteam') switchMainTab('allmanagers');
       loadManagerData();
       initRealtimeSync();
+      applyUserViewMode(user);
     }
 
     function toggleAdminEditMenu(e) {
@@ -7649,6 +7738,7 @@
     function handleLogout() {
       localStorage.removeItem('shaha_manager_session');
       currentUser = null;
+      document.documentElement.classList.remove('mobile-view', 'mis-view');
       var deskLayout = document.querySelector('.desk-split-layout');
       if (deskLayout) {
         deskLayout.classList.remove('komal-layout');
@@ -7675,6 +7765,112 @@
       if (sec) sec.classList.toggle('view-cards', !!(currentUser && currentUser.role === 'manager'));
     }
 
+    // Floor managers see the managers' table but not other teams' callers
+    function noCallerDrill() {
+      return isManagersOnly() || !!(currentUser && currentUser.role === 'manager');
+    }
+
+    // MIS view: an admin sees the desk as the MIS login (Komal) sees it: managers and branches tables, full width
+    function isMisView() { return document.documentElement.classList.contains('mis-view'); }
+    function applyMisView() {
+      var isKomal = currentUser && (currentUser.username || '').toLowerCase() === 'komal';
+      var on = false;
+      try { on = !!currentUser && !isKomal && isAdminRole() && localStorage.getItem('sf-mis-view') === '1'; } catch(e) {}
+      document.documentElement.classList.toggle('mis-view', on);
+      var deskLayout = document.querySelector('.desk-split-layout');
+      if (deskLayout && !isKomal) deskLayout.classList.toggle('komal-layout', on);
+      var l = document.getElementById('lblMisView');
+      if (l) l.textContent = on ? 'On · managers & branches only' : 'Off · full desk';
+    }
+    function toggleMisView() {
+      try { localStorage.setItem('sf-mis-view', isMisView() ? '0' : '1'); } catch(e) {}
+      applyMisView();
+      switchMainTab(activeTab);
+      showToast(isMisView() ? "MIS view on." : "MIS view off.", "success");
+    }
+
+    // View mode per user (Desk or Mobile), kept in one config row like the other settings
+    var VIEW_MODES_ROW = '__config_view_modes__';
+    var _viewModes = {};
+    async function loadViewModes() {
+      var res = await sbFetch('users?username=eq.' + VIEW_MODES_ROW + '&select=id,display_name&limit=1');
+      var row = Array.isArray(res) && res.length ? res[0] : null;
+      var map = {};
+      try { map = (row && row.display_name) ? (JSON.parse(row.display_name) || {}) : {}; } catch(e) {}
+      return { id: row ? row.id : null, map: map };
+    }
+    async function saveViewMode(username, mode) {
+      var cur = await loadViewModes();
+      if (mode === 'mobile') cur.map[username] = 'mobile'; else delete cur.map[username];
+      var payload = { username: VIEW_MODES_ROW, role: 'config', manager_key: 'all', display_name: JSON.stringify(cur.map) };
+      if (cur.id) await sbFetch('users?id=eq.' + encodeURIComponent(cur.id), { method: 'PATCH', body: payload });
+      else await sbFetch('users', { method: 'POST', body: payload });
+      _viewModes = cur.map;
+    }
+    function syncViewModeField() {
+      var wrap = document.getElementById('formViewModeWrap');
+      var role = document.getElementById('formInputRole');
+      if (wrap && role) wrap.style.display = role.value === 'viewer' ? '' : 'none';
+    }
+
+    // Mobile mode (viewer): manager cards with the collection; a tap shows that manager's caller cards
+    var mvManager = null;
+    async function applyUserViewMode(user) {
+      var on = false;
+      if ((user.role || '').toLowerCase() === 'viewer') {
+        try { on = (await loadViewModes()).map[user.username] === 'mobile'; } catch(e) {}
+      }
+      mvManager = null;
+      document.documentElement.classList.toggle('mobile-view', on);
+      if (on) renderMobileView();
+    }
+    function mvOpenManager(mk) {
+      mvManager = mk;
+      renderMobileView();
+      document.getElementById('mobileView').scrollTop = 0;
+    }
+    function mvShowManagers() {
+      mvManager = null;
+      renderMobileView();
+    }
+    function renderMobileView() {
+      var list = document.getElementById('mvList');
+      if (!list) return;
+      var live = allFloorCallers.filter(function(c) { return c.status !== 'Inactive' && c.status !== 'Hidden'; });
+      var amt = function(n) { return '<span class="mv-amt tabular' + (n > 0 ? '' : ' is-zero') + '">' + formatIndianCurrency(n) + '</span>'; };
+      var html = '', total = 0;
+      if (!mvManager) {
+        var rows = ALL_MANAGERS_ORDER.filter(function(mk) { return hiddenManagers.indexOf(mk) === -1; }).map(function(mk) {
+          var cs = live.filter(function(c) { return (c.manager_key || '').toLowerCase() === mk; });
+          return { key: mk, name: MANAGER_NAMES[mk] || mk.toUpperCase(), n: cs.length, sum: cs.reduce(function(a, c) { return a + (Number(c.today) || 0); }, 0) };
+        }).sort(function(a, b) { return b.sum - a.sum; });
+        rows.forEach(function(m, i) {
+          total += m.sum;
+          html += '<button type="button" class="mv-card" onclick="mvOpenManager(\'' + escapeJsArg(m.key) + '\')">' +
+            '<span class="mv-rank tabular">' + (i + 1) + '</span>' +
+            '<span class="mv-name"><b>' + escapeHtml(m.name) + '</b><span>' + m.n + ' caller' + (m.n === 1 ? '' : 's') + '</span></span>' +
+            amt(m.sum) +
+            '<svg class="ui-icon mv-chev" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>';
+        });
+      } else {
+        var cs = live.filter(function(c) { return (c.manager_key || '').toLowerCase() === mvManager; })
+          .sort(function(a, b) { return (Number(b.today) || 0) - (Number(a.today) || 0); });
+        cs.forEach(function(c, i) {
+          var n = Number(c.today) || 0;
+          total += n;
+          html += '<div class="mv-card"><span class="mv-rank tabular">' + (i + 1) + '</span>' +
+            '<span class="mv-name"><b>' + escapeHtml(c.officer_name || '—') + '</b></span>' + amt(n) + '</div>';
+        });
+      }
+      list.innerHTML = html || '<div class="mv-empty">No collection data yet.</div>';
+      document.getElementById('mvTitle').textContent = mvManager ? (MANAGER_NAMES[mvManager] || mvManager.toUpperCase()) : 'Managers';
+      document.getElementById('mvTotalLabel').textContent = mvManager ? 'Team collection' : 'Floor collection';
+      document.getElementById('mvTotal').textContent = formatIndianCurrency(total);
+      document.getElementById('mvBack').hidden = !mvManager;
+      var d = new Date((activeDateStr || getTodayDateString()) + 'T00:00:00');
+      document.getElementById('mvEyebrow').textContent = 'Collection · ' + d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
     // Managers only: hide every caller view and keep the managers' collection
     function isManagersOnly() { return document.documentElement.classList.contains('managers-only'); }
     function toggleManagersOnly() {
@@ -7695,6 +7891,7 @@
     function switchMainTab(tabKey) {
       if (isManagersOnly() && currentUser && currentUser.role === 'manager') document.documentElement.classList.remove('managers-only');  // floor managers always keep their own team
       if (isManagersOnly() && tabKey === 'myteam' && currentUser && currentUser.role !== 'manager') tabKey = 'allmanagers';
+      if (isMisView() && tabKey === 'myteam') tabKey = 'allmanagers';
       syncManagersOnlyLabel(); applyTeamView();
       var isKomal = currentUser && (currentUser.username || '').toLowerCase() === 'komal';
       var isAdmin = !isKomal && isAdminRole();
@@ -7707,8 +7904,8 @@
           tabKey = 'allmanagers';
         }
       } else if (!isAdmin && !isViewer) {
-        // Standard floor managers can ONLY access 'myteam' (Managers Collections removed from manager view)
-        tabKey = 'myteam';
+        // Floor managers: their own team entry and the managers' collection table (no other team's callers)
+        if (tabKey !== 'allmanagers') tabKey = 'myteam';
       }
 
       activeTab = tabKey;
@@ -7731,12 +7928,12 @@
       }
       if (btnAllMgrs) {
         btnAllMgrs.classList.toggle('active', tabKey === 'allmanagers');
-        btnAllMgrs.style.display = (isKomal || isAdmin || isViewer) ? 'inline-flex' : 'none';
+        btnAllMgrs.style.display = 'inline-flex';
       }
 
       if (viewMyTeam) viewMyTeam.style.display = (!isKomal && tabKey === 'myteam') ? 'block' : 'none';
       if (viewBranches) viewBranches.style.display = ((isKomal || isAdmin || isViewer) && tabKey === 'branches') ? 'block' : 'none';
-      if (viewAllMgrs) viewAllMgrs.style.display = ((isKomal || isAdmin || isViewer) && tabKey === 'allmanagers') ? 'block' : 'none';
+      if (viewAllMgrs) viewAllMgrs.style.display = (tabKey === 'allmanagers') ? 'block' : 'none';
 
       if (subtitle) {
         if (tabKey === 'myteam') {
@@ -8535,6 +8732,7 @@
       }
       renderOverallManagersTable();
       updateAodData();
+      if (document.documentElement.classList.contains('mobile-view')) renderMobileView();
     }
 
     // ========================================================================
@@ -10260,11 +10458,12 @@
 
       var html = '';
       rowsData.forEach(function(m, idx) {
-        var isMgrExpanded = !!expandedManagerAccordions[m.key] && !isManagersOnly();
+        var isMgrExpanded = !!expandedManagerAccordions[m.key] && !noCallerDrill();
         var mgrChevron = isMgrExpanded ? '▲' : '▼';
         var currentPill = m.isCurrentManager ? ' <span style="font-size:10.5px; background:var(--text); color:var(--on-accent); padding:1px 6px; border-radius:10px;">My Team</span>' : '';
         var hiddenBadge = m.isHidden ? ' <span style="font-size:10px; background:var(--surface-2); color:var(--text-muted); border:1px solid var(--border); padding:1px 6px; border-radius:10px; font-weight:700;">' + uiIcon('eyeOff', 'ui-icon-xs') + ' Hidden</span>' : '';
         var rowStyle = m.isHidden ? ' style="opacity: 0.72; background: var(--surface-2); cursor:pointer;"' : ' style="cursor:pointer;"';
+        if (noCallerDrill()) rowStyle = '';
 
         var actionButtons = [];
         if ((isAdmin || currentManagerKey === 'bankmoney' || (currentUser && currentUser.username === 'komal')) && m.key === 'bankmoney') {
@@ -10280,9 +10479,10 @@
           '<td style="text-align:center; font-weight:700;" class="tabular">' + (idx + 1) + '</td>' +
           '<td style="font-weight:700;">' + escapeHtml(m.title) + currentPill + hiddenBadge + '</td>' +
           '<td class="tabular col-teamsize">' +
+            (noCallerDrill() ? m.callers.length + ' Callers' :
             '<button type="button" class="btn-toggle-team" onclick="event.stopPropagation(); toggleManagerAccordion(\'' + escapeJsArg(m.key) + '\');" title="Click to ' + (isMgrExpanded ? 'hide' : 'view') + ' callers">' +
               mgrChevron + ' ' + m.callers.length + ' Callers' +
-            '</button>' +
+            '</button>') +
           '</td>' +
           '<td style="text-align:right; font-weight:700;" class="tabular col-target">' +
             (isAdmin ? '<span title="Click to edit manager target" style="cursor:pointer;" onclick="event.stopPropagation(); promptEditManagerTarget(\'' + escapeJsArg(m.key) + '\', ' + m.target + ')">' + formatIndianCurrency(m.target) + ' <span style="opacity:0.65; margin-left:3px; display:inline-block;">' + uiIcon('edit', 'ui-icon-xs') + '</span></span>' : formatIndianCurrency(m.target)) +
@@ -10331,7 +10531,7 @@
     }
 
     function toggleManagerAccordion(mgrKey) {
-      if (isManagersOnly()) return;
+      if (noCallerDrill()) return;
       if (expandedManagerAccordions[mgrKey]) {
         delete expandedManagerAccordions[mgrKey];
       } else {
@@ -11729,6 +11929,11 @@
               }
             })
             .on('postgres_changes', { event: '*', schema: 'public', table: 'users' }, async function(payload) {
+              if (payload.new && payload.new.username === '__config_employee_requests__') {
+                try { await applyEmployeeRequestsFromServer(JSON.parse(payload.new.display_name || '[]')); }
+                catch(eReq) { refreshEmployeeRequests(); }
+                return;
+              }
               if (payload.new && (payload.new.username === '__config_branches__' || payload.new.username === '__config_branch_targets__')) {
                 await loadBranchConfigFromSupabase();
                 renderUI();
@@ -12473,7 +12678,85 @@
       updateEmployeeRequestsBadge();
     }
 
+    // One request list is shared by every browser. Merge by id before each write, so a
+    // stale copy cannot drop another manager's request or undo an admin decision.
+    function mergeEmployeeRequests(serverList, localList) {
+      var byId = {};
+      var pick = function(a, b) {
+        if (!a) return b;
+        if (!b) return a;
+        var aDone = a.status !== 'pending', bDone = b.status !== 'pending';
+        if (aDone !== bDone) return aDone ? a : b;
+        return String(b.reviewed_at || '') > String(a.reviewed_at || '') ? b : a;
+      };
+      (serverList || []).concat(localList || []).forEach(function(r) {
+        if (r && r.id) byId[r.id] = pick(byId[r.id], r);
+      });
+      return Object.keys(byId).map(function(k) { return byId[k]; }).sort(function(a, b) {
+        return String(b.requested_at || '').localeCompare(String(a.requested_at || ''));
+      });
+    }
+
+    // Take a fresh list from the server: tell the admin about new requests, tell the
+    // manager about decisions on their team, and redraw what shows the list.
+    async function applyEmployeeRequestsFromServer(list) {
+      if (!Array.isArray(list)) return;
+      var oldById = {};
+      employeeRequestsList.forEach(function(r) { oldById[r.id] = r; });
+      var isAdmin = isAdminRole();
+      var isManager = currentUser && currentUser.role === 'manager';
+      var newPending = [], decidedForMe = [];
+      list.forEach(function(r) {
+        var old = oldById[r.id];
+        if (!old && r.status === 'pending') newPending.push(r);
+        if (old && old.status === 'pending' && r.status !== 'pending' && r.manager_key === currentManagerKey) decidedForMe.push(r);
+      });
+      employeeRequestsList = list;
+      try { localStorage.setItem('shaha_employee_requests', JSON.stringify(list)); } catch(e) {}
+      updateEmployeeRequestsBadge();
+      var modal = document.getElementById('employeeRequestsModalBackdrop');
+      if (modal && modal.style.display === 'flex') renderEmployeeRequestsTable();
+
+      if (isAdmin && newPending.length) {
+        var r0 = newPending[0];
+        showToast("New staff request: " + (r0.type === 'add' ? 'add ' : 'inactive ') + r0.officer_name + " (" + (MANAGER_NAMES[r0.manager_key] || r0.manager_key) + ")" + (newPending.length > 1 ? " and " + (newPending.length - 1) + " more" : ""), "info");
+      }
+      if (isManager && decidedForMe.length) {
+        decidedForMe.forEach(function(r) {
+          showToast("Request " + r.status + ": " + r.officer_name, r.status === 'approved' ? "success" : "warning");
+        });
+        if (decidedForMe.some(function(r) { return r.status === 'approved'; })) {
+          await loadManagerData();  // the new caller card appears, or the inactive caller leaves
+          return;
+        }
+      }
+      if (activeTab === 'myteam') renderCallerTable();  // "Pending Inactive" badges
+    }
+
+    var _empReqRefreshBusy = false;
+    async function refreshEmployeeRequests() {
+      if (_empReqRefreshBusy) return;
+      _empReqRefreshBusy = true;
+      try {
+        var res = await sbFetch('users?username=eq.__config_employee_requests__&select=display_name&limit=1');
+        if (Array.isArray(res) && res.length > 0 && res[0].display_name) {
+          var raw = res[0].display_name;
+          if (raw !== JSON.stringify(employeeRequestsList)) await applyEmployeeRequestsFromServer(JSON.parse(raw));
+        }
+      } catch(e) {
+        console.warn('Refresh employee requests failed:', e);
+      } finally {
+        _empReqRefreshBusy = false;
+      }
+    }
+
     async function saveEmployeeRequests() {
+      try {
+        var latest = await sbFetch('users?username=eq.__config_employee_requests__&select=display_name&limit=1');
+        if (Array.isArray(latest) && latest.length > 0 && latest[0].display_name) {
+          employeeRequestsList = mergeEmployeeRequests(JSON.parse(latest[0].display_name), employeeRequestsList);
+        }
+      } catch(e) {}
       try {
         localStorage.setItem('shaha_employee_requests', JSON.stringify(employeeRequestsList));
       } catch(e) {}
@@ -12542,6 +12825,7 @@
 
       renderEmployeeRequestsTable();
       modal.style.display = 'flex';
+      refreshEmployeeRequests();
     }
 
     function closeEmployeeRequestsModal() {
@@ -12637,8 +12921,14 @@
     }
 
     async function approveEmployeeRequest(reqId) {
+      await refreshEmployeeRequests();
       var req = employeeRequestsList.find(function(r) { return r.id === reqId; });
       if (!req) return;
+      if (req.status !== 'pending') {
+        showToast("This request was already " + req.status + " by " + (req.reviewed_by || 'another admin') + ".", "info");
+        renderEmployeeRequestsTable();
+        return;
+      }
 
       var adminName = currentUser ? (currentUser.displayName || currentUser.username) : 'Admin';
 
@@ -12724,8 +13014,14 @@
     }
 
     async function rejectEmployeeRequest(reqId) {
+      await refreshEmployeeRequests();
       var req = employeeRequestsList.find(function(r) { return r.id === reqId; });
       if (!req) return;
+      if (req.status !== 'pending') {
+        showToast("This request was already " + req.status + " by " + (req.reviewed_by || 'another admin') + ".", "info");
+        renderEmployeeRequestsTable();
+        return;
+      }
 
       var adminName = currentUser ? (currentUser.displayName || currentUser.username) : 'Admin';
       req.status = 'rejected';
@@ -13176,7 +13472,7 @@
       var tbody = document.getElementById('adminUsersTableBody');
       var countLbl = document.getElementById('adminUsersCountLabel');
       if (tbody) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 28px; color: var(--text-muted);"><div class="loading-spinner" style="margin: 0 auto 8px;"></div>Loading user directory...</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="req-empty"><div class="loading-spinner" style="margin: 0 auto 8px;"></div>Loading users...</td></tr>';
       }
       if (countLbl) countLbl.textContent = 'Fetching accounts from database...';
 
@@ -13184,6 +13480,8 @@
         var users = await sbFetch('users?select=*&username=not.like.__entry_log_*&order=role.asc,username.asc');
         if (Array.isArray(users)) {
           _cachedAdminUsers = users.filter(function(u) { return !((u.username || '').startsWith('__')); });
+          var vmRow = users.find(function(u) { return u.username === VIEW_MODES_ROW; });
+          try { _viewModes = (vmRow && vmRow.display_name) ? (JSON.parse(vmRow.display_name) || {}) : {}; } catch(e) { _viewModes = {}; }
         } else {
           _cachedAdminUsers = [];
         }
@@ -13191,7 +13489,7 @@
       } catch(err) {
         console.warn("Error fetching users directory:", err);
         if (tbody) {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 24px; color: var(--alert);">Failed to load users: ' + escapeHtml(err.message) + '</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="4" class="req-empty" style="color: var(--alert);">Could not load users: ' + escapeHtml(err.message) + '</td></tr>';
         }
         if (countLbl) countLbl.textContent = 'Error loading accounts';
       }
@@ -13225,7 +13523,7 @@
       if (!tbody) return;
 
       if (!usersList || usersList.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 28px; color: var(--text-muted);">No users match your criteria.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="req-empty">No users match the search.</td></tr>';
         if (countLbl) countLbl.textContent = 'Showing 0 accounts';
         return;
       }
@@ -13233,60 +13531,37 @@
       if (countLbl) {
         countLbl.textContent = 'Showing ' + usersList.length + ' of ' + _cachedAdminUsers.length + ' account' + (_cachedAdminUsers.length === 1 ? '' : 's');
       }
+      var roleCount = function(fn) { return _cachedAdminUsers.filter(function(u) { return fn((u.role || 'manager').toLowerCase()); }).length; };
+      var setStat = function(id, n) { var el = document.getElementById(id); if (el) el.textContent = n; };
+      setStat('usrStatTotal', _cachedAdminUsers.length);
+      setStat('usrStatAdmin', roleCount(function(r) { return r === 'admin'; }));
+      setStat('usrStatManager', roleCount(function(r) { return r === 'manager'; }));
+      setStat('usrStatOther', roleCount(function(r) { return r !== 'admin' && r !== 'manager'; }));
 
       var html = '';
-      usersList.forEach(function(u, idx) {
+      usersList.forEach(function(u) {
         var isSelf = currentUser && (currentUser.username === u.username);
-        var roleUpper = (u.role || 'MANAGER').toUpperCase();
-        var roleStyle = 'background: var(--surface-2); color: var(--text); border: 1px solid var(--border);';
-        if (roleUpper === 'ADMIN') {
-          roleStyle = 'background: var(--accent); color: var(--on-accent);';
-        } else if (roleUpper === 'MIS') {
-          roleStyle = 'background: var(--accent); color: var(--on-accent);';
-        } else if (roleUpper === 'EDITOR') {
-          roleStyle = 'background: var(--accent-hover); color: var(--on-accent);';
-        } else if (roleUpper === 'VIEWER') {
-          roleStyle = 'background: var(--surface-2); color: var(--text-muted);';
-        }
-
-        var teamName = 'All Teams';
+        var role = (u.role || 'manager').toLowerCase();
+        var teamName = 'All teams';
         if (u.manager_key && u.manager_key !== 'all') {
           teamName = MANAGER_NAMES[u.manager_key.toLowerCase()] || u.manager_key.toUpperCase();
         }
+        var shownName = (u.display_name || u.username || '').replace(/\s*\((admin|manager|mis|viewer|editor)\)\s*$/i, '');
+        var initials = shownName.replace(/\([^)]*\)/g, ' ').split(/\s+/).filter(Boolean).slice(0, 2).map(function(w) { return w.charAt(0); }).join('').toUpperCase() || '?';
 
-        var passDisplay = u.password ? escapeHtml(u.password) : '<span style="color:var(--text-muted); font-size:11px;">••••</span>';
-
-        html += '<tr>';
-        html += '<td style="text-align:center; color: var(--text-muted); font-size: 11px;">' + (idx + 1) + '</td>';
-        html += '<td>';
-        html += '<div style="display:flex; align-items:center; gap:6px;">';
-        html += '<strong class="tabular" style="font-size: 12.5px;">@' + escapeHtml(u.username) + '</strong>';
-        if (isSelf) {
-          html += '<span style="font-size: 9.5px; padding: 1px 5px; background: var(--accent); color: var(--on-accent); border-radius: 4px; font-weight: 700;">YOU</span>';
-        }
-        html += '</div>';
-        html += '</td>';
-
-        html += '<td style="font-weight: 600; color: var(--text);">' + escapeHtml(u.display_name || '—') + '</td>';
-
-        html += '<td style="text-align:center;">';
-        html += '<span style="display:inline-block; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; padding: 2px 7px; border-radius: 4px; ' + roleStyle + '">' + roleUpper + '</span>';
-        html += '</td>';
-
-        html += '<td style="font-size: 12px; color: var(--text-muted);">' + escapeHtml(teamName) + '</td>';
-
-        html += '<td style="text-align:center;"><span class="tabular" style="font-family:monospace; font-weight:700; font-size:12px; background:var(--surface-2); padding:2px 7px; border-radius:4px; border:1px solid var(--border);">' + passDisplay + '</span></td>';
-
-        html += '<td style="text-align:center;">';
-        html += '<div style="display:inline-flex; align-items:center; gap:5px;">';
-        html += '<button type="button" class="btn-outline" style="padding: 3px 8px; font-size: 11.5px; font-weight: 600;" onclick="openEditUserForm(\'' + escapeJsArg(u.id) + '\')">' + uiIcon('edit', 'ui-icon-xs') + ' Edit</button>';
-        if (!isSelf) {
-          html += '<button type="button" class="btn-outline" style="padding: 3px 7px; font-size: 11.5px; color: var(--alert); border-color: var(--alert-line);" onclick="deleteUserPrompt(\'' + escapeJsArg(u.id) + '\', \'' + escapeJsArg(u.username) + '\')" title="Delete user">' + uiIcon('trash', 'ui-icon-xs') + '</button>';
-        }
-        html += '</div>';
-        html += '</td>';
-
-        html += '</tr>';
+        html += '<tr>' +
+          '<td><div class="req-who"><span class="req-avatar">' + escapeHtml(initials) + '</span><div>' +
+            '<div class="req-name">' + escapeHtml(shownName || '—') + (isSelf ? ' <span class="usr-you">You</span>' : '') + '</div>' +
+            '<div class="req-team">@' + escapeHtml(u.username) + '</div>' +
+          '</div></div></td>' +
+          '<td><span class="usr-role is-' + escapeHtml(role) + '">' + escapeHtml(role === 'mis' ? 'MIS' : role.charAt(0).toUpperCase() + role.slice(1)) + '</span>' +
+            (role === 'viewer' && _viewModes[u.username] === 'mobile' ? ' <span class="usr-role usr-mode">Mobile</span>' : '') + '</td>' +
+          '<td class="usr-teamcell">' + escapeHtml(teamName) + '</td>' +
+          '<td style="text-align:right;"><div class="req-actions">' +
+            '<button type="button" class="btn-outline usr-btn" onclick="openEditUserForm(\'' + escapeJsArg(u.id) + '\')">' + uiIcon('edit', 'ui-icon-xs') + ' Edit</button>' +
+            (isSelf ? '' : '<button type="button" class="req-btn-reject usr-btn-del" onclick="deleteUserPrompt(\'' + escapeJsArg(u.id) + '\', \'' + escapeJsArg(u.username) + '\')" title="Delete user" aria-label="Delete user">' + uiIcon('trash', 'ui-icon-xs') + '</button>') +
+          '</div></td>' +
+        '</tr>';
       });
 
       tbody.innerHTML = html;
@@ -13321,8 +13596,10 @@
         if (dInp) dInp.value = user.display_name || '';
         if (rInp) rInp.value = user.role || 'manager';
         if (mInp) mInp.value = (user.manager_key || 'all').toLowerCase();
-        if (pInp) pInp.value = user.password || '';
-        if (hintEl) hintEl.textContent = user.password ? ("Current password shown: " + user.password + " · Edit or click PIN to update") : "Leave empty to keep existing password";
+        document.getElementById('formInputViewMode').value = _viewModes[user.username] || 'desk';
+        // Passwords are stored as hashes. Never put the hash in the box: Save would send it back as a new password.
+        if (pInp) pInp.value = '';
+        if (hintEl) hintEl.textContent = "Leave empty to keep the current password";
 
         var isSelf = currentUser && (currentUser.username === user.username);
         if (delBtn) delBtn.style.display = (!isSelf) ? 'inline-flex' : 'none';
@@ -13335,11 +13612,13 @@
         if (dInp) dInp.value = '';
         if (rInp) rInp.value = 'manager';
         if (mInp) mInp.value = 'ambuj';
+        document.getElementById('formInputViewMode').value = 'desk';
         if (pInp) pInp.value = '';
         if (hintEl) hintEl.textContent = "Required for new accounts (e.g. 1234)";
         if (delBtn) delBtn.style.display = 'none';
       }
 
+      syncViewModeField();
       document.getElementById('editUserFormBackdrop').style.display = 'flex';
       setTimeout(function() {
         if (!userId && uInp) uInp.focus();
@@ -13351,16 +13630,6 @@
       document.getElementById('editUserFormBackdrop').style.display = 'none';
     }
 
-    function generateRandomPin() {
-      var pin = Math.floor(1000 + Math.random() * 9000).toString();
-      var pInp = document.getElementById('formInputPassword');
-      if (pInp) {
-        pInp.value = pin;
-        pInp.focus();
-      }
-      showToast("Generated PIN: " + pin);
-    }
-
     async function submitSaveUserForm() {
       var id = document.getElementById('editUserId').value.trim();
       var origUsername = document.getElementById('editUserOriginalUsername').value.trim();
@@ -13369,6 +13638,7 @@
       var role = document.getElementById('formInputRole').value;
       var mgrKey = document.getElementById('formInputMgrKey').value;
       var newPass = document.getElementById('formInputPassword').value.trim();
+      var viewMode = role === 'viewer' ? document.getElementById('formInputViewMode').value : 'desk';
 
       var errEl = document.getElementById('formUserError');
       var saveBtn = document.getElementById('btnSaveUserSubmit');
@@ -13454,6 +13724,9 @@
 
           showToast("New user @" + username + " created successfully.", "success");
         }
+
+        if (origUsername && origUsername !== username && _viewModes[origUsername]) await saveViewMode(origUsername, 'desk');
+        if ((_viewModes[username] || 'desk') !== viewMode) await saveViewMode(username, viewMode);
 
         closeEditUserForm();
         await fetchAndRenderAdminUsers();
